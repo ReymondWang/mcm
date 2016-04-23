@@ -1,12 +1,13 @@
 package com.purplelight.mcm.query;
 
 import java.lang.reflect.Method;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.purplelight.mcm.exception.McmException;
+import com.purplelight.mcm.util.ConvertUtil;
 import com.purplelight.mcm.util.StringUtil;
 
 public class Strategy {
@@ -38,16 +39,16 @@ public class Strategy {
 	
 	public String generateHql() throws Exception{
 		if (table == null){
-			throw new Exception("Strategy中必须设置table");
+			throw new McmException("Strategy中必须设置table");
 		}
 		if (StringUtil.IsNullOrEmpty(alias)){
-			throw new Exception("Strategy中必须设置alias");
+			throw new McmException("Strategy中必须设置alias");
 		}
 		
 		StringBuffer strb = new StringBuffer();
 		StringBuffer strbForCount = new StringBuffer();
 		strb.append(String.format("select %s from %s %s where 1 = 1 ", alias, table, alias));
-		strbForCount.append(String.format("select count(*) from %s %s where 1 = 1 ", alias, table, alias));
+		strbForCount.append(String.format("select count(*) from %s %s where 1 = 1 ", table, alias));
 		
 		// 取得目标类中的所有的getter方法，如果（String，date，timestamp）的不为空或（int，float，double）不为0，则作为查询条件。
 		Method[] methods = entity.getClass().getMethods();
@@ -126,51 +127,16 @@ public class Strategy {
 		return false;
 	}
 	
-	private boolean isInteger(Object obj){
-		if (obj == null){
-			return false;
-		}
-		return obj.getClass().getName().equals(Integer.class.getName()) || obj.getClass().getName().equals("int");
-	}
-	
-	private boolean isFloat(Object obj){
-		if (obj == null){
-			return false;
-		}
-		return obj.getClass().getName().equals(Float.class.getName()) || obj.getClass().getName().equals("float");
-	}
-	
-	private boolean isDouble(Object obj){
-		if (obj == null){
-			return false;
-		}
-		return obj.getClass().getName().equals(Double.class.getName()) || obj.getClass().getName().equals("double");
-	}
-	
-	private boolean isString(Object obj){
-		if (obj == null){
-			return false;
-		}
-		return obj.getClass().getName().equals(String.class.getName());
-	}
-	
-	private boolean isTimeStamp(Object obj){
-		if (obj == null){
-			return false;
-		}
-		return obj.getClass().getName().equals(Timestamp.class.getName());
-	}
-	
 	private boolean isCondition(Object obj){
-		if (isInteger(obj)){
+		if (ConvertUtil.isInteger(obj)){
 			return (int)obj != 0;
-		} else if (isFloat(obj)){
+		} else if (ConvertUtil.isFloat(obj)){
 			return (float)obj != 0;
-		} else if (isDouble(obj)){
+		} else if (ConvertUtil.isDouble(obj)){
 			return (double)obj != 0;
-		} else if (isString(obj)){
+		} else if (ConvertUtil.isString(obj)){
 			return !StringUtil.IsNullOrEmpty((String)obj);
-		} else if (isTimeStamp(obj)){
+		} else if (ConvertUtil.isTimeStamp(obj)){
 			return obj != null;
 		}
 		

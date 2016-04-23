@@ -23,6 +23,7 @@ function loadModeView(url){
 		
 		$.ajax({
 			url: url,
+			method: "post",
 			async: true,
 			beforeSend: function(){
 				$("#fakeLoader").fakeLoader({
@@ -62,4 +63,46 @@ function centerLoadInModeView(obj){
 function closeModeView(){
 	$("#fakeLoader").html("");
 	$("#fakeLoader").fadeOut();
+}
+
+//弹出消息
+function alertMcmMsg(obj, msg){
+	var winW = $(window).width();
+	var winH = $(window).height();
+	
+    var spinnerW = $(obj).outerWidth();
+    var spinnerH = $(obj).outerHeight();
+
+    $(obj).css({
+        'position':'absolute',
+        'left':(winW/2)-(spinnerW/2),
+        'top':((winH/2)-(spinnerH/2)) * 0.6
+    });
+    
+    $(obj).find("#MsgContent").html(msg);
+    $(obj).fadeIn();
+    setTimeout(function(){
+		$(obj).fadeOut();
+	}, 3000);
+}
+
+function alertMcmConfirmMsg(obj, msg){
+	var winW = $(window).width();
+	var winH = $(window).height();
+	
+    var spinnerW = $(obj).outerWidth();
+    var spinnerH = $(obj).outerHeight();
+
+    $(obj).css({
+        'position':'absolute',
+        'left':(winW/2)-(spinnerW/2),
+        'top':((winH/2)-(spinnerH/2)) * 0.6
+    });
+    
+    $(obj).find("#MsgContent").html(msg);
+    $(obj).fadeIn();
+}
+
+function dismissMsg(obj){
+	$(obj).fadeOut();
 }

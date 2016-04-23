@@ -44,6 +44,8 @@ public class LoginAction extends BaseAction{
 			
 			return ERROR;
 		} else {
+			getSession().put("user", mUser);
+			
 			return SUCCESS;
 		}
 	}

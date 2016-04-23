@@ -18,16 +18,36 @@
 		</action>
 	</package>
 	
+	<package name="uploadAction" namespace="/api" extends="abstract-struts">
+		<action name="upload" class="uploadAction">
+			<result name="success">/upload.jsp</result>
+			<result name="error">/upload.jsp</result>
+		</action>
+	</package>
+	
 	<package name="userAction" namespace="/user" extends="abstract-struts">
 		<action name="direct" class="userAction">
-			<result name="list">/user/userlist.jsp</result>
-			<result name="add">/user/usermodify.jsp</result>
+			<result name="add">/user/userinfo.jsp</result>
+			<result name="modify">/user/userinfo.jsp</result>
 			<result name="info">/user/userinfo.jsp</result>
-			<result name="error">/common/error.jsp</result>
+			<result name="error">/common/userinfo.jsp</result>
+		</action>
+		<action name="list" class="userAction" method="list">
+			<result name="success">/user/userlist.jsp</result>
+			<result name="error">/user/userlist.jsp</result>
 		</action>
 		<action name="add" class="userAction" method="addUser">
 			<result name="success">/user/userinfo.jsp</result>
-			<result name="error">/common/error.jsp</result>
+			<result name="error">/common/userinfo.jsp</result>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg</param>
+				<param name="maximumSize">52428800</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<action name="del" class="userAction" method="delUser">
+			<result name="success">/user/userlist.jsp</result>
+			<result name="error">/user/userlist.jsp</result>
 		</action>
 	</package>
 	

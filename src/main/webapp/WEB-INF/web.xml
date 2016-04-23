@@ -66,4 +66,9 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
+	<!-- 配置API的属性 -->
+	<listener>
+		<listener-class>com.purplelight.mcm.api.config.ApiConfigListener</listener-class>
+	</listener>
+	
 </web-app>

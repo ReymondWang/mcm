@@ -1,12 +1,17 @@
 package com.purplelight.mcm.service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import com.purplelight.mcm.dao.ISystemUserDao;
 import com.purplelight.mcm.entity.SystemUser;
+import com.purplelight.mcm.query.PageInfo;
+import com.purplelight.mcm.query.Strategy;
+import com.purplelight.mcm.util.MCMContext;
 import com.purplelight.mcm.util.StringUtil;
+import com.purplelight.mcm.util.UpdateUtil;
 
 public class SystemUserServiceImpl implements ISystemUserService {
 
@@ -28,15 +33,43 @@ public class SystemUserServiceImpl implements ISystemUserService {
 		systemUserDao.addUser(user);
 	}
 
-	public void udpateUser(SystemUser user, SystemUser loginedUser) {
-		user.setUpdateUser(loginedUser.getId());
-		user.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+	public void updateUser(SystemUser user, SystemUser loginedUser) throws Exception {
+		SystemUser orgUser = systemUserDao.getById(user.getId());
+		orgUser = UpdateUtil.copyNotNullOrEmptyValue(orgUser, user);
 		
-		systemUserDao.updateUser(user);
+		// 设定更新用户和更新时间戳
+		orgUser.setUpdateUser(loginedUser.getId());
+		orgUser.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		
+		systemUserDao.updateUser(orgUser);
 	}
 
-	public void deleteUser(SystemUser user, SystemUser loginedUser) {
+	@Override
+	public void deleteUser(SystemUser user) {
 		systemUserDao.deleteUser(user);
+	}
+
+	@Override
+	public void deleteUserById(int id) {
+		SystemUser user = systemUserDao.getById(id);
+		deleteUser(user);
+	}
+
+	@Override
+	public void deleteUserByIdArr(int[] idArr) {
+		for(int id : idArr){
+			deleteUserById(id);
+		}
+	}
+
+	@Override
+	public void deleteUserByIdStr(String idStr) {
+		String[] idStrArr = idStr.split("\\,");
+		for(String id : idStrArr){
+			if (!StringUtil.IsNullOrEmpty(id)){
+				deleteUserById(Integer.valueOf(id).intValue());
+			}
+		}
 	}
 
 	@Override
@@ -68,6 +101,34 @@ public class SystemUserServiceImpl implements ISystemUserService {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public PageInfo<SystemUser> query(Strategy strategy, int pageNo) throws Exception {
+		int pageSize = MCMContext.PAGE_SIZE;
+		int startPos = (pageNo - 1) * pageSize;
+		
+		return systemUserDao.findByPageInfo(strategy, startPos, pageNo, pageSize);
+	}
+
+	@Override
+	public SystemUser getUser(SystemUser user) throws Exception {
+		SystemUser retUser = new SystemUser();
+		
+		if (!StringUtil.IsNullOrEmpty(user.getUserCode())){
+			retUser = systemUserDao.getByUserCode(user.getUserCode());
+		} else if (!StringUtil.IsNullOrEmpty(user.getEmail())){
+			retUser = systemUserDao.getByEmail(user.getEmail());
+		} else if (!StringUtil.IsNullOrEmpty(user.getPhone())){
+			retUser = systemUserDao.getByPhone(user.getPhone());
+		} else {
+			List<SystemUser> list = systemUserDao.find(new Strategy(user, "u"));
+			if (list.size() > 0){
+				retUser = list.get(0);
+			}
+		}
+		
+		return retUser;
 	}
 
 }

@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>移动管理平台 | 桌面</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="${rootPath}/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${rootPath}/css/style.css">
+    <link rel="stylesheet" href="${rootPath}/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="plugins/fakeloader/fakeLoader.css">
+    <link rel="stylesheet" href="${rootPath}/plugins/fakeloader/fakeLoader.css">
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -147,9 +147,37 @@
     						<i class="fa fa-laptop"></i> <span>系统管理</span> <i class="fa fa-angle-left pull-right"></i>
     					</a>
     					<ul class="treeview-menu">
-    						<li><a href="##" onclick="loadUrl('user/direct?action=list', this);">用户管理</a></li>
-    						<li><a href="##" onclick="loadUrl('user/direct?action=list', this);">角色管理</a></li>
-    						<li><a href="##" onclick="loadUrl('user/direct?action=list', this);">权限管理</a></li>
+    						<li><a href="##" onclick="loadUrl('user/list', this);">用户管理</a></li>
+    						<li><a href="##" onclick="loadUrl('user/list', this);">角色管理</a></li>
+    						<li><a href="##" onclick="loadUrl('user/list', this);">外部系统管理</a></li>
+    					</ul>
+    				</li>
+    				<li class="treeview">
+    					<a href="#">
+    						<i class="fa fa-dashboard"></i> <span>首页管理</span> <i class="fa fa-angle-left pull-right"></i>
+    					</a>
+    					<ul class="treeview-menu">
+    						<li><a href="##" onclick="loadUrl('user/list', this);">头部轮播</a></li>
+    						<li><a href="##" onclick="loadUrl('user/list', this);">功能按钮</a></li>
+    						<li><a href="##" onclick="loadUrl('user/list', this);">通知内容</a></li>
+    					</ul>
+    				</li>
+    				<li class="treeview">
+    					<a href="#">
+    						<i class="fa fa-th"></i> <span>办公管理</span> <i class="fa fa-angle-left pull-right"></i>
+    					</a>
+    					<ul class="treeview-menu">
+    						<li><a href="##" onclick="loadUrl('user/list', this);">功能注册</a></li>
+    						<li><a href="##" onclick="loadUrl('user/list', this);">流程表单</a></li>
+    					</ul>
+    				</li>
+    				<li class="treeview">
+    					<a href="#">
+    						<i class="fa fa-book"></i> <span>对外接口</span> <i class="fa fa-angle-left pull-right"></i>
+    					</a>
+    					<ul class="treeview-menu">
+    						<li><a href="##" onclick="loadUrl('user/list', this);">接口文档</a></li>
+    						<li><a href="##" onclick="loadUrl('user/list', this);">接口测试</a></li>
     					</ul>
     				</li>
     			</ul>
@@ -165,10 +193,10 @@
     		<strong>Copyright &copy; 2014-2015 PurpleLight</strong> All rights reserved.
       	</footer> -->
     </div>
-    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/app.min.js"></script>
-    <script src="plugins/fakeloader/fakeLoader.js"></script>
+    <script src="${rootPath}/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="${rootPath}/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${rootPath}/js/app.min.js"></script>
+    <script src="${rootPath}/plugins/fakeloader/fakeLoader.js"></script>
     <script type="text/javascript">
     	var posTop = $("#content").position().top;
     	var posLeft = $("#content").position().left;

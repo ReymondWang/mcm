@@ -36,6 +36,14 @@ public class PageInfo<T> {
 		this.totalCount = totalCount;
 	}
 
+	public int getStartPos() {
+		return (pageNo - 1) * pageSize + 1;
+	}
+
+	public int getEndPos() {
+		return pageNo * pageSize > totalCount ? totalCount : pageNo * pageSize;
+	}
+
 	public List<T> getResult() {
 		return result;
 	}

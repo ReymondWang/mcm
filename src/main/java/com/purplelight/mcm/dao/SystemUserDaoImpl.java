@@ -97,11 +97,14 @@ public class SystemUserDaoImpl extends BaseDaoImpl implements ISystemUserDao {
 		page.setPageNo(pageNo);
 		page.setPageSize(pageSize);
 		
-		Query cntQuery = getSession().createQuery(queryStrategy.getHqlForCount());
-		cntQuery.setProperties(queryStrategy.getQueryProperties());
-		page.setTotalCount((Integer)cntQuery.uniqueResult());
+		String hql = queryStrategy.generateHql();
+		String hqlForCount = queryStrategy.getHqlForCount();
 		
-		Query query = getSession().createQuery(queryStrategy.generateHql());
+		Query cntQuery = getSession().createQuery(hqlForCount);
+		cntQuery.setProperties(queryStrategy.getQueryProperties());
+		page.setTotalCount(new Integer(cntQuery.uniqueResult().toString()).intValue());
+		
+		Query query = getSession().createQuery(hql);
 		query.setProperties(queryStrategy.getQueryProperties());
 		query.setFirstResult(startPos);
 		query.setMaxResults(pageNo * pageSize);

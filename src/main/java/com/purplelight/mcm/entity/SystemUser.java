@@ -20,6 +20,8 @@ public class SystemUser {
 	
 	private String password;
 	
+	private String headImgPath;
+	
 	private int sex;
 	
 	private String phone;
@@ -72,6 +74,15 @@ public class SystemUser {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Column(name="head_img_path", length=100)
+	public String getHeadImgPath() {
+		return headImgPath;
+	}
+
+	public void setHeadImgPath(String headImgPath) {
+		this.headImgPath = headImgPath;
 	}
 
 	@Column(name="sex", length=1)
@@ -145,5 +156,4 @@ public class SystemUser {
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
-
 }
