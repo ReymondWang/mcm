@@ -51,4 +51,19 @@
 		</action>
 	</package>
 	
+	<package name="outterSystemAction" namespace="/system" extends="abstract-struts">
+		<action name="show" class="outterSystemAction">
+			<result name="success">/system/outtersystem.jsp</result>
+			<result name="error">/system/outtersystem.jsp</result>
+		</action>
+		<action name="save" class="outterSystemAction" method="save">
+			<result name="success">/system/outtersystem.jsp</result>
+			<result name="error">/system/outtersystem.jsp</result>
+		</action>
+		<action name="del" class="outterSystemAction" method="delete">
+			<result name="success">/system/outtersystem.jsp</result>
+			<result name="error">/system/outtersystem.jsp</result>
+		</action>
+	</package>
+	
 </struts>

@@ -24,6 +24,9 @@
     	<property name="annotatedClasses">
     		<list>
     			<value>com.purplelight.mcm.entity.SystemUser</value>
+    			<value>com.purplelight.mcm.entity.OutterSystem</value>
+    			<value>com.purplelight.mcm.entity.DictionaryName</value>
+    			<value>com.purplelight.mcm.entity.DictionaryItem</value>
     		</list>
     	</property>
     </bean>

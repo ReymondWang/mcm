@@ -17,12 +17,24 @@
 	<bean id="loginAction" class="com.purplelight.mcm.action.LoginAction" scope="prototype"></bean>
 	<bean id="desktopAction" class="com.purplelight.mcm.action.DesktopAction" scope="prototype"></bean>
 	<bean id="userAction" class="com.purplelight.mcm.action.UserAction" scope="prototype"></bean>
+	<bean id="outterSystemAction" class="com.purplelight.mcm.action.OutterSystemAction" scope="prototype"></bean>
 	
 	<!-- Spring管理的Service -->
-	<bean id="systemUserService" class="com.purplelight.mcm.service.SystemUserServiceImpl"></bean>
+	<bean id="systemUserService" class="com.purplelight.mcm.service.impl.SystemUserServiceImpl"></bean>
+	<bean id="dictService" class="com.purplelight.mcm.service.impl.DictionaryServiceImpl"></bean>
+	<bean id="outterSystemService" class="com.purplelight.mcm.service.impl.OutterSystemServiceImpl"></bean>
 	
 	<!-- Spring管理的Dao -->
-	<bean id="systemUserDao" class="com.purplelight.mcm.dao.SystemUserDaoImpl">
+	<bean id="systemUserDao" class="com.purplelight.mcm.dao.impl.SystemUserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="dictNameDao" class="com.purplelight.mcm.dao.impl.DictionaryNameDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="dictItemDao" class="com.purplelight.mcm.dao.impl.DictionaryItemDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="outterSystemDao" class="com.purplelight.mcm.dao.impl.OutterSystemDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	

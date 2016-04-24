@@ -1,4 +1,4 @@
-package com.purplelight.mcm.dao;
+package com.purplelight.mcm.dao.impl;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 
+import com.purplelight.mcm.dao.ISystemUserDao;
 import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.query.PageInfo;
 import com.purplelight.mcm.query.Strategy;

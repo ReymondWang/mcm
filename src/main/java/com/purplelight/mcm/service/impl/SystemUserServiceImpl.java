@@ -1,4 +1,4 @@
-package com.purplelight.mcm.service;
+package com.purplelight.mcm.service.impl;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -9,6 +9,7 @@ import com.purplelight.mcm.dao.ISystemUserDao;
 import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.query.PageInfo;
 import com.purplelight.mcm.query.Strategy;
+import com.purplelight.mcm.service.ISystemUserService;
 import com.purplelight.mcm.util.MCMContext;
 import com.purplelight.mcm.util.StringUtil;
 import com.purplelight.mcm.util.UpdateUtil;

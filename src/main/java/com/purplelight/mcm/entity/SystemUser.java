@@ -121,7 +121,7 @@ public class SystemUser {
 		this.address = address;
 	}
 	
-	@Column(name="input_user", length=11)
+	@Column(name="input_user")
 	public int getInputUser() {
 		return inputUser;
 	}

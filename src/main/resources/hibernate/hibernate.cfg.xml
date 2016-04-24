@@ -29,5 +29,8 @@
 		
 		<!-- 配置映射的实体类 -->
 		<mapping class="com.purplelight.mcm.entity.SystemUser" />
+		<mapping class="com.purplelight.mcm.entity.OutterSystem" />
+		<mapping class="com.purplelight.mcm.entity.DictionaryName" />
+		<mapping class="com.purplelight.mcm.entity.DictionaryItem" />
 	</session-factory>
 </hibernate-configuration>

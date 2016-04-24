@@ -1,4 +1,4 @@
-package com.purplelight.mcm.dao;
+package com.purplelight.mcm.dao.impl;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

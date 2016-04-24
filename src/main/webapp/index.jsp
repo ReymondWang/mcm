@@ -149,7 +149,7 @@
     					<ul class="treeview-menu">
     						<li><a href="##" onclick="loadUrl('user/list', this);">用户管理</a></li>
     						<li><a href="##" onclick="loadUrl('user/list', this);">角色管理</a></li>
-    						<li><a href="##" onclick="loadUrl('user/list', this);">外部系统管理</a></li>
+    						<li><a href="##" onclick="loadUrl('system/show', this);">外部系统管理</a></li>
     					</ul>
     				</li>
     				<li class="treeview">
