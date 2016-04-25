@@ -27,6 +27,7 @@
     			<value>com.purplelight.mcm.entity.OutterSystem</value>
     			<value>com.purplelight.mcm.entity.DictionaryName</value>
     			<value>com.purplelight.mcm.entity.DictionaryItem</value>
+    			<value>com.purplelight.mcm.entity.AppFunction</value>
     		</list>
     	</property>
     </bean>

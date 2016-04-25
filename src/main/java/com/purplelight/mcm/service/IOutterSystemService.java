@@ -1,5 +1,7 @@
 package com.purplelight.mcm.service;
 
+import java.util.List;
+
 import com.purplelight.mcm.entity.OutterSystem;
 import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.query.PageInfo;
@@ -11,4 +13,6 @@ public interface IOutterSystemService {
 	public void deleteOutterSystem(OutterSystem outterSystem);
 	public PageInfo<OutterSystem> query(Strategy strategy, int pageNo) throws Exception;
 	public OutterSystem getOutterSystem(OutterSystem outterSystem) throws Exception;
+	public List<OutterSystem> getAll();
+	public List<OutterSystem> getAllWithBlank();
 }

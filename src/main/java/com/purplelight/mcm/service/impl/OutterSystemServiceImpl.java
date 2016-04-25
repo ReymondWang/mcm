@@ -11,7 +11,7 @@ import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.query.PageInfo;
 import com.purplelight.mcm.query.Strategy;
 import com.purplelight.mcm.service.IOutterSystemService;
-import com.purplelight.mcm.util.MCMContext;
+import com.purplelight.mcm.util.McmConstant;
 import com.purplelight.mcm.util.UpdateUtil;
 
 public class OutterSystemServiceImpl implements IOutterSystemService {
@@ -47,7 +47,7 @@ public class OutterSystemServiceImpl implements IOutterSystemService {
 
 	@Override
 	public PageInfo<OutterSystem> query(Strategy strategy, int pageNo) throws Exception {
-		int pageSize = MCMContext.PAGE_SIZE;
+		int pageSize = McmConstant.PAGE_SIZE;
 		int startPos = (pageNo - 1) * pageSize;
 		
 		return outterSystemDao.findByPageInfo(strategy, startPos, pageNo, pageSize);
@@ -62,6 +62,22 @@ public class OutterSystemServiceImpl implements IOutterSystemService {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public List<OutterSystem> getAll() {
+		return outterSystemDao.getAll();
+	}
+
+	@Override
+	public List<OutterSystem> getAllWithBlank() {
+		List<OutterSystem> list = getAll();
+		
+		OutterSystem blank = new OutterSystem();
+		blank.setSystemName("外部系统");
+		list.add(0, blank);
+		
+		return list;
 	}
 
 }

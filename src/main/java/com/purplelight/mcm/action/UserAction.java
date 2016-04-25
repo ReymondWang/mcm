@@ -1,7 +1,6 @@
 package com.purplelight.mcm.action;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -9,17 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 
 import com.purplelight.mcm.entity.SystemUser;
-import com.purplelight.mcm.fastdfs.ClientGlobal;
-import com.purplelight.mcm.fastdfs.StorageClient;
-import com.purplelight.mcm.fastdfs.StorageServer;
-import com.purplelight.mcm.fastdfs.TrackerClient;
-import com.purplelight.mcm.fastdfs.TrackerServer;
-import com.purplelight.mcm.fastdfs.UploadStream;
 import com.purplelight.mcm.query.PageInfo;
 import com.purplelight.mcm.query.Strategy;
 import com.purplelight.mcm.service.ISystemUserService;
-import com.purplelight.mcm.util.NameValuePair;
 import com.purplelight.mcm.util.StringUtil;
+import com.purplelight.mcm.util.UploadUtil;
 
 public class UserAction extends BaseAction{
 	
@@ -95,28 +88,7 @@ public class UserAction extends BaseAction{
 						
 						return ERROR;
 					}
-					
-					String path = (getClass().getClassLoader().getResource("").toURI()).getPath();
-					ClientGlobal.init(path + "fdfs_client.conf");
-					
-					String fileExtName = imageFileName.substring(imageFileName.lastIndexOf("."));
-					long fileLength = image.length();
-					
-					TrackerClient tracker = new TrackerClient();
-					TrackerServer trackerServer = tracker.getConnection();
-					StorageServer storageServer = null;
-					StorageClient client = new StorageClient(trackerServer, storageServer);
-					
-					NameValuePair[] metaList = new NameValuePair[3];
-					metaList[0] = new NameValuePair("fileName", imageFileName);
-					metaList[1] = new NameValuePair("fileExtName", fileExtName);
-					metaList[2] = new NameValuePair("fileLength", String.valueOf(fileLength));
-					
-					FileInputStream fis = new FileInputStream(image);
-					UploadStream upStream = new UploadStream(fis, fileLength);
-					String[] result = client.upload_file(null, fileLength, upStream, fileExtName, metaList);
-					
-					user.setHeadImgPath(result[1]);
+					user.setHeadImgPath(UploadUtil.upload(image, imageFileName));
 				}
 				
 				if (user.getId() != 0){

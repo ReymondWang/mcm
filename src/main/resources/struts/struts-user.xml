@@ -66,4 +66,24 @@
 		</action>
 	</package>
 	
+	<package name="homeTopAdvAction" namespace="/hometopadv" extends="abstract-struts">
+		<action name="show" class="homeTopAdvAction">
+			<result name="success">/appfunc/homeadv.jsp</result>
+			<result name="error">/appfunc/homeadv.jsp</result>
+		</action>
+		<action name="save" class="homeTopAdvAction" method="save">
+			<result name="success">/appfunc/homeadv.jsp</result>
+			<result name="error">/appfunc/homeadv.jsp</result>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg</param>
+				<param name="maximumSize">52428800</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<action name="del" class="homeTopAdvAction" method="delete">
+			<result name="success">/appfunc/homeadv.jsp</result>
+			<result name="error">/appfunc/homeadv.jsp</result>
+		</action>
+	</package>
+	
 </struts>

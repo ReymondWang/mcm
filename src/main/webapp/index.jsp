@@ -157,7 +157,7 @@
     						<i class="fa fa-dashboard"></i> <span>首页管理</span> <i class="fa fa-angle-left pull-right"></i>
     					</a>
     					<ul class="treeview-menu">
-    						<li><a href="##" onclick="loadUrl('user/list', this);">头部轮播</a></li>
+    						<li><a href="##" onclick="loadUrl('hometopadv/show', this);">头部轮播</a></li>
     						<li><a href="##" onclick="loadUrl('user/list', this);">功能按钮</a></li>
     						<li><a href="##" onclick="loadUrl('user/list', this);">通知内容</a></li>
     					</ul>

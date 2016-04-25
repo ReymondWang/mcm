@@ -32,5 +32,6 @@
 		<mapping class="com.purplelight.mcm.entity.OutterSystem" />
 		<mapping class="com.purplelight.mcm.entity.DictionaryName" />
 		<mapping class="com.purplelight.mcm.entity.DictionaryItem" />
+		<mapping class="com.purplelight.mcm.entity.AppFunction" />
 	</session-factory>
 </hibernate-configuration>

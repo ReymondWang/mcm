@@ -22,12 +22,6 @@ public class BaseAction extends ActionSupport implements SessionAware {
 	
 	private String message;
 	
-	@SuppressWarnings("unused")
-	private String rootPath;
-	
-	@SuppressWarnings("unused")
-	private String imageServer;
-	
 	private Map<String, Object> mSession;
 	
 	public void setSession(Map<String, Object> session) {
