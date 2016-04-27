@@ -6,7 +6,7 @@ import com.purplelight.mcm.query.Strategy;
 
 public interface ISystemUserService {
 	public boolean hasThisUser(SystemUser user);
-	public boolean login(SystemUser user, String password);
+	public SystemUser login(SystemUser user, String password);
 	public void addUser(SystemUser user, SystemUser loginedUser);
 	public void updateUser(SystemUser user, SystemUser loginedUser) throws Exception;
 	public void deleteUser(SystemUser user);

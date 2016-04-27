@@ -3,9 +3,6 @@ package com.purplelight.mcm.action;
 import java.io.File;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts2.ServletActionContext;
 
 import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.query.PageInfo;
@@ -35,15 +32,14 @@ public class UserAction extends BaseAction{
 	
 	@Override
 	public String execute() throws Exception{
-		HttpServletRequest request = ServletActionContext.getRequest();
-		String action = request.getParameter("action");
+		String action = getRequest().getParameter("action");
 		try{
 			if ("add".equals(action)){
 				title = "用户新增";
 			}else if ("modify".equals(action) || "info".equals(action)){
 				title = "用户修改";
 				
-				int id = Integer.valueOf(request.getParameter("id")).intValue();
+				int id = Integer.valueOf(getRequest().getParameter("id")).intValue();
 				user.setId(id);
 				user = systemUserService.getUser(user);
 			}

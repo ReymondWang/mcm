@@ -1,18 +1,18 @@
 package com.purplelight.mcm.api.result;
 
 public class Result{
-	public static final int ERROR = 0;
-	public static final int SUCCESS = 1;
+	public static final String ERROR = "0";
+	public static final String SUCCESS = "1";
 	
-	private int success;
+	private String success;
 	
 	private String message;
 
-	public int getSuccess() {
+	public String getSuccess() {
 		return success;
 	}
 
-	public void setSuccess(int success) {
+	public void setSuccess(String success) {
 		this.success = success;
 	}
 

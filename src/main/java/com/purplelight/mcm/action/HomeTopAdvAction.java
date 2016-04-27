@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts2.ServletActionContext;
 
 import com.purplelight.mcm.entity.AppFunction;
 import com.purplelight.mcm.entity.OutterSystem;
@@ -50,9 +47,8 @@ public class HomeTopAdvAction extends BaseAction {
 		homeAdvList = appFuncService.getAppFuncByFragmentAndPart(
 				Integer.parseInt(fragment.getCode()), Integer.parseInt(part.getCode()));
 		
-		HttpServletRequest request = ServletActionContext.getRequest();
-		if (!StringUtil.IsNullOrEmpty(request.getParameter("id"))){
-			int id = Integer.parseInt(request.getParameter("id"));
+		if (!StringUtil.IsNullOrEmpty(getRequest().getParameter("id"))){
+			int id = Integer.parseInt(getRequest().getParameter("id"));
 			homeAdv.setId(id);
 			homeAdv = appFuncService.getAppFunc(homeAdv);
 		}

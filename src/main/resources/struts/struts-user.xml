@@ -86,4 +86,16 @@
 		</action>
 	</package>
 	
+	<package name="loginApi" namespace="/api" extends="abstract-struts">
+		<action name="login" class="loginApi">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
+	<package name="updateUserInfoApi" namespace="/api/userinfo" extends="abstract-struts">
+		<action name="update" class="updateUserInfoApi">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
 </struts>

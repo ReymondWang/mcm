@@ -89,7 +89,7 @@ public class SystemUserServiceImpl implements ISystemUserService {
 	}
 
 	@Override
-	public boolean login(SystemUser user, String password) {
+	public SystemUser login(SystemUser user, String password) {
 		if (!StringUtil.IsNullOrEmpty(user.getUserCode())){
 			user = systemUserDao.getByUserCode(user.getUserCode());
 		} else if (!StringUtil.IsNullOrEmpty(user.getEmail())){
@@ -98,10 +98,10 @@ public class SystemUserServiceImpl implements ISystemUserService {
 			user = systemUserDao.getByPhone(user.getPhone());
 		}
 		if (user != null && systemUserDao.getPassword(password).equals(user.getPassword())){
-			return true;
+			return user;
 		}
 		
-		return false;
+		return null;
 	}
 
 	@Override

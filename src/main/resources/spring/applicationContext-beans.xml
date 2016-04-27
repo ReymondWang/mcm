@@ -19,6 +19,8 @@
 	<bean id="userAction" class="com.purplelight.mcm.action.UserAction" scope="prototype"></bean>
 	<bean id="outterSystemAction" class="com.purplelight.mcm.action.OutterSystemAction" scope="prototype"></bean>
 	<bean id="homeTopAdvAction" class="com.purplelight.mcm.action.HomeTopAdvAction" scope="prototype"></bean>
+	<bean id="loginApi" class="com.purplelight.mcm.api.LoginApi" scope="prototype"></bean>
+	<bean id="updateUserInfoApi" class="com.purplelight.mcm.api.UpdateUserInfoApi" scope="prototype"></bean>
 	
 	<!-- Spring管理的Service -->
 	<bean id="systemUserService" class="com.purplelight.mcm.service.impl.SystemUserServiceImpl"></bean>

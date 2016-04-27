@@ -22,24 +22,24 @@ public class LoginAction extends BaseAction{
 		
 		// 尝试使用用户编号登录
 		mUser.setUserCode(loginId);
-		boolean loginSuccessed = systemUserService.login(mUser, password);
+		mUser = systemUserService.login(mUser, password);
 		
 		// 如果失败，尝试使用邮箱登录
-		if (!loginSuccessed){
-			mUser.setUserCode("");
+		if (mUser == null){
+			mUser = new SystemUser();
 			mUser.setEmail(loginId);
-			loginSuccessed = systemUserService.login(mUser, password);
+			mUser = systemUserService.login(mUser, password);
 		}
 		
 		// 如果失败，尝试使用手机号登录
-		if (!loginSuccessed){
-			mUser.setEmail("");
+		if (mUser == null){
+			mUser = new SystemUser();
 			mUser.setPhone(loginId);
-			loginSuccessed = systemUserService.login(mUser, password);
+			mUser = systemUserService.login(mUser, password);
 		}
 		
 		// 如果仍然失败，则返回错误，否则返回成功。
-		if (!loginSuccessed){
+		if (mUser == null){
 			setMessageFromResource("msg_login_failed");
 			
 			return ERROR;

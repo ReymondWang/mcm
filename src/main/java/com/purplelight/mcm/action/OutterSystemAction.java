@@ -3,9 +3,6 @@ package com.purplelight.mcm.action;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts2.ServletActionContext;
 
 import com.purplelight.mcm.entity.DictionaryItem;
 import com.purplelight.mcm.entity.OutterSystem;
@@ -36,9 +33,8 @@ public class OutterSystemAction extends BaseAction {
 	@Override
 	public String execute() throws Exception{
 		try{
-			HttpServletRequest request = ServletActionContext.getRequest();
-			if (!StringUtil.IsNullOrEmpty(request.getParameter("id"))){
-				int id = Integer.valueOf(request.getParameter("id")).intValue();
+			if (!StringUtil.IsNullOrEmpty(getRequest().getParameter("id"))){
+				int id = Integer.valueOf(getRequest().getParameter("id")).intValue();
 				outterSystem.setId(id);
 				outterSystem = outterSystemService.getOutterSystem(outterSystem);
 			}
