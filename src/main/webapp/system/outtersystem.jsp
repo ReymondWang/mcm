@@ -53,25 +53,6 @@
 								</s:iterator>
 							</ul>
 						</div>
-						<div class="box-footer no-padding">
-							<div class="mailbox-controls">
-								<div class="pull-right">
-									<s:property value="#request.pageInfo.startPos" />
-									-
-									<s:property value="#request.pageInfo.endPos" />
-									/
-									<s:property value="#request.pageInfo.totalCount" />
-									<div class="btn-group" style="margin-bottom: 5px;">
-										<button class="btn btn-default btn-sm">
-											<i class="fa fa-chevron-left"></i>
-										</button>
-										<button class="btn btn-default btn-sm">
-											<i class="fa fa-chevron-right"></i>
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 				<div class="col-md-9">

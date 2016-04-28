@@ -10,5 +10,4 @@ public class UploadResult extends Result {
 	public void setFilepath(String filepath) {
 		this.filepath = filepath;
 	}
-
 }

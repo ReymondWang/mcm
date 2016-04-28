@@ -1,7 +1,11 @@
 package com.purplelight.mcm.util;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.purplelight.mcm.api.result.WebBanner;
+import com.purplelight.mcm.entity.AppFunction;
 import com.purplelight.mcm.fastdfs.ProtoCommon;
 
 public class ConvertUtil {
@@ -49,5 +53,30 @@ public class ConvertUtil {
 		results[0] = file_id.substring(0, pos); // group name
 		results[1] = file_id.substring(pos + 1); // file name
 		return 0;
+	}
+	
+	public static WebBanner toWebBanner(AppFunction function){
+		WebBanner banner = new WebBanner();
+		if (function != null){
+			banner.setId(String.valueOf(function.getId()));
+			banner.setImage(function.getTitleImgPath());
+			banner.setLabel(function.getTitle());
+			banner.setOutterSystem(function.getOutterSystem());
+			banner.setUrl(function.getContentUrl());
+			banner.setCallMethod(function.getCallMethod());
+		}
+		
+		return banner;
+	}
+	
+	public static List<WebBanner> toWebBannerList(List<AppFunction> functions){
+		List<WebBanner> retList = new ArrayList<>();
+		if (functions != null && functions.size() > 0){
+			for (AppFunction func : functions){
+				retList.add(toWebBanner(func));
+			}
+		}
+		
+		return retList;
 	}
 }

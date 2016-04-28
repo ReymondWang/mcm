@@ -51,6 +51,7 @@
 									<div class="form-group">
 										<input type="text" name="user.phone" value="${user.phone}" class="form-control" placeholder="手机......">
 									</div>
+									<input id="hdnCurrentPageNo" type="hidden" name="currentPageNo" />
 								</form>
 							</div>
 							<div class="box-footer">
@@ -64,7 +65,7 @@
 						<div class="box-header with-border">
 							<button class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button>
 							<button class="btn btn-default btn-sm" onclick="confirmDel();"><i class="fa fa-trash-o"></i></button>
-							<button class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+							<button class="btn btn-default btn-sm" onclick="refresh();"><i class="fa fa-refresh"></i></button>
 							<form id="formAction" method="post">
 							<input id="hdnDelIds" type="hidden" name="delIds" >
 							</form>
@@ -87,7 +88,7 @@
 									<s:iterator var="item" value="#request.pageInfo.result">
 										<tr>
 											<td style="height:2rem; line-height:2rem;"><input type="checkbox" name="chkUser" value="<s:property value="#item.id" />"></td>
-											<td style="height:2rem; line-height:2rem;"><img src="<s:if test="%{#item.headImgPath == null || #item.headImgPath == ''}">${rootPath}/images/default_avatar.png</s:if><s:else><s:property value="imageServer + #item.headImgPath" /></s:else>" class="img-circle" style="width:2rem;" alt="用户头像"></td>
+											<td style="height:2rem; line-height:2rem;"><img src="<s:if test="%{#item.headImgPath == null || #item.headImgPath == ''}">${rootPath}/images/default_avatar.png</s:if><s:else><s:property value="imageServer + #item.headImgPath" /></s:else>" class="img-circle" style="width:2rem; height:2rem" alt="用户头像"></td>
 											<td style="height:2rem; line-height:2rem;"><s:property value="#item.userCode" /></td>
 											<td style="height:2rem; line-height:2rem;"><a href="${rootPath}/user/direct?action=info&id=<s:property value="#item.id" />"><s:property value="#item.userName" /></a></td>
 											<td style="height:2rem; line-height:2rem;"><s:if test="%{#item.sex == 1}">男</s:if><s:else>女</s:else></td>
@@ -104,8 +105,8 @@
 								<div class="pull-right">
 									<s:property value="#request.pageInfo.startPos"/>-<s:property value="#request.pageInfo.endPos"/>/<s:property value="#request.pageInfo.totalCount"/>
 									<div class="btn-group" style="margin-bottom:5px;">
-										<button class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-										<button class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
+										<button class="btn btn-default btn-sm" onclick="prePage();"><i class="fa fa-chevron-left"></i></button>
+										<button class="btn btn-default btn-sm" onclick="nextPage();"><i class="fa fa-chevron-right"></i></button>
 									</div>
 								</div>
 							</div>
@@ -212,6 +213,28 @@
 		
 		function cancelDel(){
 			dismissMsg($(".alert-info"));
+		}
+		
+		function refresh(){
+			search();
+		}
+		
+		function prePage(){
+			if (<s:property value="pageInfo.pageNo" /> == 1){
+				alertMcmMsg($(".alert-danger"), "<s:text name='msg_first_page'></s:text>");
+			} else {
+				$("#hdnCurrentPageNo").val(<s:property value="pageInfo.pageNo" /> - 1);
+				search();
+			}
+		}
+		
+		function nextPage(){
+			if (<s:property value="pageInfo.totalCount" /> == <s:property value="pageInfo.endPos" />){
+				alertMcmMsg($(".alert-danger"), "<s:text name='msg_last_page'></s:text>");
+			} else {
+				$("#hdnCurrentPageNo").val(<s:property value="pageInfo.pageNo" /> + 1);
+				search();
+			}
 		}
 		
 	</script>

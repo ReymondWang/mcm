@@ -1,17 +1,7 @@
 package com.purplelight.mcm.api.parameter;
 
-public class LoginParameter {
-	private String loginId;
-	
+public class LoginParameter extends Parameter {
 	private String password;
-
-	public String getLoginId() {
-		return loginId;
-	}
-
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
-	}
 
 	public String getPassword() {
 		return password;

@@ -25,37 +25,40 @@ public class LoginApi extends BaseApi {
 		
 		if (!StringUtil.IsNullOrEmpty(loginInfo)){
 			LoginParameter lp = new Gson().fromJson(loginInfo, LoginParameter.class);
-			
-			SystemUser user = new SystemUser();
-			// 尝试使用用户编号登录
-			user.setUserCode(lp.getLoginId());
-			user = systemUserService.login(user, lp.getPassword());
-			
-			// 如果失败，尝试使用邮箱登录
-			if (user == null){
-				user = new SystemUser();
-				user.setEmail(lp.getLoginId());
+			if (checkToken(lp.getToken())){
+				SystemUser user = new SystemUser();
+				// 尝试使用用户编号登录
+				user.setUserCode(lp.getLoginId());
 				user = systemUserService.login(user, lp.getPassword());
-			}
-			
-			// 如果失败，尝试使用手机号登录
-			if (user == null){
-				user = new SystemUser();
-				user.setPhone(lp.getLoginId());
-				user = systemUserService.login(user, lp.getPassword());
-			}
-			
-			if (user != null){
-				result.setSuccess(Result.SUCCESS);
-				result.setUser(user);
+				
+				// 如果失败，尝试使用邮箱登录
+				if (user == null){
+					user = new SystemUser();
+					user.setEmail(lp.getLoginId());
+					user = systemUserService.login(user, lp.getPassword());
+				}
+				
+				// 如果失败，尝试使用手机号登录
+				if (user == null){
+					user = new SystemUser();
+					user.setPhone(lp.getLoginId());
+					user = systemUserService.login(user, lp.getPassword());
+				}
+				
+				if (user != null){
+					result.setSuccess(Result.SUCCESS);
+					result.setUser(user);
+				} else {
+					result.setSuccess(Result.ERROR);
+					result.setMessage(getText("msg_login_failed"));
+				}
 			} else {
 				result.setSuccess(Result.ERROR);
-				result.setMessage(getText("msg_login_failed"));
+				result.setMessage(getText("msg_illegal_request_info"));
 			}
-			
 		} else {
 			result.setSuccess(Result.ERROR);
-			result.setMessage(getText("msg_login_failed"));
+			result.setMessage(getText("msg_no_request_json_info"));
 		}
 		
 		resultInfo = gson.toJson(result);

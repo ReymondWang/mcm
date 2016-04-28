@@ -13,7 +13,7 @@
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="error-page">
-    	<h2><i class="fa fa-warning text-red"></i> 登录超时，请重新登录......</h2>
+    	<h2><i class="fa fa-warning text-red"></i> 您伤上传的文件太大了，我们最大可以上传20M的文件......</h2>
    		<p>
    			<a href="/mcm">返回登录页面</a>。
    		</p>

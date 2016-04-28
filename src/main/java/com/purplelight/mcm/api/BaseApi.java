@@ -27,12 +27,17 @@ public class BaseApi extends ActionSupport implements ServletRequestAware {
 		return mRequest;
 	}
 	
+	/**
+	 * 返回POST提交的json数据
+	 * @return
+	 */
 	public String getJson(){
 		String json = "";
 		try{
 			json = getFromReader();
 			json = URLDecoder.decode(json, "utf-8");
-		} catch (Exception e1){
+		} catch (Exception e){
+			e.printStackTrace();
 		}
 		return json;
 	}
@@ -55,6 +60,16 @@ public class BaseApi extends ActionSupport implements ServletRequestAware {
 		SystemUser user = new SystemUser();
 		user.setId(1);
 		return user;
+	}
+	
+	/**
+	 * 检查用户请求数据的token是否合法
+	 * 目前暂时不实现该方法，统一返回true
+	 * @param token
+	 * @return
+	 */
+	public boolean checkToken(String token){
+		return true;
 	}
 	
 }

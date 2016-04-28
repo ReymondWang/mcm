@@ -39,11 +39,6 @@
 		<action name="add" class="userAction" method="addUser">
 			<result name="success">/user/userinfo.jsp</result>
 			<result name="error">/common/userinfo.jsp</result>
-			<interceptor-ref name="fileUpload">
-				<param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg</param>
-				<param name="maximumSize">52428800</param>
-			</interceptor-ref>
-			<interceptor-ref name="defaultStack" />
 		</action>
 		<action name="del" class="userAction" method="delUser">
 			<result name="success">/user/userlist.jsp</result>
@@ -74,11 +69,6 @@
 		<action name="save" class="homeTopAdvAction" method="save">
 			<result name="success">/appfunc/homeadv.jsp</result>
 			<result name="error">/appfunc/homeadv.jsp</result>
-			<interceptor-ref name="fileUpload">
-				<param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg</param>
-				<param name="maximumSize">52428800</param>
-			</interceptor-ref>
-			<interceptor-ref name="defaultStack" />
 		</action>
 		<action name="del" class="homeTopAdvAction" method="delete">
 			<result name="success">/appfunc/homeadv.jsp</result>
@@ -94,6 +84,12 @@
 	
 	<package name="updateUserInfoApi" namespace="/api/userinfo" extends="abstract-struts">
 		<action name="update" class="updateUserInfoApi">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
+	<package name="appFuncApi" namespace="/api/func" extends="abstract-struts">
+		<action name="show" class="appFuncApi">
 			<result name="success">/api/api.jsp</result>
 		</action>
 	</package>

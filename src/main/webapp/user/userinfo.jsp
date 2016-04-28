@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html>
 <html>
@@ -99,24 +98,24 @@
 							method="post">
 							<div class="box-body">
 								<input type="hidden" name="user.id" value="${user.id}">
-								<div class="form-group" style="height: 70px; line-height: 70px;">
+								<div class="form-group">
 									<label for="txtUserCode" class="col-sm-2 control-label">头像</label>
 									<div class="col-sm-9" style="margin-left: 1rem;">
 										<div class="form-group">
-											<input type="hidden" name="user.headImgPath"
-												value="${user.headImgPath}"> <img
-												src="<s:if test="user.headImgPath == null || user.headImgPath == ''">${rootPath}/images/default_avatar.png</s:if><s:else><s:property value="imageServer + user.headImgPath" /></s:else>"
-												class="img-circle" style="width: 70px;" alt="用户头像">
-											<div class="btn btn-default btn-file"
-												style="margin-left: 1rem;">
-												<i class="fa fa-paperclip"></i> 选择<input id="btnAttachment"
-													type="file" name="image"
-													onchange="btnAttachment_OnChange();">
+											<input type="hidden" name="user.headImgPath" value="${user.headImgPath}"> 
+											<div class="btn btn-default btn-file" style="margin-left: 1rem;">
+												<i class="fa fa-paperclip"></i> 选择
+												<input id="btnAttachment" type="file" name="image" onchange="btnAttachment_OnChange();">
 											</div>
-											<span id="spanFileName"></span> <input id="hdnFileName"
-												type="hidden" name="imageFileName"> <span>最大可以上传5M的图片</span>
+											<span id="spanFileName"></span> 
+											<input id="hdnFileName" type="hidden" name="imageFileName"> 
+											<span>最大可以上传5M的图片</span>
+											<div style="margin-top:0.5rem; margin-left:1rem">
+											<img src="<s:if test="user.headImgPath == null || user.headImgPath == ''">${rootPath}/images/default_avatar.png</s:if><s:else><s:property value="imageServer + user.headImgPath" /></s:else>"
+												class="img-circle" style="width: 70px; height:70px;" alt="用户头像">
+											</div>	
 										</div>
-									</div>
+									</div>	
 								</div>
 								<div class="form-group">
 									<label for="txtUserCode" class="col-sm-2 control-label">编号</label>

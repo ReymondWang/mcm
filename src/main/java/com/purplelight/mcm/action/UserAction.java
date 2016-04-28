@@ -27,6 +27,8 @@ public class UserAction extends BaseAction{
 	
 	private String imageFileName;
 	
+	private int currentPageNo;
+	
 	@Resource
 	private ISystemUserService systemUserService;
 	
@@ -60,8 +62,12 @@ public class UserAction extends BaseAction{
 	
 	public String list() throws Exception{
 		try{
+			int pageNo = 1;
+			if (currentPageNo != 0){
+				pageNo = currentPageNo;
+			}
 			Strategy strategy = new Strategy(user, "u");
-			setPageInfo(systemUserService.query(strategy, 1));
+			setPageInfo(systemUserService.query(strategy, pageNo));
 			
 			return SUCCESS;
 		} catch (Exception ex){
@@ -183,6 +189,14 @@ public class UserAction extends BaseAction{
 
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
+	}
+
+	public int getCurrentPageNo() {
+		return currentPageNo;
+	}
+
+	public void setCurrentPageNo(int currentPageNo) {
+		this.currentPageNo = currentPageNo;
 	}
 
 }

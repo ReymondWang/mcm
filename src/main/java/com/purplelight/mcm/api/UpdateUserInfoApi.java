@@ -3,6 +3,7 @@ package com.purplelight.mcm.api;
 import javax.annotation.Resource;
 
 import com.google.gson.Gson;
+import com.purplelight.mcm.api.parameter.UpdateUserInfoParameter;
 import com.purplelight.mcm.api.result.Result;
 import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.service.ISystemUserService;
@@ -23,19 +24,24 @@ public class UpdateUserInfoApi extends BaseApi {
 		
 		String json = getJson();
 		if (!StringUtil.IsNullOrEmpty(json)){
-			try{
-				SystemUser user = gson.fromJson(json, SystemUser.class);
-				systemUserService.updateUser(user, updateUser);
-				
-				result.setSuccess(Result.SUCCESS);
-				result.setMessage(getText("msg_update_user_info_success"));
-			} catch (Exception ex){
+			UpdateUserInfoParameter parameter = gson.fromJson(json, UpdateUserInfoParameter.class);
+			if (checkToken(parameter.getToken())){
+				try{
+					systemUserService.updateUser(parameter.getUser(), updateUser);
+					
+					result.setSuccess(Result.SUCCESS);
+					result.setMessage(getText("msg_update_user_info_success"));
+				} catch (Exception ex){
+					result.setSuccess(Result.ERROR);
+					result.setMessage(ex.getMessage());
+				}
+			} else {
 				result.setSuccess(Result.ERROR);
-				result.setMessage(ex.getMessage());
+				result.setMessage(getText("msg_illegal_request_info"));
 			}
 		} else {
 			result.setSuccess(Result.ERROR);
-			result.setMessage(getText("msg_update_user_info_failed"));
+			result.setMessage(getText("msg_no_request_json_info"));
 		}
 		setResultInfo(gson.toJson(result));
 		

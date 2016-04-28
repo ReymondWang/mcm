@@ -108,7 +108,7 @@ public class SystemUserDaoImpl extends BaseDaoImpl implements ISystemUserDao {
 		Query query = getSession().createQuery(hql);
 		query.setProperties(queryStrategy.getQueryProperties());
 		query.setFirstResult(startPos);
-		query.setMaxResults(pageNo * pageSize);
+		query.setMaxResults(pageSize);
 		page.setResult((List<SystemUser>)query.list());
 		
 		return page;
