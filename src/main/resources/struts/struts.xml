@@ -13,10 +13,19 @@
     <constant name="struts.objectFactory" value="spring" />  
 	
 	<package name="abstract-struts" abstract="true" namespace="/" extends="struts-default">
+		
+		<interceptors>
+			<interceptor name="timeout" class="com.purplelight.mcm.iterceptor.SessionIterceptor"></interceptor>
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="timeout"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+	
 		<global-results>
 			<result name="error">/common/error.jsp</result>
-			<result name="timeout">/common/timeout.jsp</result>
 			<result name="input">/common/input.jsp</result>
+			<result name="login">/common/timeout.jsp</result>
 		</global-results>
 	</package>
 	

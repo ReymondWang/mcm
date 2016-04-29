@@ -9,6 +9,16 @@ public final class McmConstant {
 	 */
 	public final static int PAGE_SIZE = 10;
 	
+	/**
+	 * 用户Session的ID
+	 */
+	public final static String USER_SESSION = "user_session";
+	
+	/**
+	 * APP分页的定义
+	 * @author wangyn
+	 *
+	 */
 	public final static class Fragment{
 		public static final int HOME = 1;
 		public static final int WORK = 2;

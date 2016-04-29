@@ -8,6 +8,7 @@
 		<action name="login" class="loginAction">
 			<result name="success">/index.jsp</result>
 			<result name="error">/login.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 	</package>
 	
@@ -15,6 +16,7 @@
 		<action name="desktop" class="desktopAction">
 			<result name="success">/desktop.jsp</result>
 			<result name="error">/common/error.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 	</package>
 	
@@ -22,6 +24,7 @@
 		<action name="upload" class="uploadAction">
 			<result name="success">/upload.jsp</result>
 			<result name="error">/upload.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 	</package>
 	
@@ -31,18 +34,22 @@
 			<result name="modify">/user/userinfo.jsp</result>
 			<result name="info">/user/userinfo.jsp</result>
 			<result name="error">/common/userinfo.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 		<action name="list" class="userAction" method="list">
 			<result name="success">/user/userlist.jsp</result>
 			<result name="error">/user/userlist.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 		<action name="add" class="userAction" method="addUser">
 			<result name="success">/user/userinfo.jsp</result>
 			<result name="error">/common/userinfo.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 		<action name="del" class="userAction" method="delUser">
 			<result name="success">/user/userlist.jsp</result>
 			<result name="error">/user/userlist.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 	</package>
 	
@@ -50,14 +57,17 @@
 		<action name="show" class="outterSystemAction">
 			<result name="success">/system/outtersystem.jsp</result>
 			<result name="error">/system/outtersystem.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 		<action name="save" class="outterSystemAction" method="save">
 			<result name="success">/system/outtersystem.jsp</result>
 			<result name="error">/system/outtersystem.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 		<action name="del" class="outterSystemAction" method="delete">
 			<result name="success">/system/outtersystem.jsp</result>
 			<result name="error">/system/outtersystem.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 	</package>
 	
@@ -65,14 +75,17 @@
 		<action name="show" class="homeTopAdvAction">
 			<result name="success">/appfunc/homeadv.jsp</result>
 			<result name="error">/appfunc/homeadv.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 		<action name="save" class="homeTopAdvAction" method="save">
 			<result name="success">/appfunc/homeadv.jsp</result>
 			<result name="error">/appfunc/homeadv.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 		<action name="del" class="homeTopAdvAction" method="delete">
 			<result name="success">/appfunc/homeadv.jsp</result>
 			<result name="error">/appfunc/homeadv.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 	</package>
 	
