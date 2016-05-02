@@ -20,6 +20,7 @@
 	<bean id="outterSystemAction" class="com.purplelight.mcm.action.OutterSystemAction" scope="prototype"></bean>
 	<bean id="appFuncAction" class="com.purplelight.mcm.action.AppFunctionAction" scope="prototype"></bean>
 	<bean id="dictAction" class="com.purplelight.mcm.action.DictionaryAction" scope="prototype"></bean>
+	<bean id="articleAction" class="com.purplelight.mcm.action.ArticleAction" scope="prototype"></bean>
 	<bean id="loginApi" class="com.purplelight.mcm.api.LoginApi" scope="prototype"></bean>
 	<bean id="updateUserInfoApi" class="com.purplelight.mcm.api.UpdateUserInfoApi" scope="prototype"></bean>
 	<bean id="appFuncApi" class="com.purplelight.mcm.api.AppFunctionApi" scope="prototype"></bean>
@@ -29,6 +30,7 @@
 	<bean id="dictService" class="com.purplelight.mcm.service.impl.DictionaryServiceImpl"></bean>
 	<bean id="outterSystemService" class="com.purplelight.mcm.service.impl.OutterSystemServiceImpl"></bean>
 	<bean id="appFuncService" class="com.purplelight.mcm.service.impl.AppFunctionServiceImpl"></bean>
+	<bean id="articleService" class="com.purplelight.mcm.service.impl.ArticleServiceImpl"></bean>
 	
 	<!-- Spring管理的Dao -->
 	<bean id="systemUserDao" class="com.purplelight.mcm.dao.impl.SystemUserDaoImpl">
@@ -44,6 +46,9 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="appFuncDao" class="com.purplelight.mcm.dao.impl.AppFunctionDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="articleDao" class="com.purplelight.mcm.dao.impl.ArticleDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 </beans>

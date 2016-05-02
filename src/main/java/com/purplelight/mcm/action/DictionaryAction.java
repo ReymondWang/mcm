@@ -79,7 +79,26 @@ public class DictionaryAction extends BaseAction {
 			
 			return ERROR;
 		}
-		
+	}
+	
+	public String delete() throws Exception{
+		dictNames = dictService.getAllDictNames();
+		try{
+			dictService.deleteDictItem(dictItem);
+			dictItems = dictService.getDictItemsByDictNameCode(dictNameCode);
+			if (dictItems != null && dictItems.size() > 0){
+				dictItem = dictItems.get(0);
+			}
+			
+			setMessageType(BaseAction.SUCCESS_MSG);
+			setMessageFromResource("msg_del_success");
+			return SUCCESS;
+		} catch (Exception ex){
+			setMessageType(BaseAction.ERROR_MSG);
+			setMessage(ex.getMessage());
+			
+			return ERROR;
+		}
 	}
 
 	public List<DictionaryName> getDictNames() {

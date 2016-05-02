@@ -109,6 +109,29 @@
 			<result name="error">/dictionary/dictionaryInfo.jsp</result>
 			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
+		<action name="del" class="dictAction" method="delete">
+			<result name="success">/dictionary/dictionaryInfo.jsp</result>
+			<result name="error">/dictionary/dictionaryInfo.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
+		</action>
+	</package>
+	
+	<package name="articleAction" namespace="/system/article" extends="abstract-struts">
+		<action name="list" class="articleAction">
+			<result name="success">/system/articleList.jsp</result>
+			<result name="error">/system/articleList.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
+		</action>
+		<action name="info" class="articleAction" method="info">
+			<result name="success">/system/articleInfo.jsp</result>
+			<result name="error">/system/articleInfo.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
+		</action>
+		<action name="save" class="articleAction" method="save">
+			<result name="success">/system/articleInfo.jsp</result>
+			<result name="error">/system/articleInfo.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
+		</action>
 	</package>
 	
 	<package name="loginApi" namespace="/api" extends="abstract-struts">

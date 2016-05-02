@@ -28,6 +28,7 @@
     			<value>com.purplelight.mcm.entity.DictionaryName</value>
     			<value>com.purplelight.mcm.entity.DictionaryItem</value>
     			<value>com.purplelight.mcm.entity.AppFunction</value>
+    			<value>com.purplelight.mcm.entity.Article</value>
     		</list>
     	</property>
     </bean>

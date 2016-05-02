@@ -105,8 +105,7 @@
     						<i class="fa fa-newspaper-o"></i> <span>文章管理</span> <i class="fa fa-angle-left pull-right"></i>
     					</a>
     					<ul class="treeview-menu">
-    						<li><a href="##" onclick="loadUrl('user/list', this);">文章分类</a></li>
-    						<li><a href="##" onclick="loadUrl('user/list', this);">文章内容</a></li>
+    						<li><a href="##" onclick="loadUrl('system/article/list', this);">文章内容</a></li>
     					</ul>
     				</li>
     				<li class="treeview">
