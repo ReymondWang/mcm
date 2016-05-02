@@ -10,6 +10,10 @@
 			<result name="error">/login.jsp</result>
 			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
+		<action name="logout" class="loginAction" method="logout">
+			<result name="success">/login.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
+		</action>
 	</package>
 	
 	<package name="desktopAction" namespace="/" extends="abstract-struts">
@@ -71,20 +75,38 @@
 		</action>
 	</package>
 	
-	<package name="homeTopAdvAction" namespace="/hometopadv" extends="abstract-struts">
-		<action name="show" class="homeTopAdvAction">
-			<result name="success">/appfunc/homeadv.jsp</result>
-			<result name="error">/appfunc/homeadv.jsp</result>
+	<package name="appFuncAction" namespace="/appfunc" extends="abstract-struts">
+		<action name="show" class="appFuncAction">
+			<result name="success">/appfunc/appfunc.jsp</result>
+			<result name="error">/appfunc/appfunc.jsp</result>
 			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
-		<action name="save" class="homeTopAdvAction" method="save">
-			<result name="success">/appfunc/homeadv.jsp</result>
-			<result name="error">/appfunc/homeadv.jsp</result>
+		<action name="save" class="appFuncAction" method="save">
+			<result name="success">/appfunc/appfunc.jsp</result>
+			<result name="error">/appfunc/appfunc.jsp</result>
 			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
-		<action name="del" class="homeTopAdvAction" method="delete">
-			<result name="success">/appfunc/homeadv.jsp</result>
-			<result name="error">/appfunc/homeadv.jsp</result>
+		<action name="del" class="appFuncAction" method="delete">
+			<result name="success">/appfunc/appfunc.jsp</result>
+			<result name="error">/appfunc/appfunc.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
+		</action>
+	</package>
+	
+	<package name="dictAction" namespace="/dict" extends="abstract-struts">
+		<action name="list" class="dictAction">
+			<result name="success">/dictionary/dictionaryList.jsp</result>
+			<result name="error">/dictionary/dictionaryList.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
+		</action>
+		<action name="info" class="dictAction" method="info">
+			<result name="success">/dictionary/dictionaryInfo.jsp</result>
+			<result name="error">/dictionary/dictionaryInfo.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
+		</action>
+		<action name="save" class="dictAction" method="save">
+			<result name="success">/dictionary/dictionaryInfo.jsp</result>
+			<result name="error">/dictionary/dictionaryInfo.jsp</result>
 			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 	</package>

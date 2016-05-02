@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="${rootPath}/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="${rootPath}/css/style.css">
     <link rel="stylesheet" href="${rootPath}/css/skins/_all-skins.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="${rootPath}/plugins/FortAwesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${rootPath}/plugins/ionicons/css/ionicons.min.css">
     <link rel="stylesheet" href="${rootPath}/plugins/fakeloader/fakeLoader.css">
     <link rel="stylesheet" href="${rootPath}/plugins/iCheck/flat/blue.css">
 </head>

@@ -5,20 +5,21 @@
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:tx="http://www.springframework.org/schema/tx"
     xsi:schemaLocation="http://www.springframework.org/schema/beans 
-    	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/aop 
-		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 		http://www.springframework.org/schema/context 
-		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://www.springframework.org/schema/tx 
-		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+		http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 		
 	<!-- Spring管理的Struts2的Action -->
 	<bean id="loginAction" class="com.purplelight.mcm.action.LoginAction" scope="prototype"></bean>
 	<bean id="desktopAction" class="com.purplelight.mcm.action.DesktopAction" scope="prototype"></bean>
 	<bean id="userAction" class="com.purplelight.mcm.action.UserAction" scope="prototype"></bean>
 	<bean id="outterSystemAction" class="com.purplelight.mcm.action.OutterSystemAction" scope="prototype"></bean>
-	<bean id="homeTopAdvAction" class="com.purplelight.mcm.action.HomeTopAdvAction" scope="prototype"></bean>
+	<bean id="appFuncAction" class="com.purplelight.mcm.action.AppFunctionAction" scope="prototype"></bean>
+	<bean id="dictAction" class="com.purplelight.mcm.action.DictionaryAction" scope="prototype"></bean>
 	<bean id="loginApi" class="com.purplelight.mcm.api.LoginApi" scope="prototype"></bean>
 	<bean id="updateUserInfoApi" class="com.purplelight.mcm.api.UpdateUserInfoApi" scope="prototype"></bean>
 	<bean id="appFuncApi" class="com.purplelight.mcm.api.AppFunctionApi" scope="prototype"></bean>

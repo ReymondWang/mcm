@@ -8,6 +8,7 @@ import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.query.PageInfo;
 import com.purplelight.mcm.query.Strategy;
 import com.purplelight.mcm.service.ISystemUserService;
+import com.purplelight.mcm.util.McmConstant;
 import com.purplelight.mcm.util.StringUtil;
 import com.purplelight.mcm.util.UploadUtil;
 
@@ -80,41 +81,37 @@ public class UserAction extends BaseAction{
 	}
 	
 	public String addUser() throws Exception{
-		SystemUser loginedUser = (SystemUser)getSession().get("user");
-		if (loginedUser != null){
-			try{
-				if (image != null && image.length() > 0){
-					if (image.length() > 1024 * 1024 * 4){
-						setMessageType(BaseAction.ERROR_MSG);
-						setMessageFromResource("msg_file_too_big");
-						
-						return ERROR;
-					}
-					user.setHeadImgPath(UploadUtil.upload(image, imageFileName));
+		SystemUser loginedUser = (SystemUser)getSession().get(McmConstant.USER_SESSION);
+		try{
+			if (image != null && image.length() > 0){
+				if (image.length() > 1024 * 1024 * 4){
+					setMessageType(BaseAction.ERROR_MSG);
+					setMessageFromResource("msg_file_too_big");
+					
+					return ERROR;
 				}
-				
-				if (user.getId() != 0){
-					systemUserService.updateUser(user, loginedUser);
-				} else {
-					systemUserService.addUser(user, loginedUser);
-				}
-				
-				SystemUser query = new SystemUser();
-				Strategy strategy = new Strategy(query, "u");
-				setPageInfo(systemUserService.query(strategy, 1));
-				
-				setMessageType(SUCCESS_MSG);
-				setMessageFromResource("msg_save_success");
-				
-				return SUCCESS;
-			} catch (Exception ex){
-				setMessageType(ERROR_MSG);
-				setMessage(ex.getMessage());
-				System.out.println(ex.getMessage());
-				return ERROR;
+				user.setHeadImgPath(UploadUtil.upload(image, imageFileName));
 			}
-		} else {
-			return "timeout";
+			
+			if (user.getId() != 0){
+				systemUserService.updateUser(user, loginedUser);
+			} else {
+				systemUserService.addUser(user, loginedUser);
+			}
+			
+			SystemUser query = new SystemUser();
+			Strategy strategy = new Strategy(query, "u");
+			setPageInfo(systemUserService.query(strategy, 1));
+			
+			setMessageType(SUCCESS_MSG);
+			setMessageFromResource("msg_save_success");
+			
+			return SUCCESS;
+		} catch (Exception ex){
+			setMessageType(ERROR_MSG);
+			setMessage(ex.getMessage());
+			System.out.println(ex.getMessage());
+			return ERROR;
 		}
 	}
 	

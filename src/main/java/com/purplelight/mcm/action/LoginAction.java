@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.service.ISystemUserService;
+import com.purplelight.mcm.util.McmConstant;
 
 public class LoginAction extends BaseAction{
 
@@ -12,6 +13,8 @@ public class LoginAction extends BaseAction{
 	private String loginId;
 	
 	private String password;
+	
+	private SystemUser curUser = new SystemUser();
 	
 	@Resource
 	private ISystemUserService systemUserService;
@@ -44,10 +47,17 @@ public class LoginAction extends BaseAction{
 			
 			return ERROR;
 		} else {
-			getSession().put("user", mUser);
+			setCurUser(mUser);
+			getSession().put(McmConstant.USER_SESSION, mUser);
 			
 			return SUCCESS;
 		}
+	}
+	
+	public String logout() throws Exception{
+		getSession().clear();
+		
+		return SUCCESS;
 	}
 
 	public String getLoginId() {
@@ -64,6 +74,14 @@ public class LoginAction extends BaseAction{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public SystemUser getCurUser() {
+		return curUser;
+	}
+
+	public void setCurUser(SystemUser curUser) {
+		this.curUser = curUser;
 	}
 	
 }
