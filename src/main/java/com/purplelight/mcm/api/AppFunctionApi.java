@@ -7,10 +7,8 @@ import javax.annotation.Resource;
 import com.google.gson.Gson;
 import com.purplelight.mcm.api.parameter.AppFuncParameter;
 import com.purplelight.mcm.api.result.AppFunctionResult;
-import com.purplelight.mcm.api.result.Result;
 import com.purplelight.mcm.entity.AppFunction;
 import com.purplelight.mcm.service.IAppFunctionService;
-import com.purplelight.mcm.util.ConvertUtil;
 import com.purplelight.mcm.util.McmConstant;
 import com.purplelight.mcm.util.StringUtil;
 
@@ -40,21 +38,21 @@ public class AppFunctionApi extends BaseApi {
 					List<AppFunction> notices = 
 							appFuncService.getAppFuncByFragmentAndPart(fragment, McmConstant.FragmentPart.FOOT);
 					
-					result.setSuccess(Result.SUCCESS);
-					result.setTopList(ConvertUtil.toWebBannerList(topAdvs));
-					result.setBodyList(ConvertUtil.toWebBannerList(funcs));
-					result.setFootList(ConvertUtil.toWebBannerList(notices));
+					result.setSuccess(true);
+					result.setTopList(topAdvs);
+					result.setBodyList(funcs);
+					result.setFootList(notices);
 					
 				} catch (Exception ex){
-					result.setSuccess(Result.ERROR);
+					result.setSuccess(false);
 					result.setMessage(ex.getMessage());
 				}
 			} else {
-				result.setSuccess(Result.ERROR);
+				result.setSuccess(false);
 				result.setMessage(getText("msg_illegal_request_info"));
 			}
 		} else {
-			result.setSuccess(Result.ERROR);
+			result.setSuccess(false);
 			result.setMessage(getText("msg_no_request_json_info"));
 		}
 		

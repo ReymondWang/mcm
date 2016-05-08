@@ -79,10 +79,10 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="txtSystemCode" class="col-sm-2 control-label">头部轮播名称</label>
+									<label for="txtSystemCode" class="col-sm-2 control-label">功能名称</label>
 									<div class="col-sm-9">
 										<input type="text" name="appFunc.appFuncName" class="form-control"
-											id="txtAppFuncName" value="${appFunc.appFuncName}" placeholder="头部轮播名称">
+											id="txtAppFuncName" value="${appFunc.appFuncName}" placeholder="功能名称">
 									</div>
 								</div>
 								<div class="form-group">
@@ -137,6 +137,13 @@
 									<div class="col-sm-9">
 										<input type="text" name="appFunc.contentUrl" class="form-control"
 											id="txtContentUrl" value="${appFunc.contentUrl}" placeholder="应用地址">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="txtContentUrl" class="col-sm-2 control-label">统计API</label>
+									<div class="col-sm-9">
+										<input type="text" name="appFunc.statUrl" class="form-control"
+											id="txtContentUrl" value="${appFunc.statUrl}" placeholder="统计API">
 									</div>
 								</div>
 								<div class="form-group">

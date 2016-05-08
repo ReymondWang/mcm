@@ -4,21 +4,22 @@ import javax.annotation.Resource;
 
 import com.google.gson.Gson;
 import com.purplelight.mcm.api.parameter.UserInfoParameter;
-import com.purplelight.mcm.api.result.Result;
+import com.purplelight.mcm.api.result.BindUserResult;
 import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.service.ISystemUserService;
 import com.purplelight.mcm.util.StringUtil;
 
-public class UpdateUserInfoApi extends BaseApi {
-	private static final long serialVersionUID = 5911376849085909752L;
+public class BindUserApi extends BaseApi {
+	private static final long serialVersionUID = 6675574176633007748L;
 	
 	private String resultInfo;
 	
 	@Resource
 	private ISystemUserService systemUserService;
 	
-	public String execute() throws Exception{
-		Result result = new Result();
+	@Override
+	public String execute(){
+		BindUserResult result = new BindUserResult();
 		Gson gson = new Gson();
 		SystemUser updateUser = getUpdateUser();
 		
@@ -27,10 +28,16 @@ public class UpdateUserInfoApi extends BaseApi {
 			UserInfoParameter parameter = gson.fromJson(json, UserInfoParameter.class);
 			if (checkToken(parameter.getToken())){
 				try{
-					systemUserService.updateUser(parameter.getUser(), updateUser);
+					if (systemUserService.hasThisUser(parameter.getUser())){
+						systemUserService.updateUser(parameter.getUser(), updateUser);
+					} else {
+						systemUserService.addUser(parameter.getUser(), updateUser);
+					}
 					
+					SystemUser user = systemUserService.getUser(parameter.getUser());
+					result.setUser(user);
 					result.setSuccess(true);
-					result.setMessage(getText("msg_update_user_info_success"));
+					result.setMessage(getText("msg_bind_user_success"));
 				} catch (Exception ex){
 					result.setSuccess(false);
 					result.setMessage(ex.getMessage());

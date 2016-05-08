@@ -96,8 +96,7 @@
     						<i class="fa fa-th"></i> <span>办公管理</span> <i class="fa fa-angle-left pull-right"></i>
     					</a>
     					<ul class="treeview-menu">
-    						<li><a href="##" onclick="loadUrl('user/list', this);">功能注册</a></li>
-    						<li><a href="##" onclick="loadUrl('user/list', this);">流程表单</a></li>
+    						<li><a href="##" onclick="loadUrl('appfunc/show?fragment=1&part=0', this);">功能注册</a></li>
     					</ul>
     				</li>
     				<li class="treeview">

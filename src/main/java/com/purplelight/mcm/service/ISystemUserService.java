@@ -14,5 +14,8 @@ public interface ISystemUserService {
 	public void deleteUserByIdArr(int[] idArr);
 	public void deleteUserByIdStr(String idStr);
 	public SystemUser getUser(SystemUser user) throws Exception;
+	public SystemUser getUserbyId(int id);
 	public PageInfo<SystemUser> query(Strategy strategy, int pageNo) throws Exception;
+	public boolean checkPassword(int id, String password);
+	public void modifyPassword(int id, String password);
 }

@@ -5,7 +5,6 @@ import javax.annotation.Resource;
 import com.google.gson.Gson;
 import com.purplelight.mcm.api.parameter.LoginParameter;
 import com.purplelight.mcm.api.result.LoginResult;
-import com.purplelight.mcm.api.result.Result;
 import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.service.ISystemUserService;
 import com.purplelight.mcm.util.StringUtil;
@@ -46,18 +45,18 @@ public class LoginApi extends BaseApi {
 				}
 				
 				if (user != null){
-					result.setSuccess(Result.SUCCESS);
+					result.setSuccess(true);
 					result.setUser(user);
 				} else {
-					result.setSuccess(Result.ERROR);
+					result.setSuccess(false);
 					result.setMessage(getText("msg_login_failed"));
 				}
 			} else {
-				result.setSuccess(Result.ERROR);
+				result.setSuccess(false);
 				result.setMessage(getText("msg_illegal_request_info"));
 			}
 		} else {
-			result.setSuccess(Result.ERROR);
+			result.setSuccess(false);
 			result.setMessage(getText("msg_no_request_json_info"));
 		}
 		

@@ -60,6 +60,7 @@ public class ConvertUtil {
 		if (function != null){
 			banner.setId(String.valueOf(function.getId()));
 			banner.setImage(function.getTitleImgPath());
+			banner.setType(String.valueOf(function.getFunctionType()));
 			banner.setLabel(function.getTitle());
 			banner.setOutterSystem(function.getOutterSystem());
 			banner.setUrl(function.getContentUrl());

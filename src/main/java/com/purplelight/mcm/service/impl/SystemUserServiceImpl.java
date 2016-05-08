@@ -132,4 +132,25 @@ public class SystemUserServiceImpl implements ISystemUserService {
 		return retUser;
 	}
 
+	@Override
+	public SystemUser getUserbyId(int id) {
+		return systemUserDao.getById(id);
+	}
+
+	@Override
+	public boolean checkPassword(int id, String password) {
+		String cmpPassword = systemUserDao.getPassword(password);
+		SystemUser user = systemUserDao.getById(id);
+		if (user != null){
+			return cmpPassword.equals(user.getPassword());
+		}
+		return false;
+	}
+
+	@Override
+	public void modifyPassword(int id, String password) {
+		SystemUser user = systemUserDao.getById(id);
+		user.setPassword(systemUserDao.getPassword(password));
+		systemUserDao.updateUser(user);
+	}
 }

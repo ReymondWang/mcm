@@ -2,7 +2,7 @@ package com.purplelight.mcm.api.parameter;
 
 import com.purplelight.mcm.entity.SystemUser;
 
-public class UpdateUserInfoParameter extends Parameter {
+public class UserInfoParameter extends Parameter {
 	private SystemUser user = new SystemUser();
 
 	public SystemUser getUser() {

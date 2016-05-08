@@ -30,6 +30,8 @@ public class SystemUser {
 	
 	private String address;
 	
+	private String token;
+	
 	private int inputUser;
 	
 	private Timestamp inputTime;
@@ -155,5 +157,14 @@ public class SystemUser {
 
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	@Column(name="token", length=100)
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 }

@@ -152,4 +152,16 @@
 		</action>
 	</package>
 	
+	<package name="modifyPasswordApi" namespace="/api/modifypassword" extends="abstract-struts">
+		<action name="modify" class="modifyPasswordApi">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
+	<package name="bindUserApi" namespace="/api/binduser" extends="abstract-struts">
+		<action name="bind" class="bindUserApi">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
 </struts>

@@ -41,6 +41,9 @@ public class AppFunction {
 	// 外部原生应用：外部原生应用的下载地址
 	private String contentUrl;
 	
+	// 统计数据用的Url，如果存在这个字段，则通过这个字段进行数据统计，并将统计好的数据以提醒的方式显示的图标上。
+	private String statUrl;
+	
 	// 如果本应用为外部应用，则需要在这里注明外部系统。
 	private String outterSystem;
 	
@@ -181,5 +184,14 @@ public class AppFunction {
 
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	@Column(name="stat_url", length=100)
+	public String getStatUrl() {
+		return statUrl;
+	}
+
+	public void setStatUrl(String statUrl) {
+		this.statUrl = statUrl;
 	}
 }

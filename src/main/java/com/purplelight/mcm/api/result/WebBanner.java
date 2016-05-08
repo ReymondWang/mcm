@@ -6,6 +6,8 @@ public class WebBanner {
 	
 	private String image;
 	
+	private String type;
+	
 	private String url;
 	
 	private String label;
@@ -60,6 +62,14 @@ public class WebBanner {
 
 	public void setCallMethod(String callMethod) {
 		this.callMethod = callMethod;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }
