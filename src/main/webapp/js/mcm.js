@@ -106,3 +106,9 @@ function alertMcmConfirmMsg(obj, msg){
 function dismissMsg(obj){
 	$(obj).fadeOut();
 }
+
+function localDateRange(obj){
+	$(obj).daterangepicker(
+			{format:"YYYY/MM/DD", 
+				locale:{applyLabel:"确定", cancelLabel:"取消", fromLabel:"从", toLabel:"到"}});
+}

@@ -16,8 +16,6 @@ public class AppFunctionApi extends BaseApi {
 
 	private static final long serialVersionUID = -6326328313150425347L;
 
-	private String resultInfo;
-	
 	@Resource
 	private IAppFunctionService appFuncService;
 	
@@ -59,14 +57,6 @@ public class AppFunctionApi extends BaseApi {
 		setResultInfo(gson.toJson(result));
 		
 		return SUCCESS;
-	}
-
-	public String getResultInfo() {
-		return resultInfo;
-	}
-
-	public void setResultInfo(String resultInfo) {
-		this.resultInfo = resultInfo;
 	}
 	
 }

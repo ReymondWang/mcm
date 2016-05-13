@@ -12,8 +12,6 @@ import com.purplelight.mcm.util.StringUtil;
 public class BindUserApi extends BaseApi {
 	private static final long serialVersionUID = 6675574176633007748L;
 	
-	private String resultInfo;
-	
 	@Resource
 	private ISystemUserService systemUserService;
 	
@@ -53,14 +51,6 @@ public class BindUserApi extends BaseApi {
 		setResultInfo(gson.toJson(result));
 		
 		return SUCCESS;
-	}
-
-	public String getResultInfo() {
-		return resultInfo;
-	}
-
-	public void setResultInfo(String resultInfo) {
-		this.resultInfo = resultInfo;
 	}
 	
 }

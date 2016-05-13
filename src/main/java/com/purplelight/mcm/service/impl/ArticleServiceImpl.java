@@ -33,7 +33,7 @@ public class ArticleServiceImpl implements IArticleService {
 		article.setUpdateUser(loginedUser.getId());
 		article.setUpateTime(new Timestamp(System.currentTimeMillis()));
 		
-		articleDao.add(article);
+		articleDao.save(article);
 	}
 
 	@Override

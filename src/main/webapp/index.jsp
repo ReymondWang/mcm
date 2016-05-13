@@ -78,7 +78,8 @@
     						<li><a href="##" onclick="loadUrl('user/list', this);">用户管理</a></li>
     						<li><a href="##" onclick="loadUrl('user/list', this);">角色管理</a></li>
     						<li><a href="##" onclick="loadUrl('dict/list', this);">字典管理</a></li>
-    						<li><a href="##" onclick="loadUrl('system/show', this);">外部系统管理</a></li>
+    						<li><a href="##" onclick="loadUrl('system/show', this);">外部系统</a></li>
+    						<li><a href="##" onclick="loadUrl('system/feedback/list', this);">意见反馈</a></li>
     					</ul>
     				</li>
     				<li class="treeview">

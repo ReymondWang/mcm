@@ -1,5 +1,7 @@
 package com.purplelight.mcm.query;
 
+import com.purplelight.mcm.exception.McmException;
+
 /**
  * 单个查询条件，定义单个查询项目的详细情况，这些信息包括：
  * 连接方式（and，or）;
@@ -97,7 +99,7 @@ public class ConditionItem {
 		this.enddingBracket = enddingBracket;
 	}
 	
-	public String parse() throws Exception{
+	public String parse() throws McmException{
 		StringBuffer strb = new StringBuffer();
 		strb.append(" ");
 		strb.append(SqlJoin.parse(join));

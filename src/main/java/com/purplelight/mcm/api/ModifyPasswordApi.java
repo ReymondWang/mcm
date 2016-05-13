@@ -11,8 +11,6 @@ import com.purplelight.mcm.util.StringUtil;
 public class ModifyPasswordApi extends BaseApi {
 	private static final long serialVersionUID = -3031710309077849014L;
 
-	private String resultInfo;
-	
 	@Resource
 	private ISystemUserService systemUserService;
 	
@@ -52,17 +50,9 @@ public class ModifyPasswordApi extends BaseApi {
 			result.setMessage(getText("msg_no_request_json_info"));
 		}
 		
-		resultInfo = gson.toJson(result);
+		setResultInfo(gson.toJson(result));
 		
 		return SUCCESS;
-	}
-
-	public String getResultInfo() {
-		return resultInfo;
-	}
-
-	public void setResultInfo(String resultInfo) {
-		this.resultInfo = resultInfo;
 	}
 	
 }

@@ -2,6 +2,7 @@ package com.purplelight.mcm.util;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.purplelight.mcm.api.result.WebBanner;
@@ -42,6 +43,47 @@ public class ConvertUtil {
 			return false;
 		}
 		return obj.getClass().getName().equals(Timestamp.class.getName());
+	}
+	
+	public static String ConvertToDateStr(Timestamp time){
+		String dateStr = "";
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(time);
+		
+		String year = String.valueOf(calendar.get(Calendar.YEAR));
+		String month = String.valueOf(calendar.get(Calendar.MONTH));
+		String day = String.valueOf(calendar.get(Calendar.DATE));
+		
+		dateStr = year + "-" + month + "-" + day;
+		
+		return dateStr;
+	}
+	
+	public static String ConvertToDateTimeStr(Timestamp time){
+		String dateTimeStr = "";
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(time);
+		
+		String year = String.valueOf(calendar.get(Calendar.YEAR));
+		String month = String.valueOf(calendar.get(Calendar.MONTH));
+		String day = String.valueOf(calendar.get(Calendar.DATE));
+		String hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
+		String minute = String.valueOf(calendar.get(Calendar.MINUTE));
+		String second = String.valueOf(calendar.get(Calendar.SECOND));
+		
+		dateTimeStr = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+		
+		return dateTimeStr;
+	}
+	
+	public static Timestamp ConvertToTimestamp(String str){
+		String[] arr = str.split("-");
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Integer.parseInt(arr[0]), Integer.parseInt(arr[1]) - 1, Integer.parseInt(arr[2]));
+		
+		return new Timestamp(calendar.getTimeInMillis());
 	}
 	
 	public static byte split_file_id(String file_id, String[] results, String splitor) {

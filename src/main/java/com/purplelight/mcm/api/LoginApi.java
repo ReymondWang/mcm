@@ -12,8 +12,6 @@ import com.purplelight.mcm.util.StringUtil;
 public class LoginApi extends BaseApi {
 	private static final long serialVersionUID = -6032398435463595761L;
 
-	private String resultInfo;
-	
 	@Resource
 	private ISystemUserService systemUserService;
 	
@@ -60,17 +58,9 @@ public class LoginApi extends BaseApi {
 			result.setMessage(getText("msg_no_request_json_info"));
 		}
 		
-		resultInfo = gson.toJson(result);
+		setResultInfo(gson.toJson(result));
 		
 		return SUCCESS;
-	}
-
-	public String getResultInfo() {
-		return resultInfo;
-	}
-
-	public void setResultInfo(String resultInfo) {
-		this.resultInfo = resultInfo;
 	}
 	
 }

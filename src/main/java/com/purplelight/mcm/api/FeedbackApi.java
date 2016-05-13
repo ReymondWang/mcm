@@ -3,32 +3,30 @@ package com.purplelight.mcm.api;
 import javax.annotation.Resource;
 
 import com.google.gson.Gson;
-import com.purplelight.mcm.api.parameter.UserInfoParameter;
+import com.purplelight.mcm.api.parameter.FeedbackParameter;
 import com.purplelight.mcm.api.result.Result;
-import com.purplelight.mcm.entity.SystemUser;
-import com.purplelight.mcm.service.ISystemUserService;
+import com.purplelight.mcm.service.IFeedbackService;
 import com.purplelight.mcm.util.StringUtil;
 
-public class UpdateUserInfoApi extends BaseApi {
-	private static final long serialVersionUID = 5911376849085909752L;
+public class FeedbackApi extends BaseApi {
+	private static final long serialVersionUID = -3807476249981345383L;
 	
 	@Resource
-	private ISystemUserService systemUserService;
+	private IFeedbackService feedbackService;
 	
 	public String execute() throws Exception{
 		Result result = new Result();
 		Gson gson = new Gson();
-		SystemUser updateUser = getUpdateUser();
 		
 		String json = getJson();
 		if (!StringUtil.IsNullOrEmpty(json)){
-			UserInfoParameter parameter = gson.fromJson(json, UserInfoParameter.class);
+			FeedbackParameter parameter = gson.fromJson(json, FeedbackParameter.class);
 			if (checkToken(parameter.getToken())){
 				try{
-					systemUserService.updateUser(parameter.getUser(), updateUser);
+					feedbackService.addFeedback(parameter.getFeedback());
 					
 					result.setSuccess(true);
-					result.setMessage(getText("msg_update_user_info_success"));
+					result.setMessage(getText("msg_feedback_success"));
 				} catch (Exception ex){
 					result.setSuccess(false);
 					result.setMessage(ex.getMessage());
@@ -45,5 +43,5 @@ public class UpdateUserInfoApi extends BaseApi {
 		
 		return SUCCESS;
 	}
-
+	
 }

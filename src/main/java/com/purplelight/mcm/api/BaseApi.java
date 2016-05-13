@@ -18,6 +18,8 @@ public class BaseApi extends ActionSupport implements ServletRequestAware {
 	
 	private HttpServletRequest mRequest;
 
+	private String resultInfo;
+	
 	@Override
 	public void setServletRequest(HttpServletRequest request) {
 		mRequest = request;
@@ -70,6 +72,14 @@ public class BaseApi extends ActionSupport implements ServletRequestAware {
 	 */
 	public boolean checkToken(String token){
 		return true;
+	}
+
+	public String getResultInfo() {
+		return resultInfo;
+	}
+
+	public void setResultInfo(String resultInfo) {
+		this.resultInfo = resultInfo;
 	}
 	
 }

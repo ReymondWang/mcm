@@ -54,7 +54,7 @@ public class DictionaryServiceImpl implements IDictionaryService {
 		item.setUpdateUser(loginedUser.getId());
 		item.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
-		dictItemDao.addDictItem(item);
+		dictItemDao.save(item);
 	}
 
 	@Override
@@ -64,12 +64,12 @@ public class DictionaryServiceImpl implements IDictionaryService {
 		orgItem.setUpdateUser(loginedUser.getId());
 		orgItem.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
-		dictItemDao.updateDictItem(orgItem);
+		dictItemDao.update(orgItem);
 	}
 
 	@Override
 	public void deleteDictItem(DictionaryItem item) {
-		dictItemDao.deleteDictItem(item);
+		dictItemDao.delete(item);
 	}
 
 	@Override

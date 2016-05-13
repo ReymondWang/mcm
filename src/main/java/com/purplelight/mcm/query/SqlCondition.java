@@ -1,5 +1,7 @@
 package com.purplelight.mcm.query;
 
+import com.purplelight.mcm.exception.McmException;
+
 public class SqlCondition {
 	public final static int EQUALS = 1;
 	public final static int NOT_QUUALS = 2;
@@ -9,7 +11,7 @@ public class SqlCondition {
 	public final static int LESS_OR_EQUALS = 6;
 	public final static int LIKE = 7;
 	
-	public static String parse(int condition) throws Exception{
+	public static String parse(int condition) throws McmException{
 		switch(condition){
 			case EQUALS:
 				return "=";
@@ -26,6 +28,6 @@ public class SqlCondition {
 			case LIKE:
 				return "like";
 		}
-		throw new Exception("请从SqlCondition选择查询条件。");
+		throw new McmException("请从SqlCondition选择查询条件。");
 	}
 }

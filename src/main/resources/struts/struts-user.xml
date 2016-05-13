@@ -133,6 +133,17 @@
 			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 	</package>
+	<package name="feedbackAction" namespace="/system/feedback" extends="abstract-struts">
+		<action name="list" class="feedbackAction">
+			<result name="success">/system/feedbackList.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
+		</action>
+		<action name="show" class="feedbackAction" method="show">
+			<result name="success">/system/feedbackInfo.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
+		</action>
+	</package>
+	
 	
 	<package name="loginApi" namespace="/api" extends="abstract-struts">
 		<action name="login" class="loginApi">
@@ -160,6 +171,18 @@
 	
 	<package name="bindUserApi" namespace="/api/binduser" extends="abstract-struts">
 		<action name="bind" class="bindUserApi">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
+	<package name="statTextApi" namespace="/api/stat" extends="abstract-struts">
+		<action name="test" class="statTextApi">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
+	<package name="feedbackApi" namespace="/api/feedback" extends="abstract-struts">
+		<action name="add" class="feedbackApi">
 			<result name="success">/api/api.jsp</result>
 		</action>
 	</package>

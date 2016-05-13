@@ -26,7 +26,7 @@ public class OutterSystemServiceImpl implements IOutterSystemService {
 		outterSystem.setUpdateUser(loginedUser.getId());
 		outterSystem.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
-		outterSystemDao.addOutterSystem(outterSystem);
+		outterSystemDao.save(outterSystem);
 	}
 
 	@Override
@@ -37,12 +37,12 @@ public class OutterSystemServiceImpl implements IOutterSystemService {
 		orgSys.setUpdateUser(loginedUser.getId());
 		orgSys.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
-		outterSystemDao.updateOutterSystem(orgSys);
+		outterSystemDao.update(orgSys);
 	}
 
 	@Override
 	public void deleteOutterSystem(OutterSystem outterSystem) {
-		outterSystemDao.deleteOutterSystem(outterSystem);
+		outterSystemDao.delete(outterSystem);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class OutterSystemServiceImpl implements IOutterSystemService {
 		int pageSize = McmConstant.PAGE_SIZE;
 		int startPos = (pageNo - 1) * pageSize;
 		
-		return outterSystemDao.findByPageInfo(strategy, startPos, pageNo, pageSize);
+		return outterSystemDao.find(strategy, startPos, pageNo, pageSize);
 	}
 
 	@Override

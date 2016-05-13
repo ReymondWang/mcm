@@ -24,7 +24,7 @@ public class AppFunctionServiceImpl implements IAppFunctionService {
 		appFunction.setUpdateUser(loginedUser.getId());
 		appFunction.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
-		appFuncDao.add(appFunction);
+		appFuncDao.save(appFunction);
 	}
 
 	@Override

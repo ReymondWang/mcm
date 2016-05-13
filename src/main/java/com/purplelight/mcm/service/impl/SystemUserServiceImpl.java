@@ -31,7 +31,7 @@ public class SystemUserServiceImpl implements ISystemUserService {
 		user.setUpdateUser(loginedUser.getId());
 		user.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
-		systemUserDao.addUser(user);
+		systemUserDao.save(user);
 	}
 
 	public void updateUser(SystemUser user, SystemUser loginedUser) throws Exception {
@@ -42,12 +42,12 @@ public class SystemUserServiceImpl implements ISystemUserService {
 		orgUser.setUpdateUser(loginedUser.getId());
 		orgUser.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
-		systemUserDao.updateUser(orgUser);
+		systemUserDao.update(orgUser);
 	}
 
 	@Override
 	public void deleteUser(SystemUser user) {
-		systemUserDao.deleteUser(user);
+		systemUserDao.delete(user);
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class SystemUserServiceImpl implements ISystemUserService {
 		int pageSize = McmConstant.PAGE_SIZE;
 		int startPos = (pageNo - 1) * pageSize;
 		
-		return systemUserDao.findByPageInfo(strategy, startPos, pageNo, pageSize);
+		return systemUserDao.find(strategy, startPos, pageNo, pageSize);
 	}
 
 	@Override
@@ -151,6 +151,6 @@ public class SystemUserServiceImpl implements ISystemUserService {
 	public void modifyPassword(int id, String password) {
 		SystemUser user = systemUserDao.getById(id);
 		user.setPassword(systemUserDao.getPassword(password));
-		systemUserDao.updateUser(user);
+		systemUserDao.update(user);
 	}
 }
