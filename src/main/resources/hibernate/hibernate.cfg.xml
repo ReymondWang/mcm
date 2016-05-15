@@ -35,5 +35,6 @@
 		<mapping class="com.purplelight.mcm.entity.AppFunction" />
 		<mapping class="com.purplelight.mcm.entity.Article" />
 		<mapping class="com.purplelight.mcm.entity.Feedback" />
+		<mapping class="com.purplelight.mcm.entity.UserBindSystem" />
 	</session-factory>
 </hibernate-configuration>

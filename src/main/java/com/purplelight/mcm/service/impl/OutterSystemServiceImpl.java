@@ -1,9 +1,13 @@
 package com.purplelight.mcm.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.purplelight.mcm.dao.IOutterSystemDao;
 import com.purplelight.mcm.entity.OutterSystem;
@@ -15,15 +19,16 @@ import com.purplelight.mcm.util.McmConstant;
 import com.purplelight.mcm.util.UpdateUtil;
 
 public class OutterSystemServiceImpl implements IOutterSystemService {
-
+	private static Logger logger = LoggerFactory.getLogger(OutterSystemServiceImpl.class);
+	
 	@Resource
 	private IOutterSystemDao outterSystemDao;
 	
 	@Override
 	public void addOutterSystem(OutterSystem outterSystem, SystemUser loginedUser) {
-		outterSystem.setInputUser(loginedUser.getId());
+		outterSystem.setInputUser(loginedUser);
 		outterSystem.setInputTime(new Timestamp(System.currentTimeMillis()));
-		outterSystem.setUpdateUser(loginedUser.getId());
+		outterSystem.setUpdateUser(loginedUser);
 		outterSystem.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
 		outterSystemDao.save(outterSystem);
@@ -32,9 +37,11 @@ public class OutterSystemServiceImpl implements IOutterSystemService {
 	@Override
 	public void updateOutterSystem(OutterSystem outterSystem, SystemUser loginedUser) throws Exception  {
 		OutterSystem orgSys = outterSystemDao.getById(outterSystem.getId());
-		orgSys = UpdateUtil.copyNotNullOrEmptyValue(orgSys, outterSystem);
+		List<String> expField = new ArrayList<String>();
+		expField.add("StartUsing");
+		orgSys = UpdateUtil.copyNotNullOrEmptyValue(orgSys, outterSystem, expField);
 		
-		orgSys.setUpdateUser(loginedUser.getId());
+		orgSys.setUpdateUser(loginedUser);
 		orgSys.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
 		outterSystemDao.update(orgSys);
@@ -43,6 +50,23 @@ public class OutterSystemServiceImpl implements IOutterSystemService {
 	@Override
 	public void deleteOutterSystem(OutterSystem outterSystem) {
 		outterSystemDao.delete(outterSystem);
+	}
+
+	@Override
+	public List<OutterSystem> getStartUsingOuterSystem() {
+		OutterSystem entity = new OutterSystem();
+		entity.setStartUsing(1);
+		Strategy strategy = new Strategy(entity, "os");
+		
+		List<OutterSystem> list = new ArrayList<>();
+		try{
+			list = outterSystemDao.find(strategy);
+		} catch (Exception ex){
+			logger.error(ex.getMessage(), ex);
+			ex.printStackTrace();
+		}
+		
+		return list;
 	}
 
 	@Override

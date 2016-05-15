@@ -1,12 +1,18 @@
 package com.purplelight.mcm.entity;
 
 import java.sql.Timestamp;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,16 +26,36 @@ public class OutterSystem {
 	
 	private String systemType;
 	
+	// 系统主要的地址
+	private String systemUrl;
+	
+	// 系统是否启用
+	private int startUsing;
+	
+	// 系统用户认证的地址
+	private String validationUrl;
+	
 	private String systemDescription;
 
-	private int inputUser;
+	private SystemUser inputUser;
 	
 	private Timestamp inputTime;
 	
-	private int updateUser;
+	private SystemUser updateUser;
 	
 	private Timestamp updateTime;
 	
+	private Set<UserBindSystem> bindUsers;
+	
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.LAZY, mappedBy="outterSystem")
+	public Set<UserBindSystem> getBindUsers() {
+		return bindUsers;
+	}
+
+	public void setBindUsers(Set<UserBindSystem> bindUsers) {
+		this.bindUsers = bindUsers;
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id", unique=true)
@@ -76,15 +102,6 @@ public class OutterSystem {
 	public void setSystemDescription(String systemDescription) {
 		this.systemDescription = systemDescription;
 	}
-	
-	@Column(name="input_user")
-	public int getInputUser() {
-		return inputUser;
-	}
-
-	public void setInputUser(int inputUser) {
-		this.inputUser = inputUser;
-	}
 
 	@Column(name="input_time")
 	public Timestamp getInputTime() {
@@ -95,12 +112,23 @@ public class OutterSystem {
 		this.inputTime = inputTime;
 	}
 
-	@Column(name="update_user")
-	public int getUpdateUser() {
+	@ManyToOne(cascade={CascadeType.MERGE, CascadeType.REFRESH}, fetch=FetchType.LAZY)
+	@JoinColumn(name="input_user", referencedColumnName="id")
+	public SystemUser getInputUser() {
+		return inputUser;
+	}
+
+	public void setInputUser(SystemUser inputUser) {
+		this.inputUser = inputUser;
+	}
+
+	@ManyToOne(cascade={CascadeType.MERGE, CascadeType.REFRESH}, fetch=FetchType.LAZY)
+	@JoinColumn(name="update_user", referencedColumnName="id")
+	public SystemUser getUpdateUser() {
 		return updateUser;
 	}
 
-	public void setUpdateUser(int updateUser) {
+	public void setUpdateUser(SystemUser updateUser) {
 		this.updateUser = updateUser;
 	}
 
@@ -111,5 +139,32 @@ public class OutterSystem {
 
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	@Column(name="system_url", length=100)
+	public String getSystemUrl() {
+		return systemUrl;
+	}
+
+	public void setSystemUrl(String systemUrl) {
+		this.systemUrl = systemUrl;
+	}
+
+	@Column(name="start_using")
+	public int getStartUsing() {
+		return startUsing;
+	}
+
+	public void setStartUsing(int startUsing) {
+		this.startUsing = startUsing;
+	}
+
+	@Column(name="validation_url", length=100)
+	public String getValidationUrl() {
+		return validationUrl;
+	}
+
+	public void setValidationUrl(String validationUrl) {
+		this.validationUrl = validationUrl;
 	}
 }

@@ -5,11 +5,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.Session;
+
 import com.purplelight.mcm.exception.McmException;
 import com.purplelight.mcm.query.PageInfo;
 import com.purplelight.mcm.query.Strategy;
 
 public interface IBaseDao<T, ID extends Serializable> {
+	public Session getSession();
+	
 	public void save(T t);
 	
 	public void saveOrUpdate(T t);

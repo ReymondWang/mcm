@@ -15,4 +15,5 @@ public interface IOutterSystemService {
 	public OutterSystem getOutterSystem(OutterSystem outterSystem) throws Exception;
 	public List<OutterSystem> getAll();
 	public List<OutterSystem> getAllWithBlank();
+	public List<OutterSystem> getStartUsingOuterSystem();
 }

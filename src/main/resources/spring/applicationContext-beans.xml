@@ -29,6 +29,9 @@
 	<bean id="bindUserApi" class="com.purplelight.mcm.api.BindUserApi" scope="prototype"></bean>
 	<bean id="statTextApi" class="com.purplelight.mcm.api.StatTestApi" scope="prototype"></bean>
 	<bean id="feedbackApi" class="com.purplelight.mcm.api.FeedbackApi" scope="prototype"></bean>
+	<bean id="quickRegisterApi" class="com.purplelight.mcm.api.IsQuickRegisterApi" scope="prototype"></bean>
+	<bean id="registerApi" class="com.purplelight.mcm.api.RegisterApi" scope="prototype"></bean>
+	<bean id="outterSystemApi" class="com.purplelight.mcm.api.OutterSystemApi" scope="prototype"></bean>
 	
 	<!-- Spring管理的Service -->
 	<bean id="systemUserService" class="com.purplelight.mcm.service.impl.SystemUserServiceImpl"></bean>
@@ -37,6 +40,7 @@
 	<bean id="appFuncService" class="com.purplelight.mcm.service.impl.AppFunctionServiceImpl"></bean>
 	<bean id="articleService" class="com.purplelight.mcm.service.impl.ArticleServiceImpl"></bean>
 	<bean id="feedbackService" class="com.purplelight.mcm.service.impl.FeedbackServiceImpl"></bean>
+	<bean id="userBindSystemService" class="com.purplelight.mcm.service.impl.UserBindSystemServiceImpl"></bean>
 	
 	<!-- Spring管理的Dao -->
 	<bean id="systemUserDao" class="com.purplelight.mcm.dao.impl.SystemUserDaoImpl">
@@ -58,6 +62,9 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="feedbackDao" class="com.purplelight.mcm.dao.impl.FeedbackDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="userBindSystemDao" class="com.purplelight.mcm.dao.impl.UserBindSystemDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 </beans>

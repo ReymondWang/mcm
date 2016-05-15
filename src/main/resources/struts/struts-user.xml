@@ -187,4 +187,22 @@
 		</action>
 	</package>
 	
+	<package name="quickRegisterApi" namespace="/api/quickregister" extends="abstract-struts">
+		<action name="check" class="quickRegisterApi">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
+	<package name="registerApi" namespace="/api/register" extends="abstract-struts">
+		<action name="add" class="registerApi">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
+	<package name="outterSystemApi" namespace="/api/outtersystem" extends="abstract-struts">
+		<action name="list" class="outterSystemApi">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
 </struts>

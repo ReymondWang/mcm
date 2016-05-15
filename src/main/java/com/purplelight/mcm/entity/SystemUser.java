@@ -1,12 +1,16 @@
 package com.purplelight.mcm.entity;
 
 import java.sql.Timestamp;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -39,6 +43,17 @@ public class SystemUser {
 	private int updateUser;
 	
 	private Timestamp updateTime;
+
+	private Set<UserBindSystem> bindSystems;
+	
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, fetch=FetchType.LAZY, mappedBy="user")
+	public Set<UserBindSystem> getBindSystems() {
+		return bindSystems;
+	}
+
+	public void setBindSystems(Set<UserBindSystem> bindSystems) {
+		this.bindSystems = bindSystems;
+	}
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

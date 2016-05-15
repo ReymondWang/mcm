@@ -16,7 +16,7 @@ import com.purplelight.mcm.exception.McmException;
 public class ConditionItem {
 	private String name;
 	
-	private String value;
+	private Object value;
 	
 	private int join = SqlJoin.AND;
 	
@@ -28,19 +28,19 @@ public class ConditionItem {
 	
 	public ConditionItem(){}
 	
-	public ConditionItem(String name, String value){
+	public ConditionItem(String name, Object value){
 		this.name = name;
 		this.value = value;
 	}
 	
-	public ConditionItem(String name, String value, int join, int condition) {
+	public ConditionItem(String name, Object value, int join, int condition) {
 		this.name = name;
 		this.value = value;
 		this.join = join;
 		this.condition = condition;
 	}
 
-	public ConditionItem(String name, String value, int join, int condition, boolean beginningBracket,
+	public ConditionItem(String name, Object value, int join, int condition, boolean beginningBracket,
 			boolean enddingBracket) {
 		super();
 		this.name = name;
@@ -59,11 +59,11 @@ public class ConditionItem {
 		this.name = name;
 	}
 
-	public String getValue() {
+	public Object getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Object value) {
 		this.value = value;
 	}
 

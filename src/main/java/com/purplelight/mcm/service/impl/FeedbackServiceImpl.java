@@ -1,6 +1,5 @@
 package com.purplelight.mcm.service.impl;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,6 +12,7 @@ import com.purplelight.mcm.query.SqlCondition;
 import com.purplelight.mcm.query.SqlJoin;
 import com.purplelight.mcm.query.Strategy;
 import com.purplelight.mcm.service.IFeedbackService;
+import com.purplelight.mcm.util.ConvertUtil;
 import com.purplelight.mcm.util.McmConstant;
 import com.purplelight.mcm.util.StringUtil;
 
@@ -38,10 +38,10 @@ public class FeedbackServiceImpl implements IFeedbackService {
 			strategy.add(new ConditionItem("content", content, SqlJoin.AND, SqlCondition.LIKE));
 		}
 		if (!StringUtil.IsNullOrEmpty(startDate)){
-//			strategy.add(new ConditionItem("inputTime", ConvertUtil.ConvertToTimestamp(startDate), SqlJoin.AND, SqlCondition.BIGGER_OR_EQUALS));
+			strategy.add(new ConditionItem("inputTime", ConvertUtil.ConvertToTimestamp(startDate), SqlJoin.AND, SqlCondition.BIGGER_OR_EQUALS));
 		}
 		if (!StringUtil.IsNullOrEmpty(endDate)){
-			strategy.add(new ConditionItem("inputTime", endDate, SqlJoin.AND, SqlCondition.LESS_OR_EQUALS));
+			strategy.add(new ConditionItem("inputTime", ConvertUtil.ConvertToTimestamp(endDate), SqlJoin.AND, SqlCondition.LESS_OR_EQUALS));
 		}
 		
 		return feedbackDao.find(strategy, startPos, pageNo, pageSize);

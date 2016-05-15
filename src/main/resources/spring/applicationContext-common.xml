@@ -30,6 +30,7 @@
     			<value>com.purplelight.mcm.entity.AppFunction</value>
     			<value>com.purplelight.mcm.entity.Article</value>
     			<value>com.purplelight.mcm.entity.Feedback</value>
+    			<value>com.purplelight.mcm.entity.UserBindSystem</value>
     		</list>
     	</property>
     </bean>

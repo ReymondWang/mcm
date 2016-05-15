@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html>
 <html>
@@ -11,6 +10,7 @@
     <link rel="stylesheet" href="${rootPath}/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="${rootPath}/plugins/FortAwesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="${rootPath}/plugins/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="${rootPath}/plugins/iCheck/flat/blue.css">
     <link rel="stylesheet" href="${rootPath}/plugins/fakeloader/fakeLoader.css">
     <link rel="stylesheet" href="${rootPath}/plugins/select2/select2.min.css">
     <link rel="stylesheet" href="${rootPath}/css/style.css">
@@ -80,13 +80,33 @@
 								<div class="form-group">
 									<label for="txtSystemType" class="col-sm-2 control-label">外部系统类型</label>
 									<div class="col-sm-9">
-										<select id="txtSystemType" name="outterSystem.systemType" class="form-control select2" placeholder="外部系统类型" style="width: 100%;">
+										<select id="txtSystemType" name="outterSystem.systemType" class="form-control select2" style="width: 100%;">
 											<s:iterator var="item" value="outterSystemTypes">
 												<option value='<s:property value="#item.dictItemCode" />' <s:if test="#item.dictItemCode == outterSystem.systemType">selected="selected"</s:if> >
 													<s:property value="#item.dictItemValue" />
 												</option>
 											</s:iterator>
 					                    </select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="txtSystemUrl" class="col-sm-2 control-label">外部系统地址</label>
+									<div class="col-sm-9">
+										<input type="text" name="outterSystem.systemUrl" class="form-control"
+											id="txtSystemUrl" value="${outterSystem.systemUrl}" placeholder="外部系统地址">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="chkStartUsing" class="col-sm-2 control-label">是否启用</label>
+									<div class="col-sm-9">
+										<input id="chkStartUsing" type="checkbox" name="outterSystem.startUsing" value="1" <s:if test="outterSystem.startUsing == 1">checked</s:if>>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="txtValidationUrl" class="col-sm-2 control-label">用户绑定地址</label>
+									<div class="col-sm-9">
+										<input type="text" name="outterSystem.validationUrl" class="form-control"
+											id="txtValidationUrl" value="${outterSystem.validationUrl}" placeholder="用户绑定地址">
 									</div>
 								</div>
 								<div class="form-group">
@@ -144,6 +164,11 @@
 			
 			// 初始化下拉框
 			$(".select2").select2();
+			
+			$('#chkStartUsing').iCheck({
+				checkboxClass: 'icheckbox_flat-blue',
+				radioClass: 'iradio_flat-blue'
+			});
 			
 			// 报错误消息
 			var msgType = "${messageType}";

@@ -96,7 +96,12 @@ public class UserAction extends BaseAction{
 			if (user.getId() != 0){
 				systemUserService.updateUser(user, loginedUser);
 			} else {
-				systemUserService.addUser(user, loginedUser);
+				if (systemUserService.hasThisUser(user)){
+					setMessageType(ERROR_MSG);
+					setMessageFromResource("user_can_not_equals");
+				} else {
+					systemUserService.addUser(user, loginedUser);
+				}
 			}
 			
 			SystemUser query = new SystemUser();
