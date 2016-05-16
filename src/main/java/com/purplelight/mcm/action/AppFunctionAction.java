@@ -55,6 +55,11 @@ public class AppFunctionAction extends BaseAction {
 	private SpinnerItem partItem;
 	
 	/**
+	 * 选择的外部系统编号
+	 */
+	private int outterSystemId;
+	
+	/**
 	 * 可以选择的外部系统的列表
 	 */
 	private List<OutterSystem> outterSystems = new ArrayList<OutterSystem>();
@@ -104,6 +109,8 @@ public class AppFunctionAction extends BaseAction {
 	public String save() throws Exception{
 		SystemUser loginedUser = (SystemUser)getSession().get(McmConstant.USER_SESSION);
 		try{
+			outterSystems = outterSystemService.getAllWithBlank();
+			
 			if (image != null && image.length() > 0){
 				if (image.length() > 1024 * 1024 * 5){
 					setMessageType(BaseAction.ERROR_MSG);
@@ -116,13 +123,18 @@ public class AppFunctionAction extends BaseAction {
 			}
 			appFunc.setFragment(fragment);
 			appFunc.setPart(part);
+			for (OutterSystem item : outterSystems){
+				if (item.getId() == outterSystemId){
+					appFunc.setOutterSystem(item);
+					break;
+				}
+			}
 			if (appFunc.getId() != 0){
 				appFuncService.updateAppFunction(appFunc, loginedUser);
 			} else {
 				appFuncService.addAppFunction(appFunc, loginedUser);
 			}
 			
-			outterSystems = outterSystemService.getAllWithBlank();
 			appFuncList = appFuncService.getAppFuncByFragmentAndPart(fragment, part);
 			
 			setMessageType(BaseAction.SUCCESS_MSG);
@@ -237,5 +249,13 @@ public class AppFunctionAction extends BaseAction {
 
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
+	}
+
+	public int getOutterSystemId() {
+		return outterSystemId;
+	}
+
+	public void setOutterSystemId(int outterSystemId) {
+		this.outterSystemId = outterSystemId;
 	}
 }

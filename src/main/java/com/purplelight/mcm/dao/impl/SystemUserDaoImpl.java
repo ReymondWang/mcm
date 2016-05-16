@@ -10,7 +10,6 @@ import com.purplelight.mcm.entity.SystemUser;
 @SuppressWarnings("unchecked")
 public class SystemUserDaoImpl extends BaseDaoImpl<SystemUser, Integer> implements ISystemUserDao {
 
-	
 	public SystemUser getByUserCode(String userCode) {
 		Query query = getSession().createQuery("select u from SystemUser u where u.userCode = :userCode");
 		query.setParameter("userCode", userCode);
@@ -50,6 +49,13 @@ public class SystemUserDaoImpl extends BaseDaoImpl<SystemUser, Integer> implemen
 		SQLQuery query = getSession().createSQLQuery(sql);
 		query.setString(0, orgStr);
 		return String.valueOf(query.uniqueResult());
+	}
+
+	@Override
+	public void updatePassword(int userId, String password) {
+		SystemUser user = getById(userId);
+		user.setPassword(getPassword(password));
+		saveOrUpdate(user);
 	}
 
 }

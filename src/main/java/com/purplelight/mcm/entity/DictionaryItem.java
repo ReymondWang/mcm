@@ -1,31 +1,36 @@
 package com.purplelight.mcm.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="dictionary_item")
-public class DictionaryItem {
+public class DictionaryItem implements Serializable {
+	private static final long serialVersionUID = 4269878190944319812L;
 
 	private int id;
 	
 	private String dictItemCode;
 	
-	private String dictNameCode;
+	private DictionaryName dictName;
 	
 	private String dictItemValue;
 	
-	private int inputUser;
+	private SystemUser inputUser;
 	
 	private Timestamp inputTime;
 	
-	private int updateUser;
+	private SystemUser updateUser;
 	
 	private Timestamp updateTime;
 
@@ -49,13 +54,14 @@ public class DictionaryItem {
 		this.dictItemCode = dictItemCode;
 	}
 
-	@Column(name="dict_name_code", length=50)
-	public String getDictNameCode() {
-		return dictNameCode;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="dict_name_code", referencedColumnName="dict_name_code")
+	public DictionaryName getDictName() {
+		return dictName;
 	}
 
-	public void setDictNameCode(String dictNameCode) {
-		this.dictNameCode = dictNameCode;
+	public void setDictName(DictionaryName dictName) {
+		this.dictName = dictName;
 	}
 
 	@Column(name="dict_item_value", length=100)
@@ -67,12 +73,13 @@ public class DictionaryItem {
 		this.dictItemValue = dictItemValue;
 	}
 
-	@Column(name="input_user")
-	public int getInputUser() {
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="input_user", referencedColumnName="id")
+	public SystemUser getInputUser() {
 		return inputUser;
 	}
 
-	public void setInputUser(int inputUser) {
+	public void setInputUser(SystemUser inputUser) {
 		this.inputUser = inputUser;
 	}
 
@@ -85,12 +92,13 @@ public class DictionaryItem {
 		this.inputTime = inputTime;
 	}
 
-	@Column(name="update_user")
-	public int getUpdateUser() {
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="update_user", referencedColumnName="id")
+	public SystemUser getUpdateUser() {
 		return updateUser;
 	}
 
-	public void setUpdateUser(int updateUser) {
+	public void setUpdateUser(SystemUser updateUser) {
 		this.updateUser = updateUser;
 	}
 

@@ -123,9 +123,9 @@
 								<div id="fgOuuterSystem" class="form-group" style="display:none;">
 									<label for="txtOutterSystem" class="col-sm-2 control-label">外部系统</label>
 									<div class="col-sm-9">
-										<select id="txtOutterSystem" name="appFunc.outterSystem" class="form-control select2" style="width: 100%;">
+										<select id="txtOutterSystem" name="outterSystemId" class="form-control select2" style="width: 100%;">
 											<s:iterator var="item" value="outterSystems">
-												<option value='<s:property value="#item.systemCode" />' <s:if test="#item.systemCode == appFunc.outterSystem">selected="selected"</s:if> >
+												<option value='<s:property value="#item.id" />' <s:if test="#item.id == appFunc.outterSystem.id">selected="selected"</s:if> >
 													<s:property value="#item.systemName" />
 												</option>
 											</s:iterator>

@@ -1,10 +1,11 @@
 package com.purplelight.mcm.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,18 +15,18 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="feedback")
-public class Feedback {
+public class Feedback implements Serializable {
+	private static final long serialVersionUID = 6861707773235029089L;
+
 	private int id;
 	
 	private String content;
 	
 	private String imagePath;
 	
-	private int inputUser;
+	private SystemUser inputUser;
 	
 	private Timestamp inputTime;
-	
-	private SystemUser systemUser;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -56,15 +57,6 @@ public class Feedback {
 		this.imagePath = imagePath;
 	}
 
-	@Column(name="input_user")
-	public int getInputUser() {
-		return inputUser;
-	}
-
-	public void setInputUser(int inputUser) {
-		this.inputUser = inputUser;
-	}
-
 	@Column(name="input_time")
 	public Timestamp getInputTime() {
 		return inputTime;
@@ -74,13 +66,13 @@ public class Feedback {
 		this.inputTime = inputTime;
 	}
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="input_user", referencedColumnName="id", insertable=false, updatable=false)
-	public SystemUser getSystemUser() {
-		return systemUser;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="input_user", referencedColumnName="id")
+	public SystemUser getInputUser() {
+		return inputUser;
 	}
 
-	public void setSystemUser(SystemUser systemUser) {
-		this.systemUser = systemUser;
+	public void setInputUser(SystemUser inputUser) {
+		this.inputUser = inputUser;
 	}
 }

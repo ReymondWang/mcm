@@ -1,6 +1,8 @@
 package com.purplelight.mcm.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,7 +17,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="system_user")
-public class SystemUser {
+public class SystemUser implements Serializable {
+	private static final long serialVersionUID = -6106324928219264721L;
+
 	private int id;
 	
 	private String userCode;
@@ -43,17 +47,8 @@ public class SystemUser {
 	private int updateUser;
 	
 	private Timestamp updateTime;
-
-	private Set<UserBindSystem> bindSystems;
 	
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, fetch=FetchType.LAZY, mappedBy="user")
-	public Set<UserBindSystem> getBindSystems() {
-		return bindSystems;
-	}
-
-	public void setBindSystems(Set<UserBindSystem> bindSystems) {
-		this.bindSystems = bindSystems;
-	}
+	private Set<UserBindSystem> outterSystems = new HashSet<>();
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -181,5 +176,14 @@ public class SystemUser {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.LAZY, mappedBy="user")
+	public Set<UserBindSystem> getOutterSystems() {
+		return outterSystems;
+	}
+
+	public void setOutterSystems(Set<UserBindSystem> outterSystems) {
+		this.outterSystems = outterSystems;
 	}
 }

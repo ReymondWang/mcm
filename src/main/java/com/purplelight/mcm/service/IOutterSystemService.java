@@ -13,6 +13,7 @@ public interface IOutterSystemService {
 	public void deleteOutterSystem(OutterSystem outterSystem);
 	public PageInfo<OutterSystem> query(Strategy strategy, int pageNo) throws Exception;
 	public OutterSystem getOutterSystem(OutterSystem outterSystem) throws Exception;
+	public OutterSystem getOutterSystemById(int id);
 	public List<OutterSystem> getAll();
 	public List<OutterSystem> getAllWithBlank();
 	public List<OutterSystem> getStartUsingOuterSystem();

@@ -137,8 +137,13 @@ public class HttpUtil {
             strUrl += "?";
         }
 
+        int cnt = 0;
         for(Entry<String, String> entry : params.entrySet()){
+        	if (cnt != 0){
+            	strUrl += "&";
+            }
             strUrl += (entry.getKey() + "=" + entry.getValue());
+            cnt++;
         }
 
         return strUrl;

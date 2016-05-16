@@ -85,7 +85,7 @@
 										<tr>
 											<td><a href="${rootPath}/system/feedback/show?id=<s:property value="#item.id" />">查看</a></td>
 											<td><s:property value="#item.content" /></td>
-											<td><s:property value="#item.systemUser.userName" /></td>
+											<td><s:property value="#item.inputUser.userName" /></td>
 											<td><s:date name="#item.inputTime" format="yyyy-MM-dd" /></td>
 										</tr>
 									</s:iterator>

@@ -104,7 +104,7 @@ public class ConvertUtil {
 			banner.setImage(function.getTitleImgPath());
 			banner.setType(String.valueOf(function.getFunctionType()));
 			banner.setLabel(function.getTitle());
-			banner.setOutterSystem(function.getOutterSystem());
+			banner.setOutterSystem(function.getOutterSystem().getId());
 			banner.setUrl(function.getContentUrl());
 			banner.setCallMethod(function.getCallMethod());
 		}

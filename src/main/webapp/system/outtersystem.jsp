@@ -64,13 +64,6 @@
 							<div class="box-body">
 								<input type="hidden" name="outterSystem.id" value="${outterSystem.id}" >
 								<div class="form-group">
-									<label for="txtSystemCode" class="col-sm-2 control-label">外部系统编号</label>
-									<div class="col-sm-9">
-										<input type="text" name="outterSystem.systemCode" class="form-control"
-											id="txtSystemCode" value="${outterSystem.systemCode}" placeholder="外部系统编号">
-									</div>
-								</div>
-								<div class="form-group">
 									<label for="txtSystemName" class="col-sm-2 control-label">外部系统名称</label>
 									<div class="col-sm-9">
 										<input type="text" name="outterSystem.systemName" class="form-control"

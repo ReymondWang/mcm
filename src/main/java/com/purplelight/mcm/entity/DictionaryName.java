@@ -1,34 +1,55 @@
 package com.purplelight.mcm.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="dictionary_name")
-public class DictionaryName {
-	private int id;
-	
-	private String dictNameCode;
-	
-	private String dictNameValue;
+public class DictionaryName implements Serializable {
+	private static final long serialVersionUID = -1787519063628897097L;
 
-	private int inputUser;
-	
-	private Timestamp inputTime;
-	
-	private int updateUser;
-	
-	private Timestamp updateTime;
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id", unique=true)
+	private int id;
+	
+	@Column(name="dict_name_code", length=50)
+	private String dictNameCode;
+	
+	@Column(name="dict_name_value", length=100)
+	private String dictNameValue;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="input_user", referencedColumnName="id")
+	private SystemUser inputUser;
+	
+	@Column(name="input_time")
+	private Timestamp inputTime;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="update_user", referencedColumnName="id")
+	private SystemUser updateUser;
+	
+	@Column(name="update_time")
+	private Timestamp updateTime;
+	
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.LAZY, mappedBy="dictName")
+	private Set<DictionaryItem> dictItems = new HashSet<>();
+
 	public int getId() {
 		return id;
 	}
@@ -37,7 +58,6 @@ public class DictionaryName {
 		this.id = id;
 	}
 
-	@Column(name="dict_name_code", length=50)
 	public String getDictNameCode() {
 		return dictNameCode;
 	}
@@ -46,7 +66,6 @@ public class DictionaryName {
 		this.dictNameCode = dictNameCode;
 	}
 
-	@Column(name="dict_name_value", length=100)
 	public String getDictNameValue() {
 		return dictNameValue;
 	}
@@ -54,17 +73,15 @@ public class DictionaryName {
 	public void setDictNameValue(String dictNameValue) {
 		this.dictNameValue = dictNameValue;
 	}
-	
-	@Column(name="input_user")
-	public int getInputUser() {
+
+	public SystemUser getInputUser() {
 		return inputUser;
 	}
 
-	public void setInputUser(int inputUser) {
+	public void setInputUser(SystemUser inputUser) {
 		this.inputUser = inputUser;
 	}
 
-	@Column(name="input_time")
 	public Timestamp getInputTime() {
 		return inputTime;
 	}
@@ -73,21 +90,27 @@ public class DictionaryName {
 		this.inputTime = inputTime;
 	}
 
-	@Column(name="update_user")
-	public int getUpdateUser() {
+	public SystemUser getUpdateUser() {
 		return updateUser;
 	}
 
-	public void setUpdateUser(int updateUser) {
+	public void setUpdateUser(SystemUser updateUser) {
 		this.updateUser = updateUser;
 	}
 
-	@Column(name="update_time")
 	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
 
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public Set<DictionaryItem> getDictItems() {
+		return dictItems;
+	}
+
+	public void setDictItems(Set<DictionaryItem> dictItems) {
+		this.dictItems = dictItems;
 	}
 }

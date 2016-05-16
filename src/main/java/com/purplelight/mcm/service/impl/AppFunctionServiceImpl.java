@@ -19,9 +19,9 @@ public class AppFunctionServiceImpl implements IAppFunctionService {
 	
 	@Override
 	public void addAppFunction(AppFunction appFunction, SystemUser loginedUser) {
-		appFunction.setInputUser(loginedUser.getId());
+		appFunction.setInputUser(loginedUser);
 		appFunction.setInputTime(new Timestamp(System.currentTimeMillis()));
-		appFunction.setUpdateUser(loginedUser.getId());
+		appFunction.setUpdateUser(loginedUser);
 		appFunction.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
 		appFuncDao.save(appFunction);
@@ -32,7 +32,7 @@ public class AppFunctionServiceImpl implements IAppFunctionService {
 		AppFunction orgFunc = appFuncDao.getById(appFunction.getId());
 		orgFunc = UpdateUtil.copyNotNullOrEmptyValue(orgFunc, appFunction);
 		
-		orgFunc.setUpdateUser(loginedUser.getId());
+		orgFunc.setUpdateUser(loginedUser);
 		orgFunc.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
 		appFuncDao.update(orgFunc);
@@ -65,6 +65,12 @@ public class AppFunctionServiceImpl implements IAppFunctionService {
 	@Override
 	public List<AppFunction> getAppFuncByFragmentAndPartAndType(int fragment, int part, int type) {
 		return appFuncDao.getByFragmentAndPartAndType(fragment, part, type);
+	}
+
+	@Override
+	public List<AppFunction> getAppFuncByFragmentAndPart(int fragment, int part, int userId) {
+		
+		return null;
 	}
 
 }

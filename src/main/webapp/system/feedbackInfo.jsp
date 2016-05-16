@@ -84,7 +84,7 @@
 								<div class="form-group">
 									<label class="col-sm-2 control-label">提交人</label>
 									<div class="col-sm-9">
-										<input type="text" name="feedback.systemUser.userName" class="form-control"  value="${feedback.systemUser.userName}">
+										<input type="text" name="feedback.inputUser.userName" class="form-control"  value="${feedback.inputUser.userName}">
 									</div>
 								</div>
 								<div class="form-group">

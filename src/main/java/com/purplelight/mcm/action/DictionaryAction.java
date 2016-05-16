@@ -57,13 +57,18 @@ public class DictionaryAction extends BaseAction {
 		dictNames = dictService.getAllDictNames();
 		SystemUser loginedUser = (SystemUser)getSession().get(McmConstant.USER_SESSION);
 		try{
-			if (dictService.hasDictItemCode(dictItem.getDictItemCode())){
+			if (dictItem.getId() == 0 && dictService.hasDictItemCode(dictItem.getDictItemCode())){
 				setMessageType(BaseAction.ERROR_MSG);
 				setMessageFromResource("msg_dict_item_code_unique");
 				return ERROR;
 			}
 			
-			dictItem.setDictNameCode(dictNameCode);
+			for(DictionaryName name : dictNames){
+				if (dictNameCode.equals(name.getDictNameCode())){
+					dictItem.setDictName(name);
+					break;
+				}
+			}
 			if (dictItem.getId() != 0){
 				dictService.updateDictItem(dictItem, loginedUser);
 			} else {

@@ -1,17 +1,23 @@
 package com.purplelight.mcm.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="app_function")
-public class AppFunction {
+public class AppFunction implements Serializable {
+	private static final long serialVersionUID = 624947710487604266L;
+
 	private int id;
 	
 	// 定义该功能显示在APP的那个只要模块分页上，该数据从0开始，不设定上限。
@@ -45,16 +51,16 @@ public class AppFunction {
 	private String statUrl;
 	
 	// 如果本应用为外部应用，则需要在这里注明外部系统。
-	private String outterSystem;
+	private OutterSystem outterSystem;
 	
 	// 如果为外部原生应用，则需要写明白调用的具体方式。
 	private String callMethod;
 	
-	private int inputUser;
+	private SystemUser inputUser;
 	
 	private Timestamp inputTime;
 	
-	private int updateUser;
+	private SystemUser updateUser;
 	
 	private Timestamp updateTime;
 
@@ -132,12 +138,13 @@ public class AppFunction {
 		this.contentUrl = contentUrl;
 	}
 
-	@Column(name="outter_system", length=50)
-	public String getOutterSystem() {
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="outter_system_id", referencedColumnName="id")
+	public OutterSystem getOutterSystem() {
 		return outterSystem;
 	}
 
-	public void setOutterSystem(String outterSystem) {
+	public void setOutterSystem(OutterSystem outterSystem) {
 		this.outterSystem = outterSystem;
 	}
 
@@ -150,12 +157,13 @@ public class AppFunction {
 		this.callMethod = callMethod;
 	}
 
-	@Column(name="input_user")
-	public int getInputUser() {
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="input_user", referencedColumnName="id")
+	public SystemUser getInputUser() {
 		return inputUser;
 	}
 
-	public void setInputUser(int inputUser) {
+	public void setInputUser(SystemUser inputUser) {
 		this.inputUser = inputUser;
 	}
 
@@ -168,12 +176,13 @@ public class AppFunction {
 		this.inputTime = inputTime;
 	}
 
-	@Column(name="update_user")
-	public int getUpdateUser() {
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="update_user", referencedColumnName="id")
+	public SystemUser getUpdateUser() {
 		return updateUser;
 	}
 
-	public void setUpdateUser(int updateUser) {
+	public void setUpdateUser(SystemUser updateUser) {
 		this.updateUser = updateUser;
 	}
 

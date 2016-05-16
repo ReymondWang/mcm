@@ -1,5 +1,6 @@
 package com.purplelight.mcm.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
@@ -15,8 +16,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="user_bind_system")
-public class UserBindSystem {
-	
+public class UserBindSystem implements Serializable {
+	private static final long serialVersionUID = -4173010297894173996L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id")

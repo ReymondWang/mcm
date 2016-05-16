@@ -173,6 +173,9 @@
 		<action name="bind" class="bindUserApi">
 			<result name="success">/api/api.jsp</result>
 		</action>
+		<action name="unBind" class="bindUserApi" method="unBind">
+			<result name="success">/api/api.jsp</result>
+		</action>
 	</package>
 	
 	<package name="statTextApi" namespace="/api/stat" extends="abstract-struts">

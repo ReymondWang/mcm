@@ -51,6 +51,8 @@ public class UpdateUtil {
 							isNeededToCopy = true;
 						} else if (ConvertUtil.isTimeStamp(val) && val != null){
 							isNeededToCopy = true;
+						} else if (val != null){
+							isNeededToCopy = true;
 						}
 					}
 					if (isNeededToCopy){

@@ -12,5 +12,6 @@ public interface IAppFunctionService {
 	public AppFunction getAppFunc(AppFunction appFunc) throws Exception;
 	public List<AppFunction> getAppFuncByFragment(int fragment);
 	public List<AppFunction> getAppFuncByFragmentAndPart(int fragment, int part);
+	public List<AppFunction> getAppFuncByFragmentAndPart(int fragment, int part, int userId);
 	public List<AppFunction> getAppFuncByFragmentAndPartAndType(int fragment, int part, int type);
 }

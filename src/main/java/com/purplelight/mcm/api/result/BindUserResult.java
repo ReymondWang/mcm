@@ -1,15 +1,13 @@
 package com.purplelight.mcm.api.result;
 
-import com.purplelight.mcm.entity.SystemUser;
-
 public class BindUserResult extends Result {
-	private SystemUser user;
+	private BindUser obj;
 
-	public SystemUser getUser() {
-		return user;
+	public BindUser getObj() {
+		return obj;
 	}
 
-	public void setUser(SystemUser user) {
-		this.user = user;
+	public void setObj(BindUser obj) {
+		this.obj = obj;
 	}
 }

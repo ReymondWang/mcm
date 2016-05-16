@@ -3,10 +3,12 @@ package com.purplelight.mcm.api;
 import javax.annotation.Resource;
 
 import com.google.gson.Gson;
+import com.purplelight.mcm.api.config.ConfigUtil;
 import com.purplelight.mcm.api.parameter.LoginParameter;
 import com.purplelight.mcm.api.result.LoginResult;
 import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.service.ISystemUserService;
+import com.purplelight.mcm.service.IUserBindSystemService;
 import com.purplelight.mcm.util.StringUtil;
 
 public class LoginApi extends BaseApi {
@@ -14,6 +16,9 @@ public class LoginApi extends BaseApi {
 
 	@Resource
 	private ISystemUserService systemUserService;
+	
+	@Resource
+	private IUserBindSystemService userBindSystemService;
 	
 	public String execute() throws Exception{
 		String loginInfo = getJson();
@@ -46,8 +51,12 @@ public class LoginApi extends BaseApi {
 					result.setSuccess(true);
 					result.setUser(user);
 				} else {
-					result.setSuccess(false);
-					result.setMessage(getText("msg_login_failed"));
+					if ("true".equals(ConfigUtil.config.getProperty("quick_register"))){
+						result = userBindSystemService.bindWithCreate(lp.getLoginId(), lp.getPassword());
+					} else {
+						result.setSuccess(false);
+						result.setMessage(getText("msg_login_failed"));
+					}
 				}
 			} else {
 				result.setSuccess(false);

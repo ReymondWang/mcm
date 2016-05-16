@@ -1,6 +1,8 @@
 package com.purplelight.mcm.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,10 +19,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="outter_system")
-public class OutterSystem {
+public class OutterSystem implements Serializable {
+	private static final long serialVersionUID = -1348392722146170125L;
+
 	private int id;
-	
-	private String systemCode;
 	
 	private String systemName;
 	
@@ -45,17 +47,8 @@ public class OutterSystem {
 	
 	private Timestamp updateTime;
 	
-	private Set<UserBindSystem> bindUsers;
+	private Set<UserBindSystem> bindUsers = new HashSet<>();
 	
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.LAZY, mappedBy="outterSystem")
-	public Set<UserBindSystem> getBindUsers() {
-		return bindUsers;
-	}
-
-	public void setBindUsers(Set<UserBindSystem> bindUsers) {
-		this.bindUsers = bindUsers;
-	}
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id", unique=true)
@@ -65,15 +58,6 @@ public class OutterSystem {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	@Column(name="system_code", length=50)
-	public String getSystemCode() {
-		return systemCode;
-	}
-
-	public void setSystemCode(String systemCode) {
-		this.systemCode = systemCode;
 	}
 
 	@Column(name="system_name", length=100)
@@ -112,7 +96,7 @@ public class OutterSystem {
 		this.inputTime = inputTime;
 	}
 
-	@ManyToOne(cascade={CascadeType.MERGE, CascadeType.REFRESH}, fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="input_user", referencedColumnName="id")
 	public SystemUser getInputUser() {
 		return inputUser;
@@ -122,7 +106,7 @@ public class OutterSystem {
 		this.inputUser = inputUser;
 	}
 
-	@ManyToOne(cascade={CascadeType.MERGE, CascadeType.REFRESH}, fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="update_user", referencedColumnName="id")
 	public SystemUser getUpdateUser() {
 		return updateUser;
@@ -166,5 +150,14 @@ public class OutterSystem {
 
 	public void setValidationUrl(String validationUrl) {
 		this.validationUrl = validationUrl;
+	}
+
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.LAZY, mappedBy="outterSystem")
+	public Set<UserBindSystem> getBindUsers() {
+		return bindUsers;
+	}
+
+	public void setBindUsers(Set<UserBindSystem> bindUsers) {
+		this.bindUsers = bindUsers;
 	}
 }

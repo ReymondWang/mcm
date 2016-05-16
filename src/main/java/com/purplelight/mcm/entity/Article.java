@@ -1,5 +1,6 @@
 package com.purplelight.mcm.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -11,7 +12,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="article")
-public class Article {
+public class Article implements Serializable {
+	private static final long serialVersionUID = 1056293286675585399L;
+
 	private int id;
 	
 	/**

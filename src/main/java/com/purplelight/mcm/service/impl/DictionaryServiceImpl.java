@@ -49,9 +49,9 @@ public class DictionaryServiceImpl implements IDictionaryService {
 
 	@Override
 	public void addDictItem(DictionaryItem item, SystemUser loginedUser) {
-		item.setInputUser(loginedUser.getId());
+		item.setInputUser(loginedUser);
 		item.setInputTime(new Timestamp(System.currentTimeMillis()));
-		item.setUpdateUser(loginedUser.getId());
+		item.setUpdateUser(loginedUser);
 		item.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
 		dictItemDao.save(item);
@@ -61,7 +61,7 @@ public class DictionaryServiceImpl implements IDictionaryService {
 	public void updateDictItem(DictionaryItem item, SystemUser loginedUser) throws Exception {
 		DictionaryItem orgItem = dictItemDao.getById(item.getId());
 		orgItem = UpdateUtil.copyNotNullOrEmptyValue(orgItem, item);
-		orgItem.setUpdateUser(loginedUser.getId());
+		orgItem.setUpdateUser(loginedUser);
 		orgItem.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
 		dictItemDao.update(orgItem);

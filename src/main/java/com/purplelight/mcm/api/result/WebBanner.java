@@ -12,7 +12,7 @@ public class WebBanner {
 	
 	private String label;
 	
-	private String outterSystem;
+	private int outterSystem;
 	
 	private String callMethod;
 
@@ -48,11 +48,11 @@ public class WebBanner {
 		this.id = id;
 	}
 
-	public String getOutterSystem() {
+	public int getOutterSystem() {
 		return outterSystem;
 	}
 
-	public void setOutterSystem(String outterSystem) {
+	public void setOutterSystem(int outterSystem) {
 		this.outterSystem = outterSystem;
 	}
 

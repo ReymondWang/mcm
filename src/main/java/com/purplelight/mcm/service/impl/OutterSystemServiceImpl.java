@@ -89,6 +89,11 @@ public class OutterSystemServiceImpl implements IOutterSystemService {
 	}
 
 	@Override
+	public OutterSystem getOutterSystemById(int id) {
+		return outterSystemDao.getById(id);
+	}
+
+	@Override
 	public List<OutterSystem> getAll() {
 		return outterSystemDao.getAll();
 	}

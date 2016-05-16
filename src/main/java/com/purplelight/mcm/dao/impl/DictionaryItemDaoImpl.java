@@ -17,7 +17,6 @@ public class DictionaryItemDaoImpl extends BaseDaoImpl<DictionaryItem, Integer> 
 		Query query = getSession().createQuery("select di from DictionaryItem di where di.dictItemCode = :dictItemCode");
 		query.setParameter("dictItemCode", code);
 		
-		
 		Iterator<DictionaryItem> i = (Iterator<DictionaryItem>)query.iterate();
 		if (i.hasNext()){
 			return i.next();
@@ -28,7 +27,7 @@ public class DictionaryItemDaoImpl extends BaseDaoImpl<DictionaryItem, Integer> 
 
 	@Override
 	public List<DictionaryItem> getByDictNameCode(String dictNameCode) {
-		Query query = getSession().createQuery("select di from DictionaryItem di where di.dictNameCode = :dictNameCode");
+		Query query = getSession().createQuery("select di from DictionaryItem di where di.dictName.dictNameCode = :dictNameCode");
 		query.setParameter("dictNameCode", dictNameCode);
 		
 		List<DictionaryItem> retList = (List<DictionaryItem>)query.list();
