@@ -2,7 +2,7 @@ package com.purplelight.mcm.api.result;
 
 import java.util.List;
 
-import com.purplelight.mcm.bean.OutterSystemBindInfo;
+import com.purplelight.mcm.api.bean.OutterSystemBindInfo;
 
 public class OutterSystemResult extends Result {
 	private List<OutterSystemBindInfo> systemList;

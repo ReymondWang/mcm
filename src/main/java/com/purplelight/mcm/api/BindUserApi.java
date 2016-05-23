@@ -5,8 +5,8 @@ import java.util.HashMap;
 import javax.annotation.Resource;
 
 import com.google.gson.Gson;
+import com.purplelight.mcm.api.bean.BindUser;
 import com.purplelight.mcm.api.parameter.BindUserParameter;
-import com.purplelight.mcm.api.result.BindUser;
 import com.purplelight.mcm.api.result.BindUserResult;
 import com.purplelight.mcm.api.result.Result;
 import com.purplelight.mcm.entity.OutterSystem;

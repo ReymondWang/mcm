@@ -1,5 +1,7 @@
 package com.purplelight.mcm.api.result;
 
+import com.purplelight.mcm.api.bean.BindUser;
+
 public class BindUserResult extends Result {
 	private BindUser obj;
 

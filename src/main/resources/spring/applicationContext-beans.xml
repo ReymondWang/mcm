@@ -32,6 +32,9 @@
 	<bean id="quickRegisterApi" class="com.purplelight.mcm.api.IsQuickRegisterApi" scope="prototype"></bean>
 	<bean id="registerApi" class="com.purplelight.mcm.api.RegisterApi" scope="prototype"></bean>
 	<bean id="outterSystemApi" class="com.purplelight.mcm.api.OutterSystemApi" scope="prototype"></bean>
+	<bean id="estimateApi" class="com.purplelight.mcm.api.EstimateApi" scope="prototype"></bean>
+	<bean id="specialCheckApi" class="com.purplelight.mcm.api.SpecialCheckApi" scope="prototype"></bean>
+	<bean id="commonApi" class="com.purplelight.mcm.api.CommonApi" scope="prototype"></bean>
 	
 	<!-- Spring管理的Service -->
 	<bean id="systemUserService" class="com.purplelight.mcm.service.impl.SystemUserServiceImpl"></bean>
@@ -41,6 +44,9 @@
 	<bean id="articleService" class="com.purplelight.mcm.service.impl.ArticleServiceImpl"></bean>
 	<bean id="feedbackService" class="com.purplelight.mcm.service.impl.FeedbackServiceImpl"></bean>
 	<bean id="userBindSystemService" class="com.purplelight.mcm.service.impl.UserBindSystemServiceImpl"></bean>
+	<bean id="rsOmEstimateService" class="com.purplelight.mcm.service.impl.RedStarOmEstimateServiceImpl"></bean>
+	<bean id="rsOmSpecialCheckervice" class="com.purplelight.mcm.service.impl.RedStarOmSpecialCheckServiceImpl"></bean>
+	<bean id="rsOmCommonService" class="com.purplelight.mcm.service.impl.RedStarOmCommonServiceImpl"></bean>
 	
 	<!-- Spring管理的Dao -->
 	<bean id="systemUserDao" class="com.purplelight.mcm.dao.impl.SystemUserDaoImpl">

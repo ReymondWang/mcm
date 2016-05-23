@@ -33,6 +33,7 @@ public class HttpUtil {
             }
         }catch (Exception ex){
         	logger.error(ex.getMessage(), ex);
+        	ex.printStackTrace();
         }
         return "";
     }
@@ -50,13 +51,14 @@ public class HttpUtil {
         urlConnection.setDoOutput(true);
         urlConnection.setRequestMethod("POST");
         urlConnection.setUseCaches(false);
+        urlConnection.setRequestProperty("Accept", "application/json");
         urlConnection.setRequestProperty("Content-Type", "application/json");
         urlConnection.setRequestProperty("Charset", "utf-8");
 
         urlConnection.connect();
 
         DataOutputStream dataOutputStream = new DataOutputStream(urlConnection.getOutputStream());
-        dataOutputStream.writeBytes(URLEncoder.encode(json, "utf-8"));
+        dataOutputStream.writeBytes(json);
         dataOutputStream.flush();
         dataOutputStream.close();
 

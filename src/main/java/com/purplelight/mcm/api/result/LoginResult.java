@@ -1,15 +1,15 @@
 package com.purplelight.mcm.api.result;
 
-import com.purplelight.mcm.entity.SystemUser;
+import com.purplelight.mcm.api.bean.SystemUserInfo;
 
 public class LoginResult extends Result {
-	private SystemUser user;
+	private SystemUserInfo user;
 
-	public SystemUser getUser() {
+	public SystemUserInfo getUser() {
 		return user;
 	}
 
-	public void setUser(SystemUser user) {
+	public void setUser(SystemUserInfo user) {
 		this.user = user;
 	}
 }

@@ -5,9 +5,9 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import com.google.gson.Gson;
+import com.purplelight.mcm.api.bean.OutterSystemBindInfo;
 import com.purplelight.mcm.api.parameter.Parameter;
 import com.purplelight.mcm.api.result.OutterSystemResult;
-import com.purplelight.mcm.bean.OutterSystemBindInfo;
 import com.purplelight.mcm.service.IUserBindSystemService;
 import com.purplelight.mcm.util.StringUtil;
 

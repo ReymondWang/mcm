@@ -3,12 +3,14 @@ package com.purplelight.mcm.api;
 import javax.annotation.Resource;
 
 import com.google.gson.Gson;
+import com.purplelight.mcm.api.bean.SystemUserInfo;
 import com.purplelight.mcm.api.config.ConfigUtil;
 import com.purplelight.mcm.api.parameter.LoginParameter;
 import com.purplelight.mcm.api.result.LoginResult;
 import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.service.ISystemUserService;
 import com.purplelight.mcm.service.IUserBindSystemService;
+import com.purplelight.mcm.util.ConvertUtil;
 import com.purplelight.mcm.util.StringUtil;
 
 public class LoginApi extends BaseApi {
@@ -49,7 +51,18 @@ public class LoginApi extends BaseApi {
 				
 				if (user != null){
 					result.setSuccess(true);
-					result.setUser(user);
+					
+					SystemUserInfo userInfo = new SystemUserInfo();
+					userInfo.setId(ConvertUtil.toString(user.getId()));
+					userInfo.setUserCode(user.getUserCode());
+					userInfo.setUserName(user.getUserName());
+					userInfo.setSex(ConvertUtil.toString(user.getSex()));
+					userInfo.setEmail(user.getEmail());
+					userInfo.setPhone(user.getPhone());
+					userInfo.setAddress(user.getAddress());
+					userInfo.setHeadImgPath(user.getHeadImgPath());
+					userInfo.setToken(user.getToken());
+					result.setUser(userInfo);
 				} else {
 					if ("true".equals(ConfigUtil.config.getProperty("quick_register"))){
 						result = userBindSystemService.bindWithCreate(lp.getLoginId(), lp.getPassword());

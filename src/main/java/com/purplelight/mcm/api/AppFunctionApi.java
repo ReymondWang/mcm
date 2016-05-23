@@ -5,9 +5,9 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import com.google.gson.Gson;
+import com.purplelight.mcm.api.bean.AppFuncInfo;
 import com.purplelight.mcm.api.parameter.AppFuncParameter;
 import com.purplelight.mcm.api.result.AppFunctionResult;
-import com.purplelight.mcm.entity.AppFunction;
 import com.purplelight.mcm.service.IAppFunctionService;
 import com.purplelight.mcm.util.McmConstant;
 import com.purplelight.mcm.util.StringUtil;
@@ -29,12 +29,13 @@ public class AppFunctionApi extends BaseApi {
 			if (checkToken(parameter.getToken())){
 				int fragment = Integer.parseInt(parameter.getFragment()) ;
 				try{
-					List<AppFunction> topAdvs = 
-							appFuncService.getAppFuncByFragmentAndPart(fragment, McmConstant.FragmentPart.TOP);
-					List<AppFunction> funcs = 
-							appFuncService.getAppFuncByFragmentAndPart(fragment, McmConstant.FragmentPart.BODY);
-					List<AppFunction> notices = 
-							appFuncService.getAppFuncByFragmentAndPart(fragment, McmConstant.FragmentPart.FOOT);
+					int userId = Integer.parseInt(parameter.getLoginId());
+					List<AppFuncInfo> topAdvs = 
+							appFuncService.getAppFuncByFragmentAndPart(fragment, McmConstant.FragmentPart.TOP, userId);
+					List<AppFuncInfo> funcs = 
+							appFuncService.getAppFuncByFragmentAndPart(fragment, McmConstant.FragmentPart.BODY, userId);
+					List<AppFuncInfo> notices = 
+							appFuncService.getAppFuncByFragmentAndPart(fragment, McmConstant.FragmentPart.FOOT, userId);
 					
 					result.setSuccess(true);
 					result.setTopList(topAdvs);

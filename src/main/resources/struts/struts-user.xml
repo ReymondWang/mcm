@@ -208,4 +208,37 @@
 		</action>
 	</package>
 	
+	<package name="estimateApi" namespace="/api/estimate" extends="abstract-struts">
+		<action name="items" class="estimateApi" method="items">
+			<result name="success">/api/api.jsp</result>
+		</action>
+		<action name="singleitem" class="estimateApi" method="singleItem">
+			<result name="success">/api/api.jsp</result>
+		</action>
+		<action name="reports" class="estimateApi" method="reports">
+			<result name="success">/api/api.jsp</result>
+		</action>
+		<action name="singlereport" class="estimateApi" method="singleReport">
+			<result name="success">/api/api.jsp</result>
+		</action>
+		<action name="submit" class="estimateApi" method="submit">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
+	<package name="specialCheckApi" namespace="/api/specialcheck" extends="abstract-struts">
+		<action name="items" class="specialCheckApi">
+			<result name="success">/api/api.jsp</result>
+		</action>
+		<action name="submit" class="specialCheckApi" method="submit">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
+	<package name="commonApi" namespace="/api/common" extends="abstract-struts">
+		<action name="projects" class="commonApi" method="projects">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
 </struts>

@@ -1,4 +1,4 @@
-package com.purplelight.mcm.api.result;
+package com.purplelight.mcm.api.bean;
 
 public class BindUser {
 	private String UserId;

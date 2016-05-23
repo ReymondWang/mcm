@@ -1,14 +1,16 @@
-package com.purplelight.mcm.bean;
+package com.purplelight.mcm.api.bean;
+
+import java.io.Serializable;
 
 /**
  * 根据用户编号取得全部已经的外部系统信息，并判断是否已经绑定
  * @author wangyn
  *
  */
-public class OutterSystemBindInfo {
+public class OutterSystemBindInfo implements Serializable {
+	private static final long serialVersionUID = -4280511824420571304L;
+
 	private int systemId;
-	
-	private String systemCode;
 	
 	private String systemName;
 	
@@ -30,14 +32,6 @@ public class OutterSystemBindInfo {
 
 	public void setSystemId(int systemId) {
 		this.systemId = systemId;
-	}
-
-	public String getSystemCode() {
-		return systemCode;
-	}
-
-	public void setSystemCode(String systemCode) {
-		this.systemCode = systemCode;
 	}
 
 	public String getSystemName() {

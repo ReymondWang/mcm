@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.purplelight.mcm.api.result.WebBanner;
-import com.purplelight.mcm.entity.AppFunction;
 import com.purplelight.mcm.fastdfs.ProtoCommon;
 
 public class ConvertUtil {
@@ -97,29 +95,42 @@ public class ConvertUtil {
 		return 0;
 	}
 	
-	public static WebBanner toWebBanner(AppFunction function){
-		WebBanner banner = new WebBanner();
-		if (function != null){
-			banner.setId(String.valueOf(function.getId()));
-			banner.setImage(function.getTitleImgPath());
-			banner.setType(String.valueOf(function.getFunctionType()));
-			banner.setLabel(function.getTitle());
-			banner.setOutterSystem(function.getOutterSystem().getId());
-			banner.setUrl(function.getContentUrl());
-			banner.setCallMethod(function.getCallMethod());
-		}
-		
-		return banner;
+	public static String toString(Object obj){
+		return obj == null ? "" : String.valueOf(obj);
 	}
 	
-	public static List<WebBanner> toWebBannerList(List<AppFunction> functions){
-		List<WebBanner> retList = new ArrayList<>();
-		if (functions != null && functions.size() > 0){
-			for (AppFunction func : functions){
-				retList.add(toWebBanner(func));
+	public static int toInt(Object obj){
+		return obj == null ? 0 : Integer.parseInt(toString(obj));
+	}
+	
+	public static String dateFormat(String org){
+		if (!StringUtil.IsNullOrEmpty(org)){
+			String stmpStr = org.replace("/Date(", "").replace(")/", "");
+			if (!StringUtil.IsNullOrEmpty(stmpStr)){
+				try{
+					long stmpLong = Long.parseLong(stmpStr);
+					Timestamp stamp = new Timestamp(stmpLong);
+					return ConvertUtil.ConvertToDateStr(stamp);
+				} catch (NumberFormatException e){
+				}
 			}
 		}
-		
+		return "";
+	}
+	
+	/**
+	 * 给从业务系统获得图片地址批量添加系统地址
+	 * @param url      系统地址
+	 * @param list     数据列表
+	 * @return         处理后列表
+	 */
+	public static List<String> batchAddSystemUrl(String url, List<String> list){
+		List<String> retList = new ArrayList<>();
+		if (list != null && list.size() > 0){
+			for (int i = 0; i < list.size(); i++){
+				retList.add(url + list.get(i));
+			}
+		}
 		return retList;
 	}
 }

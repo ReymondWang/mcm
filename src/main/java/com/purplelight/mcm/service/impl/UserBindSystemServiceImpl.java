@@ -11,10 +11,11 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.google.gson.Gson;
-import com.purplelight.mcm.api.result.BindUser;
+import com.purplelight.mcm.api.bean.BindUser;
+import com.purplelight.mcm.api.bean.OutterSystemBindInfo;
+import com.purplelight.mcm.api.bean.SystemUserInfo;
 import com.purplelight.mcm.api.result.BindUserResult;
 import com.purplelight.mcm.api.result.LoginResult;
-import com.purplelight.mcm.bean.OutterSystemBindInfo;
 import com.purplelight.mcm.dao.IOutterSystemDao;
 import com.purplelight.mcm.dao.ISystemUserDao;
 import com.purplelight.mcm.dao.IUserBindSystemDao;
@@ -23,6 +24,7 @@ import com.purplelight.mcm.query.Strategy;
 import com.purplelight.mcm.service.IUserBindSystemService;
 import com.purplelight.mcm.entity.OutterSystem;
 import com.purplelight.mcm.entity.SystemUser;
+import com.purplelight.mcm.util.ConvertUtil;
 import com.purplelight.mcm.util.HttpUtil;
 import com.purplelight.mcm.util.StringUtil;
 import com.purplelight.mcm.util.UpdateUtil;
@@ -121,7 +123,18 @@ public class UserBindSystemServiceImpl implements IUserBindSystemService {
 					userBindSystemDao.save(bindSystem);
 					
 					loginResult.setSuccess(true);
-					loginResult.setUser(user);
+					
+					SystemUserInfo userInfo = new SystemUserInfo();
+					userInfo.setId(ConvertUtil.toString(user.getId()));
+					userInfo.setUserCode(user.getUserCode());
+					userInfo.setUserName(user.getUserName());
+					userInfo.setSex(ConvertUtil.toString(user.getSex()));
+					userInfo.setEmail(user.getEmail());
+					userInfo.setPhone(user.getPhone());
+					userInfo.setAddress(user.getAddress());
+					userInfo.setHeadImgPath(user.getHeadImgPath());
+					userInfo.setToken(user.getToken());
+					loginResult.setUser(userInfo);
 				} else {
 					loginResult.setSuccess(false);
 					loginResult.setMessage(result.getMessage());
@@ -142,7 +155,6 @@ public class UserBindSystemServiceImpl implements IUserBindSystemService {
 	public List<OutterSystemBindInfo> getUserBindInfo(int userId) {
 		Session session = userBindSystemDao.getSession();
 		String hql = "select os.id"
-				+ ", os.systemCode"
 				+ ", os.systemType"
 				+ ", os.systemUrl"
 				+ ", os.startUsing"
@@ -162,23 +174,39 @@ public class UserBindSystemServiceImpl implements IUserBindSystemService {
 			Object[] valArr = (Object[])query.list().get(i);
 			OutterSystemBindInfo bindInfo = new OutterSystemBindInfo();
 			bindInfo.setSystemId((int)valArr[0]);
-			bindInfo.setSystemCode((String.valueOf(valArr[1])));
-			bindInfo.setSystemType((String.valueOf(valArr[2])));
-			bindInfo.setSystemUrl((String.valueOf(valArr[3])));
-			bindInfo.setStartUsing((int)valArr[4]);
-			bindInfo.setValidationUrl((String.valueOf(valArr[5])));
-			bindInfo.setSystemDescription((String.valueOf(valArr[6])));
-			if ((int)valArr[7] == 0){
+			bindInfo.setSystemType((String.valueOf(valArr[1])));
+			bindInfo.setSystemUrl((String.valueOf(valArr[2])));
+			bindInfo.setStartUsing((int)valArr[3]);
+			bindInfo.setValidationUrl((String.valueOf(valArr[4])));
+			bindInfo.setSystemDescription((String.valueOf(valArr[5])));
+			if ((int)valArr[6] == 0){
 				bindInfo.setBinded(false);
 			} else {
 				bindInfo.setBinded(true);
 			}
-			bindInfo.setSystemName(String.valueOf(valArr[8]));
+			bindInfo.setSystemName(String.valueOf(valArr[7]));
 			
 			retList.add(bindInfo);
 		}
 		
 		return retList;
+	}
+
+	@Override
+	public UserBindSystem getByUserIdAndSystemId(int userId, int systemId) {
+		String hql = "from UserBindSystem us where us.user.id = :userId and us.outterSystem.id = :systemId";
+		Query query = userBindSystemDao.getSession().createQuery(hql);
+		query.setParameter("userId", userId);
+		query.setParameter("systemId", systemId);
+		
+		@SuppressWarnings("rawtypes")
+		List list = query.list();
+		
+		if (list != null && list.size() > 0){
+			return (UserBindSystem)list.get(0);
+		}
+		
+		return null;
 	}
 
 }

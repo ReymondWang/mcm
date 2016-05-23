@@ -95,7 +95,7 @@
 											<input id="btnAttachment" type="file" name="image" onchange="btnAttachment_OnChange();">
 										</div>
 										<span id="spanFileName"></span>
-										<span>请上传2:1的图片，最大可以上传5M。</span>
+										<span>最大可以上传5M。</span>
 										<div style="margin-top:0.5rem">
 											<img alt="显示图片" class='img-responsive' src="<s:if test="%{appFunc.titleImgPath == null || appFunc.titleImgPath == ''}"> ${rootPath}/images/default_image.png </s:if><s:else> <s:property value="imageServer + appFunc.titleImgPath" /> </s:else>">
 										</div>
@@ -111,7 +111,7 @@
 								<div class="form-group">
 									<label for="txtFunctionType" class="col-sm-2 control-label">应用类型</label>
 									<div class="col-sm-9">
-										<select id="txtFunctionType" name="appFunc.functionType" class="form-control select2" style="width: 100%;" onchange="txtFunctionType_OnChange();">
+										<select id="txtFunctionType" name="appFunc.functionType" class="form-control select2" style="width: 100%;">
 											<s:iterator var="item" value="funcType">
 												<option value='<s:property value="#item.code" />' <s:if test="#item.code == appFunc.functionType">selected="selected"</s:if> >
 													<s:property value="#item.value" />
@@ -120,7 +120,7 @@
 					                    </select>
 									</div>
 								</div>
-								<div id="fgOuuterSystem" class="form-group" style="display:none;">
+								<div id="fgOuuterSystem" class="form-group">
 									<label for="txtOutterSystem" class="col-sm-2 control-label">外部系统</label>
 									<div class="col-sm-9">
 										<select id="txtOutterSystem" name="outterSystemId" class="form-control select2" style="width: 100%;">
