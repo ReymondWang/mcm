@@ -10,5 +10,4 @@ public class ProjectParameter extends Parameter {
 	public void setSystemId(int systemId) {
 		this.systemId = systemId;
 	}
-	
 }

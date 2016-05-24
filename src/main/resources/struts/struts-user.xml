@@ -235,6 +235,15 @@
 		</action>
 	</package>
 	
+	<package name="passportApi" namespace="/api/passport" extends="abstract-struts">
+		<action name="items" class="passportApi">
+			<result name="success">/api/api.jsp</result>
+		</action>
+		<action name="files" class="passportApi" method="files">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
 	<package name="commonApi" namespace="/api/common" extends="abstract-struts">
 		<action name="projects" class="commonApi" method="projects">
 			<result name="success">/api/api.jsp</result>
