@@ -36,6 +36,11 @@
     	<version>3.6.10.Final</version>
     </dependency>
     <dependency>
+    	<groupId>org.hibernate</groupId>
+    	<artifactId>hibernate-ehcache</artifactId>
+    	<version>3.6.10.Final</version>
+    </dependency>
+    <dependency>
     	<groupId>org.aspectj</groupId>
     	<artifactId>aspectjweaver</artifactId>
     	<version>1.7.3</version>

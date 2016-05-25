@@ -15,9 +15,23 @@
     
     <!-- 启用spring注解支持 -->
     <context:annotation-config />
+    <context:property-placeholder location="classpath:hibernate/hibernate.properties"/>
+    
+    <!-- C3P0 数据源 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${hibernate.connection.driver_class}" />
+        <property name="jdbcUrl" value="${hibernate.connection.url}" />
+        <property name="user" value="${hibernate.connection.username}" />
+        <property name="password" value="${hibernate.connection.password}" />
+        <property name="initialPoolSize" value="${hibernate.connection.initialPoolSize}" />
+        <property name="minPoolSize" value="${hibernate.connection.minPoolSize}" />
+        <property name="maxPoolSize" value="${hibernate.connection.maxPoolSize}" />
+        <property name="preferredTestQuery" value="select 1 from dual " />
+    </bean>
     
     <!--数据源 -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+    	<property name="dataSource" ref="dataSource" />
     	<property name="configLocation">
     		<value>classpath:hibernate/hibernate.cfg.xml</value>
     	</property>
@@ -31,6 +45,7 @@
     			<value>com.purplelight.mcm.entity.Article</value>
     			<value>com.purplelight.mcm.entity.Feedback</value>
     			<value>com.purplelight.mcm.entity.UserBindSystem</value>
+    			<value>com.purplelight.mcm.entity.AppFileManage</value>
     		</list>
     	</property>
     </bean>

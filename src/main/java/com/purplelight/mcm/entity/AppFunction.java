@@ -56,6 +56,9 @@ public class AppFunction implements Serializable {
 	// 如果为外部原生应用，则需要写明白调用的具体方式。
 	private String callMethod;
 	
+	// 功能排序
+	private String appOrder; 
+	
 	private SystemUser inputUser;
 	
 	private Timestamp inputTime;
@@ -202,5 +205,14 @@ public class AppFunction implements Serializable {
 
 	public void setStatUrl(String statUrl) {
 		this.statUrl = statUrl;
+	}
+
+	@Column(name="app_order", length=50)
+	public String getAppOrder() {
+		return appOrder;
+	}
+
+	public void setAppOrder(String appOrder) {
+		this.appOrder = appOrder;
 	}
 }

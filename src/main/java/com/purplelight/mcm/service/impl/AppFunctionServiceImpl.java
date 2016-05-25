@@ -90,7 +90,8 @@ public class AppFunctionServiceImpl implements IAppFunctionService {
 				+ " from AppFunction f left join f.outterSystem s left join s.bindUsers b with b.user.id = :userId"
 				+ " where (f.functionType in (1, 2, 3) or b.id is not null)"
 				+ " and f.fragment = :fragment"
-				+ " and f.part = :part";
+				+ " and f.part = :part"
+				+ " order by f.appOrder";
 		Query query = appFuncDao.getSession().createQuery(hql);
 		query.setParameter("fragment", fragment);
 		query.setParameter("part", part);

@@ -22,6 +22,9 @@
 	<bean id="dictAction" class="com.purplelight.mcm.action.DictionaryAction" scope="prototype"></bean>
 	<bean id="articleAction" class="com.purplelight.mcm.action.ArticleAction" scope="prototype"></bean>
 	<bean id="feedbackAction" class="com.purplelight.mcm.action.FeedbackAction" scope="prototype"></bean>
+	<bean id="appFileManageAction" class="com.purplelight.mcm.action.AppFileManageAction" scope="prototype"></bean>
+	
+	<!-- Spring管理的Struts2的接口Action -->
 	<bean id="loginApi" class="com.purplelight.mcm.api.LoginApi" scope="prototype"></bean>
 	<bean id="updateUserInfoApi" class="com.purplelight.mcm.api.UpdateUserInfoApi" scope="prototype"></bean>
 	<bean id="appFuncApi" class="com.purplelight.mcm.api.AppFunctionApi" scope="prototype"></bean>

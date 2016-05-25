@@ -154,6 +154,13 @@
 									</div>
 								</div>
 								<div class="form-group">
+									<label for="txtOrder" class="col-sm-2 control-label">排序</label>
+									<div class="col-sm-9">
+										<input type="text" name="appFunc.appOrder" class="form-control"
+											id="txtOrder" value="${appFunc.appOrder}" placeholder="排序">
+									</div>
+								</div>
+								<div class="form-group">
 									<div class="col-sm-offset-2 col-sm-10">
 										<button type="button" class="btn btn-danger" onclick="saveAppFunc();">&nbsp;&nbsp;保存&nbsp;&nbsp;</button>
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

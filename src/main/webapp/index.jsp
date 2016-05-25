@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>移动管理平台 | 桌面</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="${rootPath}/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${rootPath}/css/style.css">
-    <link rel="stylesheet" href="${rootPath}/css/skins/_all-skins.min.css">
-    <link rel="stylesheet" href="${rootPath}/plugins/FortAwesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${rootPath}/plugins/ionicons/css/ionicons.min.css">
-    <link rel="stylesheet" href="${rootPath}/plugins/fakeloader/fakeLoader.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="plugins/FortAwesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="plugins/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="plugins/fakeloader/fakeLoader.css">
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -80,6 +80,7 @@
     						<li><a href="##" onclick="loadUrl('dict/list', this);">字典管理</a></li>
     						<li><a href="##" onclick="loadUrl('system/show', this);">外部系统</a></li>
     						<li><a href="##" onclick="loadUrl('system/feedback/list', this);">意见反馈</a></li>
+    						<li><a href="##" onclick="loadUrl('system/appfilemanage/list', this);">更新管理</a></li>
     					</ul>
     				</li>
     				<li class="treeview">

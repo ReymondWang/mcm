@@ -5,6 +5,11 @@
 <hibernate-configuration>
 	<!-- sessionFactory代表一个数据库的描述 -->
 	<session-factory>
+		<!-- 告诉hibernate链接的是什么数据库 -->
+		<property name="dialect">
+			org.hibernate.dialect.MySQLDialect
+		</property>
+		
 		<!-- 数据库用户名、密码、驱动、URL、数据库方言 -->
 		<property name="connection.username">root</property>
 		<property name="connection.password">123456</property>
@@ -14,10 +19,7 @@
 		<property name="hibernate.connection.url">
 			<![CDATA[jdbc:mysql://127.0.0.1:3306/mcm?useUnicode=true&characterEncoding=UTF-8]]>
 		</property>
-		<!-- 告诉hibernate链接的是什么数据库 -->
-		<property name="dialect">
-			org.hibernate.dialect.MySQLDialect
-		</property>
+		
 		<!-- 显示sql语句 -->
 		<property name="show sql">true</property>
 		<!--validate     默认值 根据持久化类和映射文件检查表的结构 
@@ -26,6 +28,11 @@
 			create-drop  当启动hibernate容器时创建表，当hibernate容器销毁时，删除表 -->
 		<property name="hbm2ddl.auto">update</property>
 		<property name="format sql">true</property>
+		
+		<!-- 配置缓存 -->
+		<property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+		<property name="hibernate.cache.use_query_cache">false</property>
+		<property name="hibernate.cache.use_second_level_cache">true</property>
 		
 		<!-- 配置映射的实体类 -->
 		<mapping class="com.purplelight.mcm.entity.SystemUser" />
@@ -36,5 +43,6 @@
 		<mapping class="com.purplelight.mcm.entity.Article" />
 		<mapping class="com.purplelight.mcm.entity.Feedback" />
 		<mapping class="com.purplelight.mcm.entity.UserBindSystem" />
+		<mapping class="com.purplelight.mcm.entity.AppFileManage" />
 	</session-factory>
 </hibernate-configuration>

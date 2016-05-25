@@ -143,6 +143,20 @@
 			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
 	</package>
+	<package name="appFileManageAction" namespace="/system/appfilemanage" extends="abstract-struts">
+		<action name="list" class="appFileManageAction">
+			<result name="success">/system/appfilemanage.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
+		</action>
+		<action name="info" class="appFileManageAction" method="info">
+			<result name="success">/system/appfilemanageinfo.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
+		</action>
+		<action name="save" class="appFileManageAction" method="save">
+			<result name="success">/system/appfilemanageinfo.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
+		</action>
+	</package>
 	
 	
 	<package name="loginApi" namespace="/api" extends="abstract-struts">
