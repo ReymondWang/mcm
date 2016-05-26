@@ -62,13 +62,13 @@
 									<thead>
 										<tr>
 											<th>应用名称</th>
-											<th>版本号</th>
+											<th>版本名称</th>
 											<th>更新说明</th>
 											<th>是否启用</th>
 										</tr>
 									</thead>
 									<tbody>
-									<s:iterator var="item" value="#pageInfo.result">
+									<s:iterator var="item" value="#request.pageInfo.result">
 										<tr>
 											<td>
 												<a href="${rootPath}/system/appfilemanage/info?osType=<s:property value="curOsType" />&id=<s:property value="#item.id" />">
@@ -76,13 +76,13 @@
 												</a>
 											</td>
 											<td>
-												<s:property value="#item.versionCode" />
+												<s:property value="#item.versionName" />
 											</td>
 											<td>
 												<s:property value="#item.versionDescription" />
 											</td>
 											<td>
-												<s:if test="#item.isUsing = 1">启用</s:if><s:else>停用</s:else>
+												<s:if test="#item.isUsing == 1">启用</s:if><s:else>停用</s:else>
 											</td>
 										</tr>
 									</s:iterator>
@@ -93,13 +93,14 @@
 						<div class="box-footer no-padding">
 							<div class="mailbox-controls">
 								<div class="pull-right">
-									<s:property value="#pageInfo.startPos"/>-<s:property value="#pageInfo.endPos"/>/<s:property value="#pageInfo.totalCount"/>
+									<s:property value="#request.pageInfo.startPos"/>-<s:property value="#request.pageInfo.endPos"/>/<s:property value="#request.pageInfo.totalCount"/>
 									<div class="btn-group" style="margin-bottom:5px;">
 										<button class="btn btn-default btn-sm" onclick="prePage();"><i class="fa fa-chevron-left"></i></button>
 										<button class="btn btn-default btn-sm" onclick="nextPage();"><i class="fa fa-chevron-right"></i></button>
 									</div>
 								</div>
 							</div>
+							<input id="hdnCurrentPageNo" type="hidden" name="currentPageNo" />
 						</div>
 					</div>
 				</div>
@@ -128,6 +129,24 @@
 				}
 			}
 		});
+		
+		function prePage(){
+			if (<s:property value="pageInfo.pageNo" /> == 1){
+				alertMcmMsg($(".alert-danger"), "<s:text name='msg_first_page'></s:text>");
+			} else {
+				$("#hdnCurrentPageNo").val(<s:property value="pageInfo.pageNo" /> - 1);
+				search();
+			}
+		}
+		
+		function nextPage(){
+			if (<s:property value="pageInfo.totalCount" /> == <s:property value="pageInfo.endPos" />){
+				alertMcmMsg($(".alert-danger"), "<s:text name='msg_last_page'></s:text>");
+			} else {
+				$("#hdnCurrentPageNo").val(<s:property value="pageInfo.pageNo" /> + 1);
+				search();
+			}
+		}
 	</script>
 </body>
 </html>

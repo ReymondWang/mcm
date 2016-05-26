@@ -13,8 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
 @Table(name="app_file_manage")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class AppFileManage implements Serializable {
 	private static final long serialVersionUID = 4791666822763065640L;
 
@@ -29,8 +33,11 @@ public class AppFileManage implements Serializable {
 	@Column(name="app_name", length=50)
 	private String appName;
 	
-	@Column(name="version_code", length=50)
-	private String versionCode;
+	@Column(name="version_code")
+	private int versionCode;
+	
+	@Column(name="version_name", length=50)
+	private String versionName;
 	
 	@Column(name="version_description", length=500)
 	private String versionDescription;
@@ -79,12 +86,20 @@ public class AppFileManage implements Serializable {
 		this.appName = appName;
 	}
 
-	public String getVersionCode() {
+	public int getVersionCode() {
 		return versionCode;
 	}
 
-	public void setVersionCode(String versionCode) {
+	public void setVersionCode(int versionCode) {
 		this.versionCode = versionCode;
+	}
+
+	public String getVersionName() {
+		return versionName;
+	}
+
+	public void setVersionName(String versionName) {
+		this.versionName = versionName;
 	}
 
 	public String getVersionDescription() {

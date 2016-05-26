@@ -17,8 +17,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
 @Table(name="dictionary_name")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class DictionaryName implements Serializable {
 	private static final long serialVersionUID = -1787519063628897097L;
 

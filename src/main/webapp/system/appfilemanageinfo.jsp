@@ -65,6 +65,7 @@
 							method="post">
 							<div class="box-body">
 								<input type="hidden" name="entity.id" value="${entity.id}">
+								<input type="hidden" name="curOsType" value="${curOsType}">
 								<div class="form-group">
 									<label for="txtAppName" class="col-sm-2 control-label">应用名称</label>
 									<div class="col-sm-9">
@@ -75,8 +76,15 @@
 								<div class="form-group">
 									<label for="txtVersionCode" class="col-sm-2 control-label">版本号</label>
 									<div class="col-sm-9">
-										<input type="text" name="entity.versionCode" class="form-control"
+										<input type="number" name="entity.versionCode" class="form-control"
 											id="txtVersionCode" value="${entity.versionCode}" placeholder="版本号">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="txtVersionName" class="col-sm-2 control-label">版本名称</label>
+									<div class="col-sm-9">
+										<input type="text" name="entity.versionName" class="form-control"
+											id="txtVersionName" value="${entity.versionName}" placeholder="版本名称">
 									</div>
 								</div>
 								<div class="form-group">
@@ -93,7 +101,7 @@
 											<i class="fa fa-paperclip"></i> 选择
 											<input id="btnAttachment" type="file" name="appFile" onchange="btnAttachment_OnChange();">
 										</div>
-										<span id="spanFileName"></span>
+										<span id="spanFileName">${entity.fileName}</span>
 									</div>
 								</div>
 								<div id="fileIOS" class="form-group">
@@ -125,6 +133,25 @@
 			</div>
 		</section>
 	</div>
+	<div class="alert alert-danger alert-dismissable col-sm-4" style="display:none;">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<h4><i class="icon fa fa-ban"></i> 错误</h4>
+		<div id="MsgContent"></div>
+	</div>
+	<div class="alert alert-success alert-dismissable col-sm-4" style="display:none;">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<h4><i class="icon fa fa-check"></i> 成功</h4>
+		<div id="MsgContent"></div>
+    </div>
+    <div class="alert alert-info col-sm-4" style="display:none; background:white;">
+    	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    	<h4><i class="icon fa fa-info"></i> 确认</h4>
+    	<div id="MsgContent" class="text-center">你是否确定要删除？</div>
+    	<div class="text-center" style="margin-top:1rem;">
+    		<button class="btn btn-defalut" onclick="cancelDel();">取消</button>
+    		<button class="btn btn-danger" onclick="submitDel();">确定</button>
+    	</div>
+    </div>
 	<script src="${rootPath}/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <script src="${rootPath}/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${rootPath}/plugins/fastclick/fastclick.min.js"></script>
@@ -168,7 +195,45 @@
 		}
 		
 		function saveFileInfo(){
+			var appName = $("#txtAppName").val();
+			var versionCode = $("#txtVersionCode").val();
+			var versionName = $("#txtVersionName").val();
+			var hdnFileName = $("#hdnFileName").val();
+			var txtAppFileUrl = $("#txtAppFileUrl").val();
+			
+			var hasError = false;
+			if (appName == ""){
+				alertMcmMsg($(".alert-danger"),'<s:text name="msg_appname_cannot_empty"></s:text>');
+				hasError = true;
+			}
+			if (!hasError && versionCode == ""){
+				alertMcmMsg($(".alert-danger"),'<s:text name="msg_versioncode_cannot_empty"></s:text>');
+				hasError = true;
+			}
+			if (!hasError && versionName == ""){
+				alertMcmMsg($(".alert-danger"),'<s:text name="msg_versionname_cannot_empty"></s:text>');
+				hasError = true;
+			}
+			if (!hasError && hdnFileName == "" && txtAppFileUrl == ""){
+				alertMcmMsg($(".alert-danger"),'<s:text name="msg_file_cannot_empty"></s:text>');
+				hasError = true;
+			}
+			if (!hasError){
+				$("#formFile").submit();
+			}
+		}
+		
+		function confirmDel(){
+			alertMcmConfirmMsg($(".alert-info"), "<s:text name='msg_del_confim'></s:text>")
+		}
+		
+		function submitDel(){
+			$("#formFile").attr("action", "${rootPath}/system/appfilemanage/del");
 			$("#formFile").submit();
+		}
+		
+		function cancelDel(){
+			dismissMsg($(".alert-info"));
 		}
 	</script>
 </body>

@@ -13,8 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
 @Table(name="app_function")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class AppFunction implements Serializable {
 	private static final long serialVersionUID = 624947710487604266L;
 

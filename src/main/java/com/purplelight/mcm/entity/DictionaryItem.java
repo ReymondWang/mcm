@@ -13,8 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
 @Table(name="dictionary_item")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class DictionaryItem implements Serializable {
 	private static final long serialVersionUID = 4269878190944319812L;
 

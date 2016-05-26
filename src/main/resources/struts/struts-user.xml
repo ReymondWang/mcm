@@ -156,6 +156,10 @@
 			<result name="success">/system/appfilemanageinfo.jsp</result>
 			<interceptor-ref name="mydefault"></interceptor-ref>
 		</action>
+		<action name="del" class="appFileManageAction" method="delete">
+			<result name="success">/system/appfilemanageinfo.jsp</result>
+			<interceptor-ref name="mydefault"></interceptor-ref>
+		</action>
 	</package>
 	
 	

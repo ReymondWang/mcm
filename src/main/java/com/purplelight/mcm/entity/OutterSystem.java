@@ -17,8 +17,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
 @Table(name="outter_system")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class OutterSystem implements Serializable {
 	private static final long serialVersionUID = -1348392722146170125L;
 

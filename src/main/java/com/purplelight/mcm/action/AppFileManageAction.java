@@ -8,9 +8,12 @@ import javax.annotation.Resource;
 
 import com.purplelight.mcm.entity.AppFileManage;
 import com.purplelight.mcm.entity.DictionaryItem;
+import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.query.PageInfo;
+import com.purplelight.mcm.service.IAppFileManageService;
 import com.purplelight.mcm.service.IDictionaryService;
 import com.purplelight.mcm.util.FileHelper;
+import com.purplelight.mcm.util.McmConstant;
 import com.purplelight.mcm.util.StringUtil;
 
 public class AppFileManageAction extends BaseAction {
@@ -32,13 +35,24 @@ public class AppFileManageAction extends BaseAction {
 	
 	private String selFileName;
 	
+	private int currentPageNo;
+	
 	@Resource
 	private IDictionaryService dictService;
+	
+	@Resource
+	private IAppFileManageService appFileManageService;
 	
 	@Override
 	public String execute() throws Exception{
 		curOsType = getRequest().getParameter("osType");
 		setOsTypeInfo();
+		
+		int pageNo = 1;
+		if (currentPageNo != 0){
+			pageNo = currentPageNo;
+		}
+		pageInfo = appFileManageService.getByOsType(curOsType, pageNo);
 		
 		return SUCCESS;
 	}
@@ -47,7 +61,9 @@ public class AppFileManageAction extends BaseAction {
 		curOsType = getRequest().getParameter("osType");
 		String id = getRequest().getParameter("id");
 		setOsTypeInfo();
-		
+		if (!StringUtil.IsNullOrEmpty(id)){
+			entity = appFileManageService.getById(Integer.parseInt(id));
+		}
 		
 		return SUCCESS;
 	}
@@ -55,8 +71,43 @@ public class AppFileManageAction extends BaseAction {
 	public String save() throws Exception{
 		setOsTypeInfo();
 		
-		boolean success = FileHelper.saveAPK(appFile, selFileName);
+		if (!StringUtil.IsNullOrEmpty(selFileName)){
+			entity.setFileName(FileHelper.generateApkFileName(
+					entity.getAppName(), entity.getVersionName(), selFileName));
+			boolean success = FileHelper.saveAPK(appFile, entity.getFileName());
+			if (!success){
+				setMessageType(BaseAction.ERROR_MSG);
+				setMessageFromResource("msg_file_upload_failed");
+				return ERROR;
+			}
+		}
+		entity.setAppType(curOsType);
+		SystemUser loginedUser = (SystemUser)getSession().get(McmConstant.USER_SESSION);
+		appFileManageService.saveOrUpdate(entity, loginedUser);
 		
+		setMessageType(BaseAction.SUCCESS_MSG);
+		setMessageFromResource("msg_save_success");
+		
+		return SUCCESS;
+	}
+	
+	public String delete() throws Exception{
+		setOsTypeInfo();
+		
+		appFileManageService.delete(entity);
+		
+		// 取得当前分类下的下一条数据
+		int pageNo = 1;
+		if (currentPageNo != 0){
+			pageNo = currentPageNo;
+		}
+		pageInfo = appFileManageService.getByOsType(curOsType, pageNo);
+		if (pageInfo != null && pageInfo.getResult().size() > 0){
+			entity = pageInfo.getResult().get(0);
+		}
+		
+		setMessageType(BaseAction.SUCCESS_MSG);
+		setMessageFromResource("msg_del_success");
 		return SUCCESS;
 	}
 	
@@ -127,6 +178,14 @@ public class AppFileManageAction extends BaseAction {
 
 	public void setSelFileName(String selFileName) {
 		this.selFileName = selFileName;
+	}
+
+	public int getCurrentPageNo() {
+		return currentPageNo;
+	}
+
+	public void setCurrentPageNo(int currentPageNo) {
+		this.currentPageNo = currentPageNo;
 	}
 	
 }

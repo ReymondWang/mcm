@@ -13,8 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
 @Table(name="feedback")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Feedback implements Serializable {
 	private static final long serialVersionUID = 6861707773235029089L;
 

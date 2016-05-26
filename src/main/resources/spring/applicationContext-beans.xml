@@ -40,7 +40,7 @@
 	<bean id="passportApi" class="com.purplelight.mcm.api.PassportApi" scope="prototype"></bean>
 	<bean id="commonApi" class="com.purplelight.mcm.api.CommonApi" scope="prototype"></bean>
 	
-	<!-- Spring管理的Service -->
+	<!-- Spring管理的内部Service -->
 	<bean id="systemUserService" class="com.purplelight.mcm.service.impl.SystemUserServiceImpl"></bean>
 	<bean id="dictService" class="com.purplelight.mcm.service.impl.DictionaryServiceImpl"></bean>
 	<bean id="outterSystemService" class="com.purplelight.mcm.service.impl.OutterSystemServiceImpl"></bean>
@@ -48,6 +48,9 @@
 	<bean id="articleService" class="com.purplelight.mcm.service.impl.ArticleServiceImpl"></bean>
 	<bean id="feedbackService" class="com.purplelight.mcm.service.impl.FeedbackServiceImpl"></bean>
 	<bean id="userBindSystemService" class="com.purplelight.mcm.service.impl.UserBindSystemServiceImpl"></bean>
+	<bean id="appFileManageService" class="com.purplelight.mcm.service.impl.AppFileManageServiceImpl"></bean>
+	
+	<!-- Spring管理的对外接口Service -->
 	<bean id="rsOmEstimateService" class="com.purplelight.mcm.service.impl.RedStarOmEstimateServiceImpl"></bean>
 	<bean id="rsOmSpecialCheckervice" class="com.purplelight.mcm.service.impl.RedStarOmSpecialCheckServiceImpl"></bean>
 	<bean id="rsOmPassportService" class="com.purplelight.mcm.service.impl.RedStarOmPassportServiceImpl"></bean>
@@ -76,6 +79,9 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="userBindSystemDao" class="com.purplelight.mcm.dao.impl.UserBindSystemDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="appFileManageDao" class="com.purplelight.mcm.dao.impl.AppFileManageDapImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 </beans>
