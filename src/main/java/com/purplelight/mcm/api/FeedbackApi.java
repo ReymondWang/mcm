@@ -30,6 +30,7 @@ public class FeedbackApi extends BaseApi {
 				} catch (Exception ex){
 					result.setSuccess(false);
 					result.setMessage(ex.getMessage());
+					ex.printStackTrace();
 				}
 			} else {
 				result.setSuccess(false);

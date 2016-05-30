@@ -8,19 +8,25 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import com.purplelight.mcm.dao.IAppFileManageDao;
+import com.purplelight.mcm.dao.IDictionaryItemDao;
 import com.purplelight.mcm.entity.AppFileManage;
+import com.purplelight.mcm.entity.DictionaryItem;
 import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.exception.McmException;
 import com.purplelight.mcm.query.PageInfo;
 import com.purplelight.mcm.query.Strategy;
 import com.purplelight.mcm.service.IAppFileManageService;
 import com.purplelight.mcm.util.McmConstant;
+import com.purplelight.mcm.util.StringUtil;
 import com.purplelight.mcm.util.UpdateUtil;
 
 public class AppFileManageServiceImpl implements IAppFileManageService {
 
 	@Resource
 	private IAppFileManageDao appFileManageDao;
+	
+	@Resource
+	private IDictionaryItemDao dictItemDao;
 	
 	@Override
 	public void save(AppFileManage entity, SystemUser loginedUser) {
@@ -96,6 +102,38 @@ public class AppFileManageServiceImpl implements IAppFileManageService {
 	@Override
 	public AppFileManage getById(int id) {
 		return appFileManageDao.getById(id);
+	}
+
+	@Override
+	public AppFileManage getUpgrateInfo(String appName, String osType) {
+		AppFileManage result = new AppFileManage();
+		
+		DictionaryItem queryEntity = new DictionaryItem();
+		queryEntity.setDictItemValue(osType);
+		Strategy strategy = new Strategy(queryEntity, "di");
+		try {
+			String dictCode = "";
+			List<DictionaryItem> itemList = dictItemDao.find(strategy);
+			if (itemList != null && itemList.size() > 0) {
+				dictCode = itemList.get(0).getDictItemCode();
+			}
+			if (!StringUtil.IsNullOrEmpty(dictCode)) {
+				AppFileManage queryAFM = new AppFileManage();
+				queryAFM.setAppName(appName);
+				queryAFM.setAppType(dictCode);
+				queryAFM.setIsUsing(1);
+
+				Strategy strategyAFM = new Strategy(queryAFM, "afm");
+				List<AppFileManage> list = appFileManageDao.find(strategyAFM);
+				if (list != null && list.size() > 0){
+					result = list.get(0);
+				}
+			}
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | McmException e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 	
 }

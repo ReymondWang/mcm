@@ -16,6 +16,8 @@ public class QualityCheckItem implements Serializable {
 	
 	private String Character;
 	
+	private String Level;
+	
 	private String Descript;
 	
 	private String Partition;
@@ -86,6 +88,14 @@ public class QualityCheckItem implements Serializable {
 
 	public void setCharacter(String character) {
 		Character = character;
+	}
+
+	public String getLevel() {
+		return Level;
+	}
+
+	public void setLevel(String level) {
+		Level = level;
 	}
 
 	public String getDescript() {

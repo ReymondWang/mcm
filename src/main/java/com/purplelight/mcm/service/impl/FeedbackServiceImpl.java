@@ -4,8 +4,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.purplelight.mcm.api.bean.FeedbackInfo;
 import com.purplelight.mcm.dao.IFeedbackDao;
+import com.purplelight.mcm.dao.ISystemUserDao;
 import com.purplelight.mcm.entity.Feedback;
+import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.query.ConditionItem;
 import com.purplelight.mcm.query.PageInfo;
 import com.purplelight.mcm.query.SqlCondition;
@@ -20,6 +23,9 @@ public class FeedbackServiceImpl implements IFeedbackService {
 
 	@Resource
 	private IFeedbackDao feedbackDao;
+	
+	@Resource
+	private ISystemUserDao systemUserDao;
 	
 	@Override
 	public List<Feedback> getAll() {
@@ -53,7 +59,15 @@ public class FeedbackServiceImpl implements IFeedbackService {
 	}
 
 	@Override
-	public void addFeedback(Feedback feedback) {
-		feedbackDao.save(feedback);
+	public void addFeedback(FeedbackInfo feedback) {
+		Feedback entity = new Feedback();
+		entity.setContent(feedback.getContent());
+		entity.setImagePath(feedback.getImagePath());
+		entity.setInputTime(feedback.getInputTime());
+		
+		SystemUser inputUser = systemUserDao.getById(feedback.getId());
+		entity.setInputUser(inputUser);
+		
+		feedbackDao.save(entity);
 	}
 }

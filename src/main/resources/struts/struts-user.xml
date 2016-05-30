@@ -262,6 +262,18 @@
 		</action>
 	</package>
 	
+	<package name="upgradeApi" namespace="/api/upgrade" extends="abstract-struts">
+		<action name="info" class="upgradeApi">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
+	<package name="notificationApi" namespace="/api/notification" extends="abstract-struts">
+		<action name="info" class="notificationApi">
+			<result name="success">/api/api.jsp</result>
+		</action>
+	</package>
+	
 	<package name="commonApi" namespace="/api/common" extends="abstract-struts">
 		<action name="projects" class="commonApi" method="projects">
 			<result name="success">/api/api.jsp</result>

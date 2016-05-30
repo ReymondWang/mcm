@@ -27,6 +27,12 @@ public class EstimateItem implements Serializable {
 	// 问题性质
 	private String character;
 	
+	// 是否重大
+	private String level;
+	
+	// 所属分部工程
+	private String partition;
+	
 	// 问题描述
 	private String description;
 	
@@ -117,6 +123,22 @@ public class EstimateItem implements Serializable {
 
 	public void setCharacter(String character) {
 		this.character = character;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	public String getPartition() {
+		return partition;
+	}
+
+	public void setPartition(String partition) {
+		this.partition = partition;
 	}
 
 	public String getDescription() {

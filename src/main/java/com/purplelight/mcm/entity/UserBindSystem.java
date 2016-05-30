@@ -39,6 +39,9 @@ public class UserBindSystem implements Serializable {
 	@Column(name="token", length=100)
 	private String token;
 	
+	@Column(name="outter_user_id", length=50)
+	private String outterUserId;
+	
 	@ManyToOne(cascade={CascadeType.MERGE, CascadeType.REFRESH}, fetch=FetchType.LAZY)
 	@JoinColumn(name="input_user", referencedColumnName="id")
 	private SystemUser inputUser;
@@ -83,6 +86,14 @@ public class UserBindSystem implements Serializable {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public String getOutterUserId() {
+		return outterUserId;
+	}
+
+	public void setOutterUserId(String outterUserId) {
+		this.outterUserId = outterUserId;
 	}
 
 	public SystemUser getInputUser() {

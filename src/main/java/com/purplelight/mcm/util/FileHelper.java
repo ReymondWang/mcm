@@ -1,5 +1,7 @@
 package com.purplelight.mcm.util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,8 +9,8 @@ import java.io.IOException;
 import java.util.Calendar;
 
 public class FileHelper {
-	private static final String FILE_STORAGE_PATH;
-	private static final String APK_FILE_PATH;
+	public static final String FILE_STORAGE_PATH;
+	public static final String APK_FILE_PATH;
 	static{
 		FILE_STORAGE_PATH = FileHelper.class.getClassLoader().getResource("").getPath().replace("WEB-INF/classes/", "");
 		APK_FILE_PATH = "apk";
@@ -30,13 +32,14 @@ public class FileHelper {
 				newFile.delete();
 			}
 			try {
-				FileInputStream inStr = new FileInputStream(file);
-				FileOutputStream outStr = new FileOutputStream(newFile);
-				byte[] buffer = new byte[1024];
-				while((inStr.read(buffer)) != -1){
-					outStr.write(buffer);
+				BufferedInputStream inStr = new BufferedInputStream(new FileInputStream(file));
+				BufferedOutputStream outStr = new BufferedOutputStream(new FileOutputStream(newFile));
+				byte[] buffer = new byte[8192];
+				int readBytes = 0;
+				while((readBytes = inStr.read(buffer, 0, buffer.length)) != -1){
+					outStr.write(buffer, 0, readBytes);
 				}
-				outStr.flush();
+				
 				outStr.close();
 				inStr.close();
 				success = true;

@@ -39,6 +39,8 @@
 	<bean id="specialCheckApi" class="com.purplelight.mcm.api.SpecialCheckApi" scope="prototype"></bean>
 	<bean id="passportApi" class="com.purplelight.mcm.api.PassportApi" scope="prototype"></bean>
 	<bean id="commonApi" class="com.purplelight.mcm.api.CommonApi" scope="prototype"></bean>
+	<bean id="upgradeApi" class="com.purplelight.mcm.api.UpgradeApi" scope="prototype"></bean>
+	<bean id="notificationApi" class="com.purplelight.mcm.api.NotificationApi" scope="prototype"></bean>
 	
 	<!-- Spring管理的内部Service -->
 	<bean id="systemUserService" class="com.purplelight.mcm.service.impl.SystemUserServiceImpl"></bean>
@@ -55,6 +57,7 @@
 	<bean id="rsOmSpecialCheckervice" class="com.purplelight.mcm.service.impl.RedStarOmSpecialCheckServiceImpl"></bean>
 	<bean id="rsOmPassportService" class="com.purplelight.mcm.service.impl.RedStarOmPassportServiceImpl"></bean>
 	<bean id="rsOmCommonService" class="com.purplelight.mcm.service.impl.RedStarOmCommonServiceImpl"></bean>
+	<bean id="rsOmNotificationService" class="com.purplelight.mcm.service.impl.RedStarOmNotificationServiceImpl"></bean>
 	
 	<!-- Spring管理的Dao -->
 	<bean id="systemUserDao" class="com.purplelight.mcm.dao.impl.SystemUserDaoImpl">

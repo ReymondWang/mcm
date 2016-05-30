@@ -1,6 +1,8 @@
 package com.purplelight.mcm.api.parameter;
 
 public class EstimateReportParameter extends Parameter {
+	private int estimateType;
+	
 	private int systemId;
 	
 	private int reportId;
@@ -8,6 +10,14 @@ public class EstimateReportParameter extends Parameter {
 	private int pageNo;
 	
 	private int pageSize;
+
+	public int getEstimateType() {
+		return estimateType;
+	}
+
+	public void setEstimateType(int estimateType) {
+		this.estimateType = estimateType;
+	}
 
 	public int getSystemId() {
 		return systemId;

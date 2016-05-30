@@ -86,7 +86,7 @@ public class UserBindSystemServiceImpl implements IUserBindSystemService {
 	 * Config.properties中quick_register要设置为true
 	 */
 	@Override
-	public LoginResult bindWithCreate(String userCode, String password) throws Exception {
+	public LoginResult bindWithCreate(String userCode, String password, SystemUser loginedUser) throws Exception {
 		LoginResult loginResult = new LoginResult();
 		
 		OutterSystem queryEntity = new OutterSystem();
@@ -113,6 +113,10 @@ public class UserBindSystemServiceImpl implements IUserBindSystemService {
 					user.setUserName(bindUser.getName());
 					user.setSex("男".equals(bindUser.getGender()) ? 1 : 2);
 					user.setEmail(bindUser.getEmail());
+					user.setInputUser(loginedUser.getId());
+					user.setInputTime(new Timestamp(System.currentTimeMillis()));
+					user.setUpdateUser(loginedUser.getId());
+					user.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 					systemUserDao.save(user);
 					systemUserDao.updatePassword(user.getId(), password);
 					
@@ -120,6 +124,11 @@ public class UserBindSystemServiceImpl implements IUserBindSystemService {
 					bindSystem.setOutterSystem(trySystem);
 					bindSystem.setUser(user);
 					bindSystem.setToken(bindUser.getToken());
+					bindSystem.setOutterUserId(bindUser.getUserId());
+					bindSystem.setInputUser(loginedUser);
+					bindSystem.setInputTime(new Timestamp(System.currentTimeMillis()));
+					bindSystem.setUpdateUser(loginedUser);
+					bindSystem.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 					userBindSystemDao.save(bindSystem);
 					
 					loginResult.setSuccess(true);

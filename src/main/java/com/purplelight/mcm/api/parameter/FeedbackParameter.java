@@ -1,15 +1,15 @@
 package com.purplelight.mcm.api.parameter;
 
-import com.purplelight.mcm.entity.Feedback;
+import com.purplelight.mcm.api.bean.FeedbackInfo;
 
 public class FeedbackParameter extends Parameter {
-	private Feedback feedback;
+	private FeedbackInfo feedback;
 
-	public Feedback getFeedback() {
+	public FeedbackInfo getFeedback() {
 		return feedback;
 	}
 
-	public void setFeedback(Feedback feedback) {
+	public void setFeedback(FeedbackInfo feedback) {
 		this.feedback = feedback;
 	}
 }

@@ -10,5 +10,6 @@ public interface IAppFileManageService {
 	public void saveOrUpdate(AppFileManage entity, SystemUser loginedUser) throws Exception;
 	public void delete(AppFileManage entity);
 	public PageInfo<AppFileManage> getByOsType(String osType, int pageNo);
+	public AppFileManage getUpgrateInfo(String appName, String osType);
 	public AppFileManage getById(int id);
 }

@@ -151,4 +151,9 @@ public final class McmConstant {
 		}
 	}
 	
+	public class APPLICATION_VERSION{
+		public static final String ANDROID = "安卓";
+		public static final String IOS = "苹果";
+	}
+	
 }

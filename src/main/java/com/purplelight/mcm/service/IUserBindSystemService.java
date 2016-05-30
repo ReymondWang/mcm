@@ -12,7 +12,7 @@ public interface IUserBindSystemService {
 	public void updateBindInfo(UserBindSystem entity, SystemUser loginedUser) throws Exception;
 	public void deleteBindInfo(UserBindSystem entity);
 	public void deleteBindInfo(int userId, int systemId);
-	public LoginResult bindWithCreate(String userCode, String password) throws Exception;
+	public LoginResult bindWithCreate(String userCode, String password, SystemUser loginedUser) throws Exception;
 	public List<OutterSystemBindInfo> getUserBindInfo(int userId);
 	public UserBindSystem getByUserIdAndSystemId(int userId, int systemId);
 }

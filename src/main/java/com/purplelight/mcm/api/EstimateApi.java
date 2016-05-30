@@ -32,15 +32,10 @@ public class EstimateApi extends BaseApi {
 		if (!StringUtil.IsNullOrEmpty(json)){
 			EstimateItemParameter parameter = gson.fromJson(json, EstimateItemParameter.class);
 			if (checkToken(parameter.getToken())){
-				int userId = ConvertUtil.toInt(parameter.getLoginId());
-				int systemId = parameter.getSystemId();
-				int reportId = parameter.getReportId();
-				int pageNo = parameter.getPageNo();
-				int pageSize = parameter.getPageSize();
 				if (INCHARGER == parameter.getType()){
-					result = rsOmEstimateService.getEstimateItemsByIncharger(userId, systemId, reportId, pageNo, pageSize);
+					result = rsOmEstimateService.getEstimateItemsByIncharger(parameter);
 				} else if (CHECHER == parameter.getType()){
-					result = rsOmEstimateService.getEstimateItemsByChecker(userId, systemId, reportId, pageNo, pageSize);
+					result = rsOmEstimateService.getEstimateItemsByChecker(parameter);
 				} else {
 					result.setSuccess(false);
 					result.setMessage(getText("msg_illegal_request_info"));
@@ -94,12 +89,13 @@ public class EstimateApi extends BaseApi {
 		if (!StringUtil.IsNullOrEmpty(json)){
 			EstimateReportParameter parameter = gson.fromJson(json, EstimateReportParameter.class);
 			if (checkToken(parameter.getToken())){
+				int checkType = parameter.getEstimateType();
 				int userId = ConvertUtil.toInt(parameter.getLoginId());
 				int systemId = parameter.getSystemId();
 				int pageNo = parameter.getPageNo();
 				int pageSize = parameter.getPageSize();
 				
-				result = rsOmEstimateService.getEstimateReports(userId, systemId, pageNo, pageSize);
+				result = rsOmEstimateService.getEstimateReports(checkType, userId, systemId, pageNo, pageSize);
 			} else {
 				result.setSuccess(false);
 				result.setMessage(getText("msg_illegal_request_info"));

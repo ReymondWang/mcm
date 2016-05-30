@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import com.google.gson.Gson;
 import com.purplelight.mcm.api.bean.EstimateItem;
 import com.purplelight.mcm.api.bean.EstimateReport;
+import com.purplelight.mcm.api.parameter.EstimateItemParameter;
 import com.purplelight.mcm.api.parameter.EstimateUploadParameter;
 import com.purplelight.mcm.api.result.EstimateItemResult;
 import com.purplelight.mcm.api.result.EstimateReportResult;
@@ -47,14 +48,34 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 	private IUserBindSystemService userBindSystemService;
 	
 	@Override
-	public EstimateItemResult getEstimateItemsByIncharger(int userId, int systemId, int reportId, int pageNo, int pageSize) {
+	public EstimateItemResult getEstimateItemsByIncharger(EstimateItemParameter parameter) {
 		EstimateItemResult result = new EstimateItemResult();
+		
+		int systemId = parameter.getSystemId();
+		int userId = ConvertUtil.toInt(parameter.getLoginId());
 		
 		OutterSystem system = outterSystemService.getOutterSystemById(systemId);
 		if (system != null){
 			UserBindSystem bindSystem = userBindSystemService.getByUserIdAndSystemId(userId, systemId);
 			if (bindSystem != null){
-				result = getQualityCheckItems(systemId, system.getSystemUrl(), bindSystem.getToken(), userId, 0, reportId, pageNo, pageSize);
+				String systemUrl = system.getSystemUrl();
+				String token = bindSystem.getToken();
+				int inChargeId = ConvertUtil.toInt(bindSystem.getOutterUserId());
+				result = getQualityCheckItems(parameter.getEstimateType()
+						, systemId
+						, systemUrl
+						, token
+						, inChargeId
+						, 0
+						, parameter.getReportId()
+						, parameter.isOnlyMyself()
+						, parameter.getProjectId()
+						, parameter.getPartition()
+						, parameter.getInChargeName()
+						, parameter.getDescription()
+						, bindSystem.getOutterUserId()
+						, parameter.getPageNo()
+						, parameter.getPageSize());
 			} else {
 				result.setSuccess(false);
 				result.setMessage("用户没有绑定该系统");
@@ -68,14 +89,34 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 	}
 
 	@Override
-	public EstimateItemResult getEstimateItemsByChecker(int userId, int systemId, int reportId, int pageNo, int pageSize) {
+	public EstimateItemResult getEstimateItemsByChecker(EstimateItemParameter parameter) {
 		EstimateItemResult result = new EstimateItemResult();
 		
-		OutterSystem system = outterSystemService.getOutterSystemById(systemId);
+		int systemId = parameter.getSystemId();
+		int userId = ConvertUtil.toInt(parameter.getLoginId());
+		
+		OutterSystem system = outterSystemService.getOutterSystemById(parameter.getSystemId());
 		if (system != null){
 			UserBindSystem bindSystem = userBindSystemService.getByUserIdAndSystemId(userId, systemId);
 			if (bindSystem != null){
-				result = getQualityCheckItems(systemId, system.getSystemUrl(), bindSystem.getToken(), 0, userId, reportId, pageNo, pageSize);
+				String systemUrl = system.getSystemUrl();
+				String token = bindSystem.getToken();
+				int checkerId = ConvertUtil.toInt(bindSystem.getOutterUserId());
+				result = getQualityCheckItems(parameter.getEstimateType()
+						, systemId
+						, systemUrl
+						, token
+						, 0
+						, checkerId
+						, parameter.getReportId()
+						, parameter.isOnlyMyself()
+						, parameter.getProjectId()
+						, parameter.getPartition()
+						, parameter.getInChargeName()
+						, parameter.getDescription()
+						, bindSystem.getOutterUserId()
+						, parameter.getPageNo()
+						, parameter.getPageSize());
 			} else {
 				result.setSuccess(false);
 				result.setMessage("用户没有绑定该系统");
@@ -96,7 +137,7 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 		if (system != null){
 			UserBindSystem bindSystem = userBindSystemService.getByUserIdAndSystemId(userId, systemId);
 			if (bindSystem != null){
-				result = getQualityCheckItem(system.getSystemUrl(), bindSystem.getToken(), itemId);
+				result = getQualityCheckItem(system.getSystemUrl(), bindSystem.getToken(), itemId, bindSystem.getOutterUserId());
 			} else {
 				result.setSuccess(false);
 				result.setMessage("用户没有绑定该系统");
@@ -110,14 +151,16 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 	}
 	
 	@Override
-	public EstimateReportResult getEstimateReports(int userId, int systemId, int pageNo, int pageSize) {
+	public EstimateReportResult getEstimateReports(int checkType, int userId, int systemId, int pageNo, int pageSize) {
 		EstimateReportResult result = new EstimateReportResult();
 		
 		OutterSystem system = outterSystemService.getOutterSystemById(systemId);
 		if (system != null){
 			UserBindSystem bindSystem = userBindSystemService.getByUserIdAndSystemId(userId, systemId);
 			if (bindSystem != null){
-				result = getQualityCheckReports(system.getSystemUrl(), bindSystem.getToken(), pageNo, pageSize);
+				String systemUrl = system.getSystemUrl();
+				String token = bindSystem.getToken();
+				result = getQualityCheckReports(checkType, systemUrl, token, pageNo, pageSize);
 			} else {
 				result.setSuccess(false);
 				result.setMessage("用户没有绑定该系统");
@@ -183,15 +226,46 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 	 * @param pageNo
 	 * @return
 	 */
-	private EstimateItemResult getQualityCheckItems(int systemId, String systemUrl, String token, int inChargeId, int checkPersonId, int checkId, int page, int pageNo){
+	private EstimateItemResult getQualityCheckItems(int checkType
+			, int systemId
+			, String systemUrl
+			, String token
+			, int inChargeId
+			, int checkPersonId
+			, int checkId
+			, boolean onlyMyself
+			, String projectId
+			, String partition
+			, String inChargerName
+			, String description
+			, String outterUserId
+			, int page
+			, int pageNo){
 		EstimateItemResult result = new EstimateItemResult();
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("token", token);
-//		map.put("inchargeid", ConvertUtil.toString(inChargeId));
-		map.put("inchargeid", "0");
-		map.put("checkpersonid", ConvertUtil.toString(checkPersonId));
+		map.put("checktype", String.valueOf(checkType));
+		if (onlyMyself){
+			map.put("inchargeid", ConvertUtil.toString(inChargeId));
+			map.put("checkpersonid", ConvertUtil.toString(checkPersonId));
+		} else {
+			map.put("inchargeid", "0");
+			map.put("checkpersonid", "0");
+		}
 		map.put("checkid", ConvertUtil.toString(checkId));
+		if (!StringUtil.IsNullOrEmpty(projectId)){
+			map.put("projectid", projectId);
+		}
+		if (!StringUtil.IsNullOrEmpty(partition)){
+			map.put("partition", partition);
+		}
+		if (!StringUtil.IsNullOrEmpty(inChargerName)){
+			map.put("incharge", inChargerName);
+		}
+		if (!StringUtil.IsNullOrEmpty(description)){
+			map.put("desc", description);
+		}
 		map.put("page", ConvertUtil.toString(page));
 		map.put("numofpage", ConvertUtil.toString(pageNo));
 		
@@ -211,6 +285,8 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 					esItem.setAreaName(item.getPeriodName());
 					esItem.setCategory(item.getCatalog());
 					esItem.setCharacter(item.getCharacter());
+					esItem.setLevel(item.getLevel());
+					esItem.setPartition(item.getPartition());
 					esItem.setDescription(item.getDescript());
 					esItem.setThumbs(ConvertUtil.batchAddSystemUrl(systemUrl, item.getThumbnail()));
 					esItem.setImages(ConvertUtil.batchAddSystemUrl(systemUrl, item.getImages()));
@@ -226,6 +302,13 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 					esItem.setFixedImages(ConvertUtil.batchAddSystemUrl(systemUrl, item.getFixedImages()));
 					esItem.setOutterSystemId(systemId);
 					
+					// 本人负责的可以编辑，否则不行
+					if (item.getInChargePerson().equals(outterUserId)){
+						esItem.setStatus(1);
+					} else {
+						esItem.setStatus(0);
+					}
+					
 					esItems.add(esItem);
 				}
 				result.setItems(esItems);
@@ -238,7 +321,7 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 		return result;
 	}
 	
-	private SingleEstimateItemResult getQualityCheckItem(String systemUrl, String token, int itemId){
+	private SingleEstimateItemResult getQualityCheckItem(String systemUrl, String token, int itemId, String outterUserId){
 		SingleEstimateItemResult result = new SingleEstimateItemResult();
 		
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -275,6 +358,13 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 				item.setFixedThumbs(ConvertUtil.batchAddSystemUrl(systemUrl, obj.getFixedThumbnail()));
 				item.setFixedImages(ConvertUtil.batchAddSystemUrl(systemUrl, obj.getFixedImages()));
 				
+				// 本人负责的可以编辑，否则不行
+				if (obj.getInChargePerson().equals(outterUserId)){
+					item.setStatus(1);
+				} else {
+					item.setStatus(0);
+				}
+				
 				result.setItem(item);
 			}
 		} else {
@@ -293,11 +383,12 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 	 * @param pageSize
 	 * @return
 	 */
-	private EstimateReportResult getQualityCheckReports(String systemUrl, String token, int pageNo, int pageSize){
+	private EstimateReportResult getQualityCheckReports(int checkType, String systemUrl, String token, int pageNo, int pageSize){
 		EstimateReportResult result = new EstimateReportResult();
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("token", token);
+		map.put("checktype", String.valueOf(checkType));
 		map.put("page", ConvertUtil.toString(pageNo));
 		map.put("numofpage", ConvertUtil.toString(pageNo));
 		

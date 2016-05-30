@@ -5,6 +5,20 @@
 <hibernate-configuration>
 	<!-- sessionFactory代表一个数据库的描述 -->
 	<session-factory>
+		<!-- C3P0配置 -->
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		<property name="hibernate.c3p0.max_size">20</property>
+		<property name="hibernate.c3p0.min_size">5</property>
+		<property name="hibernate.c3p0.timeout">120</property>
+		<property name="automaticTestTable">Test</property>
+		<property name="hibernate.c3p0.max_statements">100</property>
+		<property name="hibernate.c3p0.idle_test_period">120</property>
+		<property name="hibernate.c3p0.acquire_increment">1</property>
+		<property name="c3p0.testConnectionOnCheckout">true</property>
+		<property name="c3p0.idleConnectionTestPeriod">18000</property>
+		<property name="c3p0.maxIdleTime">25000</property>
+		<property name="c3p0.idle_test_period">120</property>
+	
 		<!-- 告诉hibernate链接的是什么数据库 -->
 		<property name="dialect">
 			org.hibernate.dialect.MySQLDialect
@@ -20,6 +34,7 @@
 			<![CDATA[jdbc:mysql://127.0.0.1:3306/mcm?useUnicode=true&characterEncoding=UTF-8]]>
 		</property>
 		
+		<property name="myeclipse.connection.profile">testDb</property>
 		<!-- 显示sql语句 -->
 		<property name="show sql">true</property>
 		<!--validate     默认值 根据持久化类和映射文件检查表的结构 

@@ -53,6 +53,7 @@ public class BindUserApi extends BaseApi {
 								BindUser user = bindResult.getObj();
 								UserBindSystem bindSystem = new UserBindSystem();
 								bindSystem.setUser(systemUserService.getUserbyId(Integer.parseInt(parameter.getLoginId())));
+								bindSystem.setOutterUserId(user.getUserId());
 								bindSystem.setOutterSystem(system);
 								bindSystem.setToken(user.getToken());
 								userBindSystemService.addBindInfo(bindSystem, updateUser);
