@@ -59,5 +59,7 @@
 		<mapping class="com.purplelight.mcm.entity.Feedback" />
 		<mapping class="com.purplelight.mcm.entity.UserBindSystem" />
 		<mapping class="com.purplelight.mcm.entity.AppFileManage" />
+		<mapping class="com.purplelight.mcm.entity.FunctionStructure" />
+		<mapping class="com.purplelight.mcm.entity.UserFunction" />
 	</session-factory>
 </hibernate-configuration>

@@ -11,7 +11,7 @@ import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.service.IArticleService;
 import com.purplelight.mcm.util.UpdateUtil;
 
-public class ArticleServiceImpl implements IArticleService {
+public class ArticleServiceImpl extends BaseServiceImpl implements IArticleService {
 
 	@Resource
 	private IArticleDao articleDao;

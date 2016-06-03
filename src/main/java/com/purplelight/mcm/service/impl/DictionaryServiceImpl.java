@@ -13,7 +13,7 @@ import com.purplelight.mcm.entity.SystemUser;
 import com.purplelight.mcm.service.IDictionaryService;
 import com.purplelight.mcm.util.UpdateUtil;
 
-public class DictionaryServiceImpl implements IDictionaryService {
+public class DictionaryServiceImpl extends BaseServiceImpl implements IDictionaryService {
 
 	@Resource
 	private IDictionaryNameDao dictNameDao;

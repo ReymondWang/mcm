@@ -60,6 +60,9 @@ public class AppFunction implements Serializable {
 	// 如果为外部原生应用，则需要写明白调用的具体方式。
 	private String callMethod;
 	
+	// 权限点
+	private String rightCode;
+	
 	// 功能排序
 	private String appOrder; 
 	
@@ -218,5 +221,14 @@ public class AppFunction implements Serializable {
 
 	public void setAppOrder(String appOrder) {
 		this.appOrder = appOrder;
+	}
+
+	@Column(name="right_code", length=50)
+	public String getRightCode() {
+		return rightCode;
+	}
+
+	public void setRightCode(String rightCode) {
+		this.rightCode = rightCode;
 	}
 }

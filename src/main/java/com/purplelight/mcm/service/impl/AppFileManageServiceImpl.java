@@ -20,7 +20,7 @@ import com.purplelight.mcm.util.McmConstant;
 import com.purplelight.mcm.util.StringUtil;
 import com.purplelight.mcm.util.UpdateUtil;
 
-public class AppFileManageServiceImpl implements IAppFileManageService {
+public class AppFileManageServiceImpl extends BaseServiceImpl implements IAppFileManageService {
 
 	@Resource
 	private IAppFileManageDao appFileManageDao;

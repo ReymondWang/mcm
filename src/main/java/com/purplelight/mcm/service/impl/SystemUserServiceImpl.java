@@ -14,7 +14,7 @@ import com.purplelight.mcm.util.McmConstant;
 import com.purplelight.mcm.util.StringUtil;
 import com.purplelight.mcm.util.UpdateUtil;
 
-public class SystemUserServiceImpl implements ISystemUserService {
+public class SystemUserServiceImpl extends BaseServiceImpl implements ISystemUserService {
 
 	private final static String ORIGINAL_PASSWORD = "123456";
 	

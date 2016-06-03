@@ -9,6 +9,8 @@ public class SpecialItem implements Serializable {
 
 	private int id;
 	
+	private int checkType;
+	
 	private int systemId;
 	
 	private String category;
@@ -49,6 +51,14 @@ public class SpecialItem implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getCheckType() {
+		return checkType;
+	}
+
+	public void setCheckType(int checkType) {
+		this.checkType = checkType;
 	}
 
 	public int getSystemId() {

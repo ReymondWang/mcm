@@ -84,7 +84,13 @@
 	<bean id="userBindSystemDao" class="com.purplelight.mcm.dao.impl.UserBindSystemDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	<bean id="appFileManageDao" class="com.purplelight.mcm.dao.impl.AppFileManageDapImpl">
+	<bean id="appFileManageDao" class="com.purplelight.mcm.dao.impl.AppFileManageDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="functionStructureDao" class="com.purplelight.mcm.dao.impl.FunctionStructureDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="userFunctionDao" class="com.purplelight.mcm.dao.impl.UserFunctionDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 </beans>

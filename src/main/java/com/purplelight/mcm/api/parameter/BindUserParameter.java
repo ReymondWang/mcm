@@ -6,6 +6,8 @@ public class BindUserParameter extends Parameter {
 	private String password;
 	
 	private int systemId;
+	
+	private String meachineCode;
 
 	public String getPassword() {
 		return password;
@@ -29,5 +31,13 @@ public class BindUserParameter extends Parameter {
 
 	public void setUserCode(String userCode) {
 		this.userCode = userCode;
+	}
+
+	public String getMeachineCode() {
+		return meachineCode;
+	}
+
+	public void setMeachineCode(String meachineCode) {
+		this.meachineCode = meachineCode;
 	}
 }

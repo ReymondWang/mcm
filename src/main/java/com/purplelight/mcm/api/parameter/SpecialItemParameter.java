@@ -1,6 +1,8 @@
 package com.purplelight.mcm.api.parameter;
 
 public class SpecialItemParameter extends Parameter {
+	private int checkType;
+	
 	private int systemId;
 	
 	private int reportId;
@@ -12,6 +14,14 @@ public class SpecialItemParameter extends Parameter {
 	private int pageNo;
 	
 	private int pageSize;
+
+	public int getCheckType() {
+		return checkType;
+	}
+
+	public void setCheckType(int checkType) {
+		this.checkType = checkType;
+	}
 
 	public int getSystemId() {
 		return systemId;

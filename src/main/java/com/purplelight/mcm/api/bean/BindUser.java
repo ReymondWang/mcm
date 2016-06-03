@@ -1,5 +1,7 @@
 package com.purplelight.mcm.api.bean;
 
+import java.util.List;
+
 public class BindUser {
 	private String UserId;
 
@@ -10,6 +12,8 @@ public class BindUser {
     private String Gender;
 
     private String Token;
+    
+    private List<String> Rights;
 
     public String getUserId() {
         return UserId;
@@ -50,4 +54,12 @@ public class BindUser {
     public void setToken(String token) {
         Token = token;
     }
+
+	public List<String> getRights() {
+		return Rights;
+	}
+
+	public void setRights(List<String> rights) {
+		Rights = rights;
+	}
 }

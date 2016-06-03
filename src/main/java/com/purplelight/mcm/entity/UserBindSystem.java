@@ -39,6 +39,9 @@ public class UserBindSystem implements Serializable {
 	@Column(name="token", length=100)
 	private String token;
 	
+	@Column(name="meachine_code", length=100)
+	private String meachineCode;
+	
 	@Column(name="outter_user_id", length=50)
 	private String outterUserId;
 	
@@ -86,6 +89,14 @@ public class UserBindSystem implements Serializable {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public String getMeachineCode() {
+		return meachineCode;
+	}
+
+	public void setMeachineCode(String meachineCode) {
+		this.meachineCode = meachineCode;
 	}
 
 	public String getOutterUserId() {

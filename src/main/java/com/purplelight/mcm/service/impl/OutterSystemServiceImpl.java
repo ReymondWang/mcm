@@ -18,7 +18,7 @@ import com.purplelight.mcm.service.IOutterSystemService;
 import com.purplelight.mcm.util.McmConstant;
 import com.purplelight.mcm.util.UpdateUtil;
 
-public class OutterSystemServiceImpl implements IOutterSystemService {
+public class OutterSystemServiceImpl extends BaseServiceImpl implements IOutterSystemService {
 	private static Logger logger = LoggerFactory.getLogger(OutterSystemServiceImpl.class);
 	
 	@Resource

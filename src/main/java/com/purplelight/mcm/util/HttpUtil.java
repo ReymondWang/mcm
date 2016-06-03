@@ -72,6 +72,17 @@ public class HttpUtil {
 
         return result;
     }
+    
+    /**
+     * 生成动态令牌，算法为静态令牌、机器码、时间按戳按照字典序排序后，进行MD5加密
+     * @param token             静态令牌
+     * @param meachineCode      机器码
+     * @return
+     */
+    public static String generateDynamicToken(String token, String timestamp, String meachineCode){
+    	String originStr = token + timestamp + meachineCode;
+    	return StringUtil.md5StringFor(originStr);
+    }
 
     private static String PostDataFromNet(String strUrl, HashMap<String, String> params) throws IOException {
     	int timeOut = Integer.parseInt(ConfigUtil.config.getProperty("connection_time_out"));
@@ -135,13 +146,15 @@ public class HttpUtil {
     }
 
     private static String generateGetUrl(String strUrl, HashMap<String, String> params){
+    	boolean hasAppend = true;
         if (!strUrl.contains("?")){
             strUrl += "?";
+            hasAppend = false;
         }
 
         int cnt = 0;
         for(Entry<String, String> entry : params.entrySet()){
-        	if (cnt != 0){
+        	if (cnt != 0 || hasAppend){
             	strUrl += "&";
             }
             strUrl += (entry.getKey() + "=" + entry.getValue());

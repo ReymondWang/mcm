@@ -19,7 +19,7 @@ import com.purplelight.mcm.util.ConvertUtil;
 import com.purplelight.mcm.util.McmConstant;
 import com.purplelight.mcm.util.StringUtil;
 
-public class FeedbackServiceImpl implements IFeedbackService {
+public class FeedbackServiceImpl extends BaseServiceImpl implements IFeedbackService {
 
 	@Resource
 	private IFeedbackDao feedbackDao;

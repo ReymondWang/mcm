@@ -65,7 +65,7 @@ public class LoginApi extends BaseApi {
 					result.setUser(userInfo);
 				} else {
 					if ("true".equals(ConfigUtil.config.getProperty("quick_register"))){
-						result = userBindSystemService.bindWithCreate(lp.getLoginId(), lp.getPassword(), getUpdateUser());
+						result = userBindSystemService.bindWithCreate(lp.getLoginId(), lp.getPassword(), lp.getMeachineCode(), getUpdateUser());
 					} else {
 						result.setSuccess(false);
 						result.setMessage(getText("msg_login_failed"));

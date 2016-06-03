@@ -32,6 +32,8 @@
     			<value>com.purplelight.mcm.entity.Feedback</value>
     			<value>com.purplelight.mcm.entity.UserBindSystem</value>
     			<value>com.purplelight.mcm.entity.AppFileManage</value>
+    			<value>com.purplelight.mcm.entity.FunctionStructure</value>
+    			<value>com.purplelight.mcm.entity.UserFunction</value>
     		</list>
     	</property>
     </bean>

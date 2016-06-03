@@ -154,6 +154,13 @@
 									</div>
 								</div>
 								<div class="form-group">
+									<label for="txtRightCode" class="col-sm-2 control-label">权限</label>
+									<div class="col-sm-9">
+										<input type="text" name="appFunc.rightCode" class="form-control"
+											id="txtRightCode" value="${appFunc.rightCode}" placeholder="权限">
+									</div>
+								</div>
+								<div class="form-group">
 									<label for="txtOrder" class="col-sm-2 control-label">排序</label>
 									<div class="col-sm-9">
 										<input type="text" name="appFunc.appOrder" class="form-control"

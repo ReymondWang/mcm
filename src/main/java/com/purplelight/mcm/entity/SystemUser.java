@@ -54,6 +54,8 @@ public class SystemUser implements Serializable {
 	
 	private Set<UserBindSystem> outterSystems = new HashSet<>();
 
+	private Set<UserFunction> functions = new HashSet<>();
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id", unique=true)
@@ -189,5 +191,14 @@ public class SystemUser implements Serializable {
 
 	public void setOutterSystems(Set<UserBindSystem> outterSystems) {
 		this.outterSystems = outterSystems;
+	}
+
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.LAZY, mappedBy="user")
+	public Set<UserFunction> getFunctions() {
+		return functions;
+	}
+
+	public void setFunctions(Set<UserFunction> functions) {
+		this.functions = functions;
 	}
 }

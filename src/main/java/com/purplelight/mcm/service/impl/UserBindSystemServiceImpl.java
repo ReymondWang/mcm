@@ -16,20 +16,25 @@ import com.purplelight.mcm.api.bean.OutterSystemBindInfo;
 import com.purplelight.mcm.api.bean.SystemUserInfo;
 import com.purplelight.mcm.api.result.BindUserResult;
 import com.purplelight.mcm.api.result.LoginResult;
+import com.purplelight.mcm.dao.IFunctionStructureDao;
 import com.purplelight.mcm.dao.IOutterSystemDao;
 import com.purplelight.mcm.dao.ISystemUserDao;
 import com.purplelight.mcm.dao.IUserBindSystemDao;
-import com.purplelight.mcm.entity.UserBindSystem;
-import com.purplelight.mcm.query.Strategy;
-import com.purplelight.mcm.service.IUserBindSystemService;
+import com.purplelight.mcm.dao.IUserFunctionDao;
+import com.purplelight.mcm.entity.FunctionStructure;
 import com.purplelight.mcm.entity.OutterSystem;
 import com.purplelight.mcm.entity.SystemUser;
+import com.purplelight.mcm.entity.UserBindSystem;
+import com.purplelight.mcm.entity.UserFunction;
+import com.purplelight.mcm.query.Strategy;
+import com.purplelight.mcm.service.IUserBindSystemService;
 import com.purplelight.mcm.util.ConvertUtil;
+import com.purplelight.mcm.util.FunctionStructureUtil;
 import com.purplelight.mcm.util.HttpUtil;
 import com.purplelight.mcm.util.StringUtil;
 import com.purplelight.mcm.util.UpdateUtil;
 
-public class UserBindSystemServiceImpl implements IUserBindSystemService {
+public class UserBindSystemServiceImpl extends BaseServiceImpl implements IUserBindSystemService {
 
 	@Resource
 	private IUserBindSystemDao userBindSystemDao;
@@ -40,14 +45,23 @@ public class UserBindSystemServiceImpl implements IUserBindSystemService {
 	@Resource
 	private ISystemUserDao systemUserDao;
 	
+	@Resource
+	private IUserFunctionDao userFunctionDao;
+	
+	@Resource
+	private IFunctionStructureDao functionStructureDao;
+	
 	@Override
-	public void addBindInfo(UserBindSystem entity, SystemUser loginedUser) {
+	public void addBindInfo(UserBindSystem entity, List<String> rights, SystemUser loginedUser) {
 		entity.setInputUser(loginedUser);
 		entity.setInputTime(new Timestamp(System.currentTimeMillis()));
 		entity.setUpdateUser(loginedUser);
 		entity.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
 		userBindSystemDao.save(entity);
+		
+		// 保存用户权限
+		addFunctionStructure(rights, entity.getUser(), loginedUser);
 	}
 
 	@Override
@@ -65,17 +79,28 @@ public class UserBindSystemServiceImpl implements IUserBindSystemService {
 		userBindSystemDao.delete(entity);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteBindInfo(int userId, int systemId) {
+		// 删除用户绑定外部系统信息
 		String hql = "from UserBindSystem us where us.user.id = :userId and us.outterSystem.id = :systemId";
 		Query query = userBindSystemDao.getSession().createQuery(hql);
 		query.setParameter("userId", userId);
 		query.setParameter("systemId", systemId);
 		
-		@SuppressWarnings("unchecked")
 		List<UserBindSystem> list = (List<UserBindSystem>)query.list();
 		if (list != null && list.size() > 0){
 			userBindSystemDao.deleteAll(list);
+		}
+		
+		// 删除用户权限信息
+		String delHql = "from UserFunction uf where uf.user.id = :id";
+		Query delQuery = userFunctionDao.getSession().createQuery(delHql);
+		delQuery.setParameter("id", userId);
+		
+		List<UserFunction> delList = (List<UserFunction>)delQuery.list();
+		if (delList != null && delList.size() > 0){
+			userFunctionDao.deleteAll(delList);
 		}
 	}
 
@@ -86,7 +111,7 @@ public class UserBindSystemServiceImpl implements IUserBindSystemService {
 	 * Config.properties中quick_register要设置为true
 	 */
 	@Override
-	public LoginResult bindWithCreate(String userCode, String password, SystemUser loginedUser) throws Exception {
+	public LoginResult bindWithCreate(String userCode, String password, String meachineCode, SystemUser loginedUser) throws Exception {
 		LoginResult loginResult = new LoginResult();
 		
 		OutterSystem queryEntity = new OutterSystem();
@@ -100,6 +125,7 @@ public class UserBindSystemServiceImpl implements IUserBindSystemService {
 			HashMap<String, String> tryParams = new HashMap<>();
 			tryParams.put("name", userCode);
 			tryParams.put("password", password);
+			tryParams.put("meachineCode", meachineCode);
 			String responseJson = HttpUtil.GetDataFromNet(
 					trySystem.getSystemUrl() + trySystem.getValidationUrl()
 					, tryParams
@@ -108,6 +134,8 @@ public class UserBindSystemServiceImpl implements IUserBindSystemService {
 				BindUserResult result = gson.fromJson(responseJson, BindUserResult.class);
 				if (result.isSuccess()){
 					BindUser bindUser = result.getObj();
+					
+					// 保存用户基本信息
 					SystemUser user = new SystemUser();
 					user.setUserCode(bindUser.getEmail());
 					user.setUserName(bindUser.getName());
@@ -120,16 +148,21 @@ public class UserBindSystemServiceImpl implements IUserBindSystemService {
 					systemUserDao.save(user);
 					systemUserDao.updatePassword(user.getId(), password);
 					
+					// 保存用户系统绑定信息
 					UserBindSystem bindSystem = new UserBindSystem();
 					bindSystem.setOutterSystem(trySystem);
 					bindSystem.setUser(user);
 					bindSystem.setToken(bindUser.getToken());
+					bindSystem.setMeachineCode(meachineCode);
 					bindSystem.setOutterUserId(bindUser.getUserId());
 					bindSystem.setInputUser(loginedUser);
 					bindSystem.setInputTime(new Timestamp(System.currentTimeMillis()));
 					bindSystem.setUpdateUser(loginedUser);
 					bindSystem.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 					userBindSystemDao.save(bindSystem);
+					
+					// 保存用户权限信息
+					addFunctionStructure(bindUser.getRights(), user, loginedUser);
 					
 					loginResult.setSuccess(true);
 					
@@ -150,11 +183,11 @@ public class UserBindSystemServiceImpl implements IUserBindSystemService {
 				}
 			} else {
 				loginResult.setSuccess(false);
-				loginResult.setMessage("外部系统返回信息为空");
+				loginResult.setMessage(getMessage("msg_no_response_data"));
 			}
 		} else {
 			loginResult.setSuccess(false);
-			loginResult.setMessage("没有启用的外部系统");
+			loginResult.setMessage(getMessage("msg_system_is_not_start"));
 		}
 		
 		return loginResult;
@@ -218,4 +251,25 @@ public class UserBindSystemServiceImpl implements IUserBindSystemService {
 		return null;
 	}
 
+	/**
+	 * 保存用户权限
+	 * @param busiRights
+	 * @param user
+	 * @param loginedUser
+	 */
+	private void addFunctionStructure(List<String> busiRights, SystemUser user, SystemUser loginedUser){
+		List<String> rights = FunctionStructureUtil.getRights(busiRights);
+		for(String right : rights){
+			FunctionStructure fs = functionStructureDao.getByCode(right);
+			
+			UserFunction function = new UserFunction();
+			function.setFunction(fs);
+			function.setUser(user);
+			function.setInputUser(loginedUser);
+			function.setInputTime(new Timestamp(System.currentTimeMillis()));
+			
+			userFunctionDao.save(function);
+		}
+	}
+	
 }

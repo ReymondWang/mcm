@@ -278,6 +278,9 @@
 		<action name="projects" class="commonApi" method="projects">
 			<result name="success">/api/api.jsp</result>
 		</action>
+		<action name="token" class="commonApi" method="token">
+			<result name="success">/api/api.jsp</result>
+		</action>
 	</package>
 	
 </struts>

@@ -50,7 +50,7 @@ public class ConvertUtil {
 		calendar.setTime(time);
 		
 		String year = String.valueOf(calendar.get(Calendar.YEAR));
-		String month = String.valueOf(calendar.get(Calendar.MONTH));
+		String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
 		String day = String.valueOf(calendar.get(Calendar.DATE));
 		
 		dateStr = year + "-" + month + "-" + day;
@@ -65,7 +65,7 @@ public class ConvertUtil {
 		calendar.setTime(time);
 		
 		String year = String.valueOf(calendar.get(Calendar.YEAR));
-		String month = String.valueOf(calendar.get(Calendar.MONTH));
+		String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
 		String day = String.valueOf(calendar.get(Calendar.DATE));
 		String hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
 		String minute = String.valueOf(calendar.get(Calendar.MINUTE));

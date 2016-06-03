@@ -1,6 +1,7 @@
 package com.purplelight.mcm.service.impl;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +11,8 @@ import javax.annotation.Resource;
 import com.google.gson.Gson;
 import com.purplelight.mcm.api.bean.SpecialItem;
 import com.purplelight.mcm.api.bean.SpecialItemCheckResult;
+import com.purplelight.mcm.api.parameter.SpecialItemParameter;
+import com.purplelight.mcm.api.parameter.SpecialItemSubmitParameter;
 import com.purplelight.mcm.api.result.Result;
 import com.purplelight.mcm.api.result.SpecialItemResult;
 import com.purplelight.mcm.entity.OutterSystem;
@@ -26,9 +29,11 @@ import com.purplelight.mcm.util.ConvertUtil;
 import com.purplelight.mcm.util.HttpUtil;
 import com.purplelight.mcm.util.StringUtil;
 
-public class RedStarOmSpecialCheckServiceImpl implements ISpecialCheckService {
+public class RedStarOmSpecialCheckServiceImpl extends BaseServiceImpl implements ISpecialCheckService {
 	private static final String GET_SPECIAL_CHECK_ITEMS = "app/GetSpecialCheckItems";
 	private static final String SPECIAL_CHECK_ITEM_DONE = "app/SpecialCheckItemDone";
+	private static final String GET_ROOM_CHECK_ITEMS = "app/GetRoomCheckItems";
+	private static final String ROOM_CHECK_ITEM_DONE = "app/RoomCheckItemDone";
 	
 	@Resource
 	private IOutterSystemService outterSystemService;
@@ -37,56 +42,100 @@ public class RedStarOmSpecialCheckServiceImpl implements ISpecialCheckService {
 	private IUserBindSystemService userBindSystemService;
 	
 	@Override
-	public SpecialItemResult getSpecialCheckItems(int userId, int systemId, int reportId, boolean onlyUnChecked,
-			int pageNo, int pageSize) {
+	public SpecialItemResult getSpecialCheckItems(SpecialItemParameter parameter) {
+		int checkType = parameter.getCheckType();
+		int userId = ConvertUtil.toInt(parameter.getLoginId());
+		int systemId = parameter.getSystemId();
+		int reportId = parameter.getReportId();
+		boolean onlyUnChecked = parameter.isOnlyUnChecked();
+		int pageNo = parameter.getPageNo();
+		int pageSize = parameter.getPageSize();
+		
 		SpecialItemResult result = new SpecialItemResult();
 		
 		OutterSystem system = outterSystemService.getOutterSystemById(systemId);
 		if (system != null){
 			UserBindSystem bindSystem = userBindSystemService.getByUserIdAndSystemId(userId, systemId);
 			if (bindSystem != null){
-				result = GetSpecialCheckItems(systemId, system.getSystemUrl(), bindSystem.getToken(), reportId,
-						onlyUnChecked, pageNo, pageSize);
+				
+				result = GetSpecialCheckItems(checkType
+						, systemId
+						, system.getSystemUrl()
+						, bindSystem.getToken()
+						, bindSystem.getMeachineCode()
+						, reportId
+						, onlyUnChecked
+						, pageNo
+						, pageSize);
 			} else {
 				result.setSuccess(false);
-				result.setMessage("用户没有绑定该系统");
+				result.setMessage(getMessage("msg_no_system_binded"));
 			}
 		} else {
 			result.setSuccess(false);
-			result.setMessage("指定的外部系统不存在");
+			result.setMessage(getMessage("msg_no_system"));
 		}
 		return result;
 	}
 
 	@Override
-	public Result submitSpecialCheckItem(int userId, int systemId, int itemId, List<SpecialItemCheckResult> results,
-			List<String> images) {
+	public Result submitSpecialCheckItem(SpecialItemSubmitParameter parameter) {
 		Result result = new Result();
+		
+		int checkType = parameter.getCheckType();
+		int userId = ConvertUtil.toInt(parameter.getLoginId());
+		int systemId = parameter.getSystemId();
+		int itemId = parameter.getItemId();
+		List<SpecialItemCheckResult> results = parameter.getResults();
+		List<String> images = parameter.getImages();
 		
 		OutterSystem system = outterSystemService.getOutterSystemById(systemId);
 		if (system != null){
 			UserBindSystem bindSystem = userBindSystemService.getByUserIdAndSystemId(userId, systemId);
 			if (bindSystem != null){
-				result = SpecialCheckItemDone(system.getSystemUrl(), bindSystem.getToken(), itemId, results, images);
+				result = SpecialCheckItemDone(checkType
+						, system.getSystemUrl()
+						, bindSystem.getToken()
+						, bindSystem.getMeachineCode()
+						, itemId
+						, results
+						, images);
 			} else {
 				result.setSuccess(false);
-				result.setMessage("用户没有绑定该系统");
+				result.setMessage(getMessage("msg_no_system_binded"));
 			}
 		} else {
 			result.setSuccess(false);
-			result.setMessage("指定的外部系统不存在");
+			result.setMessage(getMessage("msg_no_system"));
 		}
 		
 		return result;
 	}
 	
-	private SpecialItemResult GetSpecialCheckItems(int systemId, String systemUrl, 
-			String token, int checkId, boolean onlyUnchecked, int page, int numOfPage){
+	private SpecialItemResult GetSpecialCheckItems(int checkType
+			, int systemId
+			, String systemUrl
+			, String token
+			, String meachineCode
+			, int checkId
+			, boolean onlyUnchecked
+			, int page
+			, int numOfPage){
 		SpecialItemResult result = new SpecialItemResult();
 		
+		if (checkType == 1){
+			systemUrl += GET_SPECIAL_CHECK_ITEMS;
+		} else {
+			systemUrl += GET_ROOM_CHECK_ITEMS;
+		}
+		
+		String nonce = String.valueOf(System.currentTimeMillis());
+		String sign = HttpUtil.generateDynamicToken(token, nonce, meachineCode);
 		SpecialCheckItemParameter parameter = new SpecialCheckItemParameter();
 		parameter.setCheckId(checkId);
 		parameter.setToken(token);
+		parameter.setNonce(nonce);
+		parameter.setSign(sign);
 		parameter.setOnlyUnchecked(onlyUnchecked);
 		parameter.setPage(page);
 		parameter.setNumOfPage(numOfPage);
@@ -95,7 +144,7 @@ public class RedStarOmSpecialCheckServiceImpl implements ISpecialCheckService {
 		
 		String requestJson = gson.toJson(parameter);
 		try{
-			String responseJson = HttpUtil.PostJosn(systemUrl + GET_SPECIAL_CHECK_ITEMS, requestJson);
+			String responseJson = HttpUtil.PostJosn(systemUrl, requestJson);
 			if (!StringUtil.IsNullOrEmpty(responseJson)){
 				SpecialCheckItemResult bsResult = gson.fromJson(responseJson, SpecialCheckItemResult.class);
 				result.setSuccess(bsResult.isSuccess());
@@ -107,6 +156,7 @@ public class RedStarOmSpecialCheckServiceImpl implements ISpecialCheckService {
 						for (SpecialCheckItem bsItem : bsResult.getObj()){
 							SpecialItem item = new SpecialItem();
 							item.setId(bsItem.getId());
+							item.setCheckType(checkType);
 							item.setSystemId(systemId);
 							item.setCategory(bsItem.getCatalog());
 							item.setProjectName(bsItem.getProjectName());
@@ -155,7 +205,7 @@ public class RedStarOmSpecialCheckServiceImpl implements ISpecialCheckService {
 				}
 			} else {
 				result.setSuccess(false);
-				result.setMessage("业务系统没有返回数据");
+				result.setMessage(getMessage("msg_no_response_data"));
 			}
 		} catch (IOException ex){
 			result.setSuccess(false);
@@ -165,41 +215,60 @@ public class RedStarOmSpecialCheckServiceImpl implements ISpecialCheckService {
 		return result;
 	}
 	
-	private Result SpecialCheckItemDone(String systemUrl, String token, 
-			int id, List<SpecialItemCheckResult> results, List<String> images){
+	private Result SpecialCheckItemDone(int checkType
+			, String systemUrl
+			, String token
+			, String meachineCode
+			, int id
+			, List<SpecialItemCheckResult> results
+			, List<String> images){
 		Result result = new Result();
 		
+		if (checkType == 1){
+			systemUrl += SPECIAL_CHECK_ITEM_DONE;
+		} else {
+			systemUrl += ROOM_CHECK_ITEM_DONE;
+		}
+		
+		String nonce = String.valueOf(System.currentTimeMillis());
+		String sign = HttpUtil.generateDynamicToken(token, nonce, meachineCode);
 		SpecialCheckItemDoneParameter parameter = new SpecialCheckItemDoneParameter();
 		parameter.setId(id);
 		parameter.setToken(token);
+		parameter.setNonce(nonce);
+		parameter.setSign(sign);
 		
 		List<ResultItem> items = new ArrayList<>();
 		if (results != null && results.size() > 0){
-			for (SpecialItemCheckResult cr : results){
-				ResultItem item = new ResultItem();
-				item.setName(cr.getName());
-				if (cr.getResult() == 1){
-					item.setCheckresult("√");
-				} else {
-					item.setCheckresult("×");
+			try{
+				for (SpecialItemCheckResult cr : results){
+					ResultItem item = new ResultItem();
+					item.setName(URLEncoder.encode(cr.getName(), "utf-8"));
+					if (cr.getResult() == 1){
+						item.setCheckresult("√");
+					} else {
+						item.setCheckresult("×");
+					}
+					items.add(item);
 				}
-				items.add(item);
+			} catch (Exception ex){
+				ex.printStackTrace();
 			}
 		}
 		parameter.setItems(items);
-		
 		parameter.setImages(images);
 		
 		Gson gson = new Gson();
 		String requestJson = gson.toJson(parameter);
 		
 		try{
-			String responseJson = HttpUtil.PostJosn(systemUrl + SPECIAL_CHECK_ITEM_DONE, requestJson);
+			
+			String responseJson = HttpUtil.PostJosn(systemUrl, requestJson);
 			if (!StringUtil.IsNullOrEmpty(responseJson)){
 				result = gson.fromJson(responseJson, Result.class);
 			} else {
 				result.setSuccess(false);
-				result.setMessage("业务系统没有返回数据");
+				result.setMessage(getMessage("msg_no_response_data"));
 			}
 		} catch (IOException ex){
 			result.setSuccess(false);

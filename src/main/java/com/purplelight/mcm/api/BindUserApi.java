@@ -46,6 +46,7 @@ public class BindUserApi extends BaseApi {
 						HashMap<String, String> map = new HashMap<>();
 			            map.put("name", parameter.getUserCode());
 			            map.put("password", parameter.getPassword());
+			            map.put("meachineCode", parameter.getMeachineCode());
 			            String bindJson = HttpUtil.GetDataFromNet(system.getSystemUrl() + system.getValidationUrl(), map, HttpUtil.POST);
 						if (!StringUtil.IsNullOrEmpty(bindJson)){
 							BindUserResult bindResult = gson.fromJson(bindJson, BindUserResult.class);
@@ -56,7 +57,8 @@ public class BindUserApi extends BaseApi {
 								bindSystem.setOutterUserId(user.getUserId());
 								bindSystem.setOutterSystem(system);
 								bindSystem.setToken(user.getToken());
-								userBindSystemService.addBindInfo(bindSystem, updateUser);
+								bindSystem.setMeachineCode(parameter.getMeachineCode());
+								userBindSystemService.addBindInfo(bindSystem, user.getRights(),  updateUser);
 								
 								result.setSuccess(true);
 								result.setMessage(getText("msg_bind_user_success"));

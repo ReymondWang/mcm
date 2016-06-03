@@ -9,6 +9,9 @@ public class EstimateItem implements Serializable {
 	// 主键
 	private String id;
 	
+	// 检查类型
+	private int estimateType;
+	
 	// 所属报告编号
 	private String reportId;
 	
@@ -83,6 +86,14 @@ public class EstimateItem implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public int getEstimateType() {
+		return estimateType;
+	}
+
+	public void setEstimateType(int estimateType) {
+		this.estimateType = estimateType;
 	}
 
 	public String getProjectId() {

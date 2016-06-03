@@ -24,7 +24,7 @@ import com.purplelight.mcm.util.ConvertUtil;
 import com.purplelight.mcm.util.HttpUtil;
 import com.purplelight.mcm.util.StringUtil;
 
-public class RedStarOmPassportServiceImpl implements IPassportService {
+public class RedStarOmPassportServiceImpl extends BaseServiceImpl implements IPassportService {
 	private static final String GET_LICENCES = "app/GetLicences";
 	private static final String GET_LICENCE_FILES = "app/GetAttachments";
 	private static final String ATTACH_URL = "attachment/download?fileid=";
@@ -45,15 +45,21 @@ public class RedStarOmPassportServiceImpl implements IPassportService {
 		if (system != null){
 			UserBindSystem bindSystem = userBindSystemService.getByUserIdAndSystemId(userId, systemId);
 			if (bindSystem != null){
-				result = getLicences(systemId, system.getSystemUrl(), bindSystem.getToken(), 
-						projectId, category, pageNo, pageSize);
+				result = getLicences(systemId
+						, system.getSystemUrl()
+						, bindSystem.getToken()
+						, bindSystem.getMeachineCode()
+						, projectId
+						, category
+						, pageNo
+						, pageSize);
 			} else {
 				result.setSuccess(false);
-				result.setMessage("用户没有绑定该系统");
+				result.setMessage(getMessage("msg_no_system_binded"));
 			}
 		} else {
 			result.setSuccess(false);
-			result.setMessage("指定的外部系统不存在");
+			result.setMessage(getMessage("msg_no_system"));
 		}
 		
 		return result;
@@ -67,25 +73,38 @@ public class RedStarOmPassportServiceImpl implements IPassportService {
 		if (system != null){
 			UserBindSystem bindSystem = userBindSystemService.getByUserIdAndSystemId(userId, systemId);
 			if (bindSystem != null){
-				result = getAttachments(system.getSystemUrl(), bindSystem.getToken(), itemId);
+				result = getAttachments(system.getSystemUrl()
+						, bindSystem.getToken()
+						, bindSystem.getMeachineCode()
+						, itemId);
 			} else {
 				result.setSuccess(false);
-				result.setMessage("用户没有绑定该系统");
+				result.setMessage(getMessage("msg_no_system_binded"));
 			}
 		} else {
 			result.setSuccess(false);
-			result.setMessage("指定的外部系统不存在");
+			result.setMessage(getMessage("msg_no_system"));
 		}
 		
 		return result;
 	}
 	
-	private PassportResult getLicences(int systemId, String systemUrl, String token, String projectId, 
-			String catalog, int page, int numOfPage){
+	private PassportResult getLicences(int systemId
+			, String systemUrl
+			, String token
+			, String meachineCode
+			, String projectId
+			, String catalog
+			, int page
+			, int numOfPage){
 		PassportResult result = new PassportResult();
 		
+		String nonce = String.valueOf(System.currentTimeMillis());
+		String sign = HttpUtil.generateDynamicToken(token, nonce, meachineCode);
 		HashMap<String, String> map = new HashMap<>();
 		map.put("token", token);
+		map.put("nonce", nonce);
+		map.put("sign", sign);
 		map.put("projectid", projectId);
 		map.put("catalog", catalog);
 		map.put("page", String.valueOf(page));
@@ -94,7 +113,7 @@ public class RedStarOmPassportServiceImpl implements IPassportService {
 		String responseJson = HttpUtil.GetDataFromNet(systemUrl + GET_LICENCES, map, HttpUtil.POST);
 		if (StringUtil.IsNullOrEmpty(responseJson)){
 			result.setSuccess(false);
-			result.setMessage("业务系统没有返回数据");
+			result.setMessage(getMessage("msg_no_response_data"));
 		} else {
 			LicenceResult bsResult = new Gson().fromJson(responseJson, LicenceResult.class);
 			result.setSuccess(bsResult.isSuccess());
@@ -122,11 +141,18 @@ public class RedStarOmPassportServiceImpl implements IPassportService {
 		return result;
 	}
 	
-	private PassportFileResult getAttachments(String systemUrl, String token, int itemId){
+	private PassportFileResult getAttachments(String systemUrl
+			, String token
+			, String meachineCode
+			, int itemId){
 		PassportFileResult result = new PassportFileResult();
 		
+		String nonce = String.valueOf(System.currentTimeMillis());
+		String sign = HttpUtil.generateDynamicToken(token, nonce, meachineCode);
 		HashMap<String, String> map = new HashMap<>();
 		map.put("token", token);
+		map.put("nonce", nonce);
+		map.put("sign", sign);
 		map.put("mastertype", MASTER_TYPE);
 		map.put("masterid", String.valueOf(itemId));
 		map.put("numOfPage", "0");
@@ -134,7 +160,7 @@ public class RedStarOmPassportServiceImpl implements IPassportService {
 		String responseJson = HttpUtil.GetDataFromNet(systemUrl + GET_LICENCE_FILES, map, HttpUtil.POST);
 		if (StringUtil.IsNullOrEmpty(responseJson)){
 			result.setSuccess(false);
-			result.setMessage("业务系统没有返回数据");
+			result.setMessage(getMessage("msg_no_response_data"));
 		} else {
 			LicenceFileResult bsResult = new Gson().fromJson(responseJson, LicenceFileResult.class);
 			result.setSuccess(bsResult.isSuccess());

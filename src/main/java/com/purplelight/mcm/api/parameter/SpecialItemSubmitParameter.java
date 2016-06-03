@@ -5,6 +5,8 @@ import java.util.List;
 import com.purplelight.mcm.api.bean.SpecialItemCheckResult;
 
 public class SpecialItemSubmitParameter extends Parameter {
+	private int checkType;
+	
 	private int systemId;
 	
 	private int itemId;
@@ -12,6 +14,14 @@ public class SpecialItemSubmitParameter extends Parameter {
 	private List<SpecialItemCheckResult> results;
 	
 	private List<String> images;
+
+	public int getCheckType() {
+		return checkType;
+	}
+
+	public void setCheckType(int checkType) {
+		this.checkType = checkType;
+	}
 
 	public int getSystemId() {
 		return systemId;

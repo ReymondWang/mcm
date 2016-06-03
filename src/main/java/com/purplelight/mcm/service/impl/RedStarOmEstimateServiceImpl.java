@@ -34,7 +34,7 @@ import com.purplelight.mcm.util.ConvertUtil;
 import com.purplelight.mcm.util.HttpUtil;
 import com.purplelight.mcm.util.StringUtil;
 
-public class RedStarOmEstimateServiceImpl implements IEstimateService {
+public class RedStarOmEstimateServiceImpl extends BaseServiceImpl implements IEstimateService {
 	private static final String QUALITY_CHECK_ITEM = "app/getqualitycheckitems";
 	private static final String QUALITY_SINGLE_CHECK_ITEM = "app/GetQualityCheckItem";
 	private static final String QUALITY_CHECK_REPORT = "app/getqualitycheckreports";
@@ -60,11 +60,13 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 			if (bindSystem != null){
 				String systemUrl = system.getSystemUrl();
 				String token = bindSystem.getToken();
+				String meachineCode = bindSystem.getMeachineCode();
 				int inChargeId = ConvertUtil.toInt(bindSystem.getOutterUserId());
 				result = getQualityCheckItems(parameter.getEstimateType()
 						, systemId
 						, systemUrl
 						, token
+						, meachineCode
 						, inChargeId
 						, 0
 						, parameter.getReportId()
@@ -78,11 +80,11 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 						, parameter.getPageSize());
 			} else {
 				result.setSuccess(false);
-				result.setMessage("用户没有绑定该系统");
+				result.setMessage(getMessage("msg_no_system_binded"));
 			}
 		} else {
 			result.setSuccess(false);
-			result.setMessage("指定的外部系统不存在");
+			result.setMessage(getMessage("msg_no_system"));
 		}
 		
 		return result;
@@ -101,11 +103,13 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 			if (bindSystem != null){
 				String systemUrl = system.getSystemUrl();
 				String token = bindSystem.getToken();
+				String meachineCode = bindSystem.getMeachineCode();
 				int checkerId = ConvertUtil.toInt(bindSystem.getOutterUserId());
 				result = getQualityCheckItems(parameter.getEstimateType()
 						, systemId
 						, systemUrl
 						, token
+						, meachineCode
 						, 0
 						, checkerId
 						, parameter.getReportId()
@@ -119,11 +123,11 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 						, parameter.getPageSize());
 			} else {
 				result.setSuccess(false);
-				result.setMessage("用户没有绑定该系统");
+				result.setMessage(getMessage("msg_no_system_binded"));
 			}
 		} else {
 			result.setSuccess(false);
-			result.setMessage("指定的外部系统不存在");
+			result.setMessage(getMessage("msg_no_system"));
 		}
 		
 		return result;
@@ -137,14 +141,18 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 		if (system != null){
 			UserBindSystem bindSystem = userBindSystemService.getByUserIdAndSystemId(userId, systemId);
 			if (bindSystem != null){
-				result = getQualityCheckItem(system.getSystemUrl(), bindSystem.getToken(), itemId, bindSystem.getOutterUserId());
+				result = getQualityCheckItem(system.getSystemUrl()
+						, bindSystem.getToken()
+						, bindSystem.getMeachineCode()
+						, itemId
+						, bindSystem.getOutterUserId());
 			} else {
 				result.setSuccess(false);
-				result.setMessage("用户没有绑定该系统");
+				result.setMessage(getMessage("msg_no_system_binded"));
 			}
 		} else {
 			result.setSuccess(false);
-			result.setMessage("指定的外部系统不存在");
+			result.setMessage(getMessage("msg_no_system"));
 		}
 		
 		return result;
@@ -160,14 +168,20 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 			if (bindSystem != null){
 				String systemUrl = system.getSystemUrl();
 				String token = bindSystem.getToken();
-				result = getQualityCheckReports(checkType, systemUrl, token, pageNo, pageSize);
+				String meachineCode = bindSystem.getMeachineCode();
+				result = getQualityCheckReports(checkType
+						, systemUrl
+						, token
+						, meachineCode
+						, pageNo
+						, pageSize);
 			} else {
 				result.setSuccess(false);
-				result.setMessage("用户没有绑定该系统");
+				result.setMessage(getMessage("msg_no_system_binded"));
 			}
 		} else {
 			result.setSuccess(false);
-			result.setMessage("指定的外部系统不存在");
+			result.setMessage(getMessage("msg_no_system"));
 		}
 		
 		return result;
@@ -181,14 +195,17 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 		if (system != null){
 			UserBindSystem bindSystem = userBindSystemService.getByUserIdAndSystemId(userId, systemId);
 			if (bindSystem != null){
-				result = getQualityCheckReport(system.getSystemUrl(), bindSystem.getToken(), reportId);
+				result = getQualityCheckReport(system.getSystemUrl()
+						, bindSystem.getToken()
+						, bindSystem.getMeachineCode()
+						, reportId);
 			} else {
 				result.setSuccess(false);
-				result.setMessage("用户没有绑定该系统");
+				result.setMessage(getMessage("msg_no_system_binded"));
 			}
 		} else {
 			result.setSuccess(false);
-			result.setMessage("指定的外部系统不存在");
+			result.setMessage(getMessage("msg_no_system"));
 		}
 		
 		return result;
@@ -203,14 +220,17 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 		if (system != null){
 			UserBindSystem bindSystem = userBindSystemService.getByUserIdAndSystemId(userId, parameter.getSystemId());
 			if (bindSystem != null){
-				result = fixQualityFixItem(system.getSystemUrl(), bindSystem.getToken(), parameter);
+				result = fixQualityFixItem(system.getSystemUrl()
+						, bindSystem.getToken()
+						, bindSystem.getMeachineCode()
+						, parameter);
 			} else {
 				result.setSuccess(false);
-				result.setMessage("用户没有绑定该系统");
+				result.setMessage(getMessage("msg_no_system_binded"));
 			}
 		} else {
 			result.setSuccess(false);
-			result.setMessage("指定的外部系统不存在");
+			result.setMessage(getMessage("msg_no_system"));
 		}
 		
 		return result;
@@ -230,6 +250,7 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 			, int systemId
 			, String systemUrl
 			, String token
+			, String meachineCode
 			, int inChargeId
 			, int checkPersonId
 			, int checkId
@@ -243,9 +264,13 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 			, int pageNo){
 		EstimateItemResult result = new EstimateItemResult();
 		
+		String nonce = String.valueOf(System.currentTimeMillis());
+		String sign = HttpUtil.generateDynamicToken(token, nonce, meachineCode);
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("token", token);
-		map.put("checktype", String.valueOf(checkType));
+		map.put("nonce", nonce);
+		map.put("sign", sign);
+		map.put("catalog", String.valueOf(checkType));
 		if (onlyMyself){
 			map.put("inchargeid", ConvertUtil.toString(inChargeId));
 			map.put("checkpersonid", ConvertUtil.toString(checkPersonId));
@@ -279,6 +304,7 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 				for (QualityCheckItem item : qcResult.getObj()){
 					EstimateItem esItem = new EstimateItem();
 					esItem.setId(item.getId());
+					esItem.setEstimateType(checkType);
 					esItem.setReportId(item.getCheckId());
 					esItem.setProjectId(item.getProjectId());
 					esItem.setProjectName(item.getProjectName());
@@ -315,17 +341,25 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 			}
 		} else {
 			result.setSuccess(false);
-			result.setMessage("业务系统没有返回数据");
+			result.setMessage(getMessage("msg_no_response_data"));
 		}
 		
 		return result;
 	}
 	
-	private SingleEstimateItemResult getQualityCheckItem(String systemUrl, String token, int itemId, String outterUserId){
+	private SingleEstimateItemResult getQualityCheckItem(String systemUrl
+			, String token
+			, String meachineCode
+			, int itemId
+			, String outterUserId){
 		SingleEstimateItemResult result = new SingleEstimateItemResult();
 		
+		String nonce = String.valueOf(System.currentTimeMillis());
+		String sign = HttpUtil.generateDynamicToken(token, nonce, meachineCode);
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("token", token);
+		map.put("nonce", nonce);
+		map.put("sign", sign);
 		map.put("id", String.valueOf(itemId));
 		
 		String responseJson = HttpUtil.GetDataFromNet(systemUrl + QUALITY_SINGLE_CHECK_ITEM, map, HttpUtil.POST);
@@ -369,7 +403,7 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 			}
 		} else {
 			result.setSuccess(false);
-			result.setMessage("业务系统没有返回数据");
+			result.setMessage(getMessage("msg_no_response_data"));
 		}
 		
 		return result;
@@ -383,12 +417,21 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 	 * @param pageSize
 	 * @return
 	 */
-	private EstimateReportResult getQualityCheckReports(int checkType, String systemUrl, String token, int pageNo, int pageSize){
+	private EstimateReportResult getQualityCheckReports(int checkType
+			, String systemUrl
+			, String token
+			, String meachineCode
+			, int pageNo
+			, int pageSize){
 		EstimateReportResult result = new EstimateReportResult();
 		
+		String nonce = String.valueOf(System.currentTimeMillis());
+		String sign = HttpUtil.generateDynamicToken(token, nonce, meachineCode);
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("token", token);
-		map.put("checktype", String.valueOf(checkType));
+		map.put("nonce", nonce);
+		map.put("sign", sign);
+		map.put("catalog", String.valueOf(checkType));
 		map.put("page", ConvertUtil.toString(pageNo));
 		map.put("numofpage", ConvertUtil.toString(pageNo));
 		
@@ -434,17 +477,24 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 			}
 		} else {
 			result.setSuccess(false);
-			result.setMessage("业务系统没有返回数据");
+			result.setMessage(getMessage("msg_no_response_data"));
 		}
 		
 		return result;
 	}
 	
-	private SingleEstimateReportResult getQualityCheckReport(String systemUrl, String token, int reportId){
+	private SingleEstimateReportResult getQualityCheckReport(String systemUrl
+			, String token
+			, String meachineCode
+			, int reportId){
 		SingleEstimateReportResult result = new SingleEstimateReportResult();
 		
+		String nonce = String.valueOf(System.currentTimeMillis());
+		String sign = HttpUtil.generateDynamicToken(token, nonce, meachineCode);
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("token", token);
+		map.put("nonce", nonce);
+		map.put("sign", sign);
 		map.put("id", ConvertUtil.toString(reportId));
 		
 		String responseJson = HttpUtil.GetDataFromNet(systemUrl + QUALITY_SINGLE_CHECK_REPORT, map, HttpUtil.POST);
@@ -487,18 +537,26 @@ public class RedStarOmEstimateServiceImpl implements IEstimateService {
 			}
 		} else {
 			result.setSuccess(false);
-			result.setMessage("业务系统没有返回数据");
+			result.setMessage(getMessage("msg_no_response_data"));
 		}
 		
 		return result;
 	}
 	
-	private Result fixQualityFixItem(String systemUrl, String token, EstimateUploadParameter parameter){
+	private Result fixQualityFixItem(String systemUrl
+			, String token
+			, String meachineCode
+			, EstimateUploadParameter parameter){
 		Result result = new Result();
 		Gson gson = new Gson();
 		try {
+			String nonce = String.valueOf(System.currentTimeMillis());
+			String sign = HttpUtil.generateDynamicToken(token, nonce, meachineCode);
+			
 			FixQualityItemParameter submitParams = new FixQualityItemParameter();
 			submitParams.setToken(token);
+			submitParams.setNonce(nonce);
+			submitParams.setSign(sign);
 			submitParams.setId(parameter.getItemId());
 			submitParams.setAction(URLEncoder.encode(parameter.getImprovementAction(), "utf-8"));
 			submitParams.setDonedate(parameter.getDate());
