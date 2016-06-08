@@ -1,6 +1,5 @@
 package com.purplelight.mcm.service.impl;
 
-import java.sql.Timestamp;
 import java.util.HashMap;
 import javax.annotation.Resource;
 
@@ -12,7 +11,6 @@ import com.purplelight.mcm.entity.UserBindSystem;
 import com.purplelight.mcm.outtersystem.result.NoticeCntResult;
 import com.purplelight.mcm.service.INotificationService;
 import com.purplelight.mcm.service.IUserBindSystemService;
-import com.purplelight.mcm.util.ConvertUtil;
 import com.purplelight.mcm.util.HttpUtil;
 import com.purplelight.mcm.util.StringUtil;
 
@@ -53,12 +51,7 @@ public class RedStarOmNotificationServiceImpl extends BaseServiceImpl implements
 			return result;
 		}
 		
-		long milli = System.currentTimeMillis();
-		String nonce = String.valueOf(milli);
-		
-		String str = ConvertUtil.ConvertToDateTimeStr(new Timestamp(milli));
-		System.out.println(str);
-		
+		String nonce = String.valueOf(System.currentTimeMillis());
 		String token = bindSystem.getToken();
 		String sign = HttpUtil.generateDynamicToken(token, nonce, bindSystem.getMeachineCode());
 		

@@ -245,9 +245,9 @@ public class RedStarOmSpecialCheckServiceImpl extends BaseServiceImpl implements
 					ResultItem item = new ResultItem();
 					item.setName(URLEncoder.encode(cr.getName(), "utf-8"));
 					if (cr.getResult() == 1){
-						item.setCheckresult("√");
+						item.setCheckresult(URLEncoder.encode("√", "utf-8"));
 					} else {
-						item.setCheckresult("×");
+						item.setCheckresult(URLEncoder.encode("×", "utf-8"));
 					}
 					items.add(item);
 				}
